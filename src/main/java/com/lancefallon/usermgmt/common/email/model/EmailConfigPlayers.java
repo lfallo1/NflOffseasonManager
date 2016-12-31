@@ -5,7 +5,7 @@ import java.util.List;
 import com.lancefallon.usermgmt.player.model.Player;
 
 /**
- * Email config for user related emails
+ * Email config for player / prospects related emails
  * @author lancefallon
  *
  */

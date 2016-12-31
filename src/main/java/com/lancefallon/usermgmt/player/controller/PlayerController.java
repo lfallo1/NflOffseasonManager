@@ -17,7 +17,7 @@ import com.lancefallon.usermgmt.player.model.Player;
 import com.lancefallon.usermgmt.player.service.PlayerService;
 
 /**
- * user api endpoint
+ * players api endpoint
  * @author lancefallon
  *
  */
