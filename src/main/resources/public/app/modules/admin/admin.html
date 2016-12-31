@@ -1,0 +1,10 @@
+<div class="container">
+	<div class="jumbotron"><h3>Admin portal</h3></div>
+	<strong>Optional param: {{myUsernameParam}}</strong>
+	<div ng-repeat="u in users">
+		{{u.name}} - {{u.email}}
+	</div>
+	<div ui-view></div>
+	<div class="alert alert-info" ui-view="portal"></div>
+	<div ui-view="software"></div>
+</div>

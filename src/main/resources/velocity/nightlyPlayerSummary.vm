@@ -1,0 +1,11 @@
+<div style="background: #ccc;  padding: 24px; border-radius: 6px; width: 75%; margin: 10px auto; ">
+  <div style="color: white; text-align: center">
+  #foreach($player in $emailConfig.players)
+    <div>Name: ${player.name}</div>
+    #end
+  </div>
+</div>
+
+<div style="text-align: center">
+<button style="padding: 8px; border-radius: 8px; border: 0px; background: #339999; color: white">Learn more</button>
+</div>

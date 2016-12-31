@@ -1,0 +1,15 @@
+<div ng-controller="StatusCtrl as status">
+	<button class="btn btn-{{v.style}}" ng-repeat="v in status.vals track by $index" ng-click="status.statusClick(v)">Message#{{$index}}</button>
+	<div class="alert alert-{{status.msg.style}}" ng-show="status.msg">{{status.msg.value}}</div>
+</div>
+<h3>Film list</h3>
+<ul ng-if="!filmApiError && authentication" class="list-group">
+	<li class="list-group-item" ng-repeat="film in films">
+		{{film.title}} - {{film.genre}}
+	</li>
+</ul>
+<div class="alert alert-danger" ng-if="filmApiError || !authentication">Please <a ui-sref="site.login">login</a> to see the list of films</div>
+<div class="text-center btn-link" ng-click="loadFilms()">Reload</div>
+
+<!-- absolute path is filmtable@site.home -->
+<div ui-view="filmtable"></div>

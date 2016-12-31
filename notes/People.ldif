@@ -1,0 +1,60 @@
+version: 1
+
+dn: cn=Kara+sn=Croft,ou=People,dc=abc,dc=com
+objectClass: person
+objectClass: organizationalPerson
+objectClass: top
+cn: Kara
+sn: Croft
+ou: ou=user,ou=Support,dc=abc,dc=com
+userPassword:: e1NTSEF9TTFiSldRdUVXK2NPQkhSUWsyalVScmdKOGh5VVVhNkFLeXZNV0E9P
+ Q==
+
+dn: ou=People,dc=abc,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: People
+
+dn: cn=Captain Justice+mail=CaptainJustice@defenders.org,ou=People,dc=abc,dc
+ =com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: Captain Justice
+sn: CaptainJustice
+mail: CaptainJustice@defenders.org
+
+dn: cn=melissa+sn=m101,ou=People,dc=abc,dc=com
+objectClass: person
+objectClass: organizationalPerson
+objectClass: top
+cn: melissa
+sn: m101
+ou: ou=admin,ou=Support,dc=abc,dc=com
+userPassword:: e1NTSEF9THg3V0lEemhxbTN4bmtCNitIa0VGNndTMUFTSkFxb2tZMkxZblE9P
+ Q==
+
+dn: cn=Mandy+sn=Moore,ou=People,dc=abc,dc=com
+objectClass: person
+objectClass: organizationalPerson
+objectClass: top
+cn: Mandy
+sn: Moore
+ou: ou=user,ou=Support,dc=abc,dc=com
+userPassword:: e1NTSEF9b0NCWFVzbFZSSWI4NWlOSCtudlh4QXgydUNOdjhNTWJORlRPMlE9P
+ Q==
+
+dn: cn=Lance+sn=Fallon,ou=People,dc=abc,dc=com
+objectClass: person
+objectClass: organizationalPerson
+objectClass: top
+cn: Lance
+sn: Fallon
+description: Captain Justice - Founder and leader of Justice League. Regarde
+ d as the spandex-clad god, the almighty champion of justice is the greatest
+  crime-fighter of our time
+ou: ou=admin,ou=Support,dc=abc,dc=com
+userPassword:: e1NTSEF9ZUdqU0ZzeTNYMzRCV3hlWm1qSU4yZFd4SnlBNWdwZCttRUl5UXc9P
+ Q==
+

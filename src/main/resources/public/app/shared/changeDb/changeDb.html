@@ -1,0 +1,4 @@
+<div ng-controller="ChangeDbCtrl" id="changeDb" class="text-center">
+	<button ng-class="selected === DEFAULT ? 'btn btn-primary' : 'btn btn-default'" ng-click="setDatabase(DEFAULT)">Use Default Database</button>
+	<button ng-class="selected === BACKUP ? 'btn btn-primary' : 'btn btn-default'" ng-click="setDatabase(BACKUP)">Use Backup Database</button>
+</div>
