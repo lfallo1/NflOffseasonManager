@@ -9,16 +9,46 @@
 </style>
 
 <!-- css dependencies -->
-<link href="bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="bower/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 
 </head>
 
-<body ng-app="springDemoApp">
+<body ng-app="nflDraftApp">
 	
-	<h4>{{user ? 'Hello there, ' + user.username : 'You are not logged in'}}</h4>
-	<button ng-show="user" ng-click="logout()">logout</button>
-	<div ui-view class="container"></div>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#/">NFL Draft Manager</a>
+	    </div>
+	
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li ng-show="!user"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+	        <li ng-show="!user"><a href="#/login?view=register">Register</a></li>
+	        <li ng-show="user" class="dropdown">
+	          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logged in as {{user.username}} <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	
+	<div class="container">
+		<ng-view></ng-view>
+	</div>
 	
 	<!-- jquery / bootstrap -->
 	<script src="bower/jquery/dist/jquery.js"></script>
@@ -26,31 +56,32 @@
 	
 	<!-- Angular dependencies -->
 	<script src="bower/angular/angular.js"></script>
+	<script type="text/javascript" src="bower/angular-animate/angular-animate.min.js"></script>
 	<script src="bower/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="bower/angular-route/angular-route.js"></script>
 	<script src="bower/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="bower/a0-angular-storage/dist/angular-storage.js"></script>
+	<script type="text/javascript" src="bower/lodash/dist/lodash.js"></script>
+	<script type="text/javascript" src="bower/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+	
 	
 	<!-- Angular Modules -->
-	<script src="app/modules/siteApp.js"></script>
 	<script src="app/app.js"></script>
 	
 	<!-- Controllers -->
 	<script src="app/modules/home/homeController.js"></script>
+	<script src="app/modules/home/modals/playerNotesModalController.js"></script>
 	<script src="app/modules/login/loginController.js"></script>
-	<script src="app/modules/admin/adminController.js"></script>
-	<script src="app/shared/changeDb/changeDbController.js"></script>
-	<script src="app/shared/filmStatusTable/filmStatusTableController.js"></script>
 	
 	<!-- Config -->
 	<script src="app/config/httpRequestInterceptor.js"></script>
 	
 	<!-- Constants -->
-	<script src="app/constants/filmApiConstants.js"></script>
-	<script src="app/constants/dbConstants.js"></script>
+	<script src="app/constants/playersApiConstants.js"></script>
 	
 	<!-- Services -->
-	<script src="app/services/dbService.js"></script>
 	<script src="app/services/apiService.js"></script>
+	<script src="app/services/playerService.js"></script>
+	<script src="app/services/configurationService.js"></script>
 </body>
 </html>

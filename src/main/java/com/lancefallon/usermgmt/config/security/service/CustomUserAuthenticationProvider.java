@@ -22,6 +22,9 @@ public class CustomUserAuthenticationProvider implements AuthenticationProvider 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	private static final Logger LOGGER = Logger.getLogger(CustomUserAuthenticationProvider.class);
 
 	/**
@@ -37,13 +40,12 @@ public class CustomUserAuthenticationProvider implements AuthenticationProvider 
 		if (authentication != null) {
 
 			final Object username = authentication.getPrincipal();
-//			final Object password = authentication.getCredentials();
+			final Object password = authentication.getCredentials();
 			
-			//if a result was returned, check application's db for the user
+			//check application's db for the user
 			UserPrivileges user = (UserPrivileges) userDetailsService.loadUserByUsername(username.toString());
 
-			// if a user was returned, create a new auth object and add the UserPrivileges to the object
-			if (user != null) {
+			if(passwordEncoder.checkpw(password.toString(), user.getPassword())){
 				auth = new CustomUserPasswordAuthenticationToken(authentication.getPrincipal(),
 						authentication.getCredentials(), user.getAuthorities());
 				auth.setUserPrivileges(user);

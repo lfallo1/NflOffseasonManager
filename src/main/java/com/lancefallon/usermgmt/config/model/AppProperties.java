@@ -22,9 +22,6 @@ public class AppProperties {
 	@Value("${datasource.url.default}")
 	private String dbDefaultUrl;
 
-	@Value("${datasource.url.backup}")
-	private String dbBackupUrl;
-
 	@Value("${datasource.username}")
 	private String dbUsername;
 
@@ -34,7 +31,7 @@ public class AppProperties {
 	@Value("${datasource.driver}")
 	private String dbDriver;
 
-	@Value("${flyway.locations}")
+//	@Value("${flyway.locations}")
 	private String flywayLocations;
 
 	public String getEmailHost() {
@@ -47,10 +44,6 @@ public class AppProperties {
 
 	public String getDbDefaultUrl() {
 		return dbDefaultUrl;
-	}
-
-	public String getDbBackupUrl() {
-		return dbBackupUrl;
 	}
 
 	public String getDbUsername() {

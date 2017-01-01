@@ -65,8 +65,8 @@ public class OAuth2AuthServerConfig extends AuthorizationServerConfigurerAdapter
         .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
         .scopes("read", "write", "trust")
         .secret("secret")
-        .accessTokenValiditySeconds(120)
-        .refreshTokenValiditySeconds(600);
+        .accessTokenValiditySeconds(3600)
+        .refreshTokenValiditySeconds(15000);
 
 	}
 	

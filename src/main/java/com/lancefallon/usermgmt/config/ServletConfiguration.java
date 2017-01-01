@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -17,7 +16,6 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.velocity.VelocityEngineFactory;
@@ -39,13 +37,14 @@ public class ServletConfiguration implements EmbeddedServletContainerCustomizer 
 	private AppProperties appConfig;
 
 	@Bean
-	@Qualifier("primary")
 	public DataSource getDefaultDataSource() {
-		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-		dataSourceBuilder.url(appConfig.getDbDefaultUrl());
-		dataSourceBuilder.username(appConfig.getDbUsername());
-		dataSourceBuilder.password(appConfig.getDbPassword());
-		return dataSourceBuilder.build();
+		return DataSourceBuilder
+				.create()
+				.driverClassName(appConfig.getDbDriver())
+				.url(appConfig.getDbDefaultUrl())
+				.username(appConfig.getDbUsername())
+				.password(appConfig.getDbPassword())
+				.build();
 	}
 
 	/**
@@ -93,12 +92,10 @@ public class ServletConfiguration implements EmbeddedServletContainerCustomizer 
 	 * 
 	 * @return
 	 */
-	@Bean
-	@FlywayDataSource
-	@Primary
-	public DataSource flywayDataSource() {
-		return getDefaultDataSource();
-	}
+//	@FlywayDataSource
+//	public DataSource flywayDataSource() {
+//		return getDefaultDataSource();
+//	}
 
 	/**
 	 * configure 404s to be redirected to a request mapper that accepts routes

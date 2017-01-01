@@ -3,13 +3,13 @@ package com.lancefallon.usermgmt.player.model;
 public class College {
 
 	private Integer id;
-	private Integer conf;
+	private Conference conf;
 	private String name;
 
 	public College() {
 	}
 
-	public College(Integer id, String name, Integer conf) {
+	public College(Integer id, String name, Conference conf) {
 		this.id = id;
 		this.conf = conf;
 		this.name = name;
@@ -23,11 +23,11 @@ public class College {
 		this.id = id;
 	}
 
-	public Integer getConf() {
+	public Conference getConf() {
 		return conf;
 	}
 
-	public void setConf(Integer conf) {
+	public void setConf(Conference conf) {
 		this.conf = conf;
 	}
 

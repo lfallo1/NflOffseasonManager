@@ -5,7 +5,6 @@ package com.lancefallon.usermgmt.config.security.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserPrivileges implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private int userID;
 	
 	private String username;
 	
@@ -30,29 +27,7 @@ public class UserPrivileges implements UserDetails, Serializable {
 	
 	private Collection<GrantedAuthority> authorities;
 
-	private String defaultDB;
-
-	private String presentDB;
-
-	private List<String> dbList;
-
 	private boolean isAuthenticated;
-
-	public String getDefaultDB() {
-		return defaultDB;
-	}
-
-	public void setDefaultDB(String defaultDB) {
-		this.defaultDB = defaultDB;
-	}
-
-	public List<String> getDbList() {
-		return dbList;
-	}
-
-	public void setDbList(List<String> dbList) {
-		this.dbList = dbList;
-	}
 
 	public boolean isAuthenticated() {
 		return isAuthenticated;
@@ -60,22 +35,6 @@ public class UserPrivileges implements UserDetails, Serializable {
 
 	public void setAuthenticated(boolean isAuthenticated) {
 		this.isAuthenticated = isAuthenticated;
-	}
-
-	public String getPresentDB() {
-		return presentDB;
-	}
-
-	public void setPresentDB(String presentDB) {
-		this.presentDB = presentDB;
-	}
-
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
 	}
 
 	public String getUsername() {

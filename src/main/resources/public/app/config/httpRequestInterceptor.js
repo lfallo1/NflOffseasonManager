@@ -1,4 +1,4 @@
-angular.module('springDemoApp').factory('httpRequestInterceptor', function ($q, $rootScope, $location) {
+angular.module('nflDraftApp').factory('httpRequestInterceptor', function ($q, $rootScope, $location) {
 	
 	//handle requests / responses. If api request and user logged in, then session timer on front end should reset
 	var log = function(data){

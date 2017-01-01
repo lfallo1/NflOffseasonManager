@@ -1,15 +1,117 @@
-<div ng-controller="StatusCtrl as status">
-	<button class="btn btn-{{v.style}}" ng-repeat="v in status.vals track by $index" ng-click="status.statusClick(v)">Message#{{$index}}</button>
-	<div class="alert alert-{{status.msg.style}}" ng-show="status.msg">{{status.msg.value}}</div>
-</div>
-<h3>Film list</h3>
-<ul ng-if="!filmApiError && authentication" class="list-group">
-	<li class="list-group-item" ng-repeat="film in films">
-		{{film.title}} - {{film.genre}}
-	</li>
-</ul>
-<div class="alert alert-danger" ng-if="filmApiError || !authentication">Please <a ui-sref="site.login">login</a> to see the list of films</div>
-<div class="text-center btn-link" ng-click="loadFilms()">Reload</div>
+<div class="container">
 
-<!-- absolute path is filmtable@site.home -->
-<div ui-view="filmtable"></div>
+	<div id="filters" class="well">
+	
+		<form class="form-horizontal">
+		  <fieldset>
+		    <legend>Filters</legend>
+		    <div class="form-group">
+		      	<div class="col-xs-4">
+		        	<div 
+		        		class="full-width"
+		        		ng-dropdown-multiselect="" 
+		        		options="positionOptions" 
+		        		selected-model="filterParams.positions" 
+		        		extra-settings="smartButtonSettings"
+		        		translation-texts="{buttonDefaultText: 'Positions'}"
+			        	events="onMultiSelectEvents">
+		        	</div>
+		      	</div>
+				<div class="col-xs-4">
+		        	<div ng-dropdown-multiselect="" 
+		        		class="full-width"
+			        	options="positionCategoryOptions" 
+			        	selected-model="filterParams.positionCategories" 
+			        	extra-settings="smartButtonSettings"
+			        	translation-texts="{buttonDefaultText: 'Position Groups'}"
+			        	events="onMultiSelectEvents">
+			        </div>
+		      	</div>
+				<div class="col-xs-4">
+		        	<div ng-dropdown-multiselect="" 
+		        		class="full-width"
+			        	options="positionSideOfBallOptions" 
+			        	selected-model="filterParams.positionSidesOfBall" 
+			        	extra-settings="smartButtonSettings"
+			        	translation-texts="{buttonDefaultText: 'Off / Def / Spt'}"
+			        	events="onMultiSelectEvents">
+			        </div>
+		      	</div>
+		      	
+		      	<div class="col-xs-4">
+		        	<div 
+		        		ng-dropdown-multiselect="" 
+		        		class="full-width"
+		        		options="collegeOptions" 
+		        		selected-model="filterParams.colleges" 
+		        		extra-settings="smartButtonSettings"
+		        		translation-texts="{buttonDefaultText: 'Colleges'}"
+			        	events="onMultiSelectEvents">
+		        	</div>
+		      	</div>
+				<div class="col-xs-4">
+		        	<div ng-dropdown-multiselect="" 
+		        		class="full-width"
+			        	options="conferenceOptions" 
+			        	selected-model="filterParams.conferences" 
+			        	extra-settings="smartButtonSettings"
+			        	translation-texts="{buttonDefaultText: 'Conferences'}"
+			        	events="onMultiSelectEvents">
+			        </div>
+		      	</div>
+				<div class="col-xs-4">
+		        	<div ng-dropdown-multiselect="" 
+		        		class="full-width"
+			        	options="yearOptions" 
+			        	selected-model="filterParams.years" 
+			        	extra-settings="smartButtonSettings"
+			        	translation-texts="{buttonDefaultText: 'Years'}"
+			        	events="onMultiSelectEvents">
+			        </div>
+		      	</div>
+		    </div>
+		  </fieldset>
+		</form>
+	
+	</div>
+
+	<div ng-if="loading" class="loading-text text-center">Loading...</div>
+	<table class="table">
+		<thead>
+			<tr class="sortable-header">
+				<th ng-click="sort('positionRank')">Position Rank</th>
+				<th ng-click="sort('name')">Name</th>
+				<th ng-click="sort('position.name')">Position</th>
+				<th ng-click="sort('college.name')">College</th>
+				<th ng-click="sort('height')">Height</th>
+				<th ng-click="sort('weight')">Weight</th>
+				<th ng-click="sort('rank')">Year</th>
+				<th ng-show="user">Notes</th>
+				<th ng-show="user"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="player in players" ng-class="{'highlight-table-row' : player.notes.id}">
+				<td>{{player.positionRank}}</td>
+				<td>{{player.name}}</td>
+				<td>{{player.position.name}}</td>
+				<td>{{player.college.name}}</td>
+				<td>{{player.height}}</td>
+				<td>{{player.weight}}</td>
+				<td>{{player.year}}</td>
+				<td class="max-width-notes" ng-show="user">
+					<div ng-show="player.notes">{{player.notes.notes}}</div>
+				</td>
+				<td ng-show="user">
+					<div ng-show="player.notes.id">
+						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit notes</button>
+						<div class="delete-note text-danger" ng-click="deleteNote(player)">Delete</div>
+					</div>
+					<div ng-show="!player.notes.id">
+						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Add notes</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

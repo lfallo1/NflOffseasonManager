@@ -2,11 +2,12 @@ package com.lancefallon.usermgmt.player.model;
 
 public class Player {
 
+	private Integer id;
 	private Integer rank;
 	private String name;
-	private Integer college;
+	private College college;
 	private String collegeText;
-	private String position;
+	private Position position;
 	private Double height;
 	private Double weight;
 	private Integer positionRank;
@@ -14,12 +15,15 @@ public class Player {
 	private String yearClass;
 	private Integer year;
 
+	private PlayerNote notes;
+
 	public Player() {
 		this.rank = 0;
 	}
 
-	public Player(Integer rank, String name, Integer college, String collegeText, String position, Double height,
-			Double weight, Integer positionRank, String projectedRound, String yearClass, Integer year) {
+	public Player(Integer id, Integer rank, String name, College college, String collegeText, Position position,
+			Double height, Double weight, Integer positionRank, String projectedRound, String yearClass, Integer year) {
+		this.id = id;
 		this.rank = rank;
 		this.name = name;
 		this.college = college;
@@ -31,6 +35,14 @@ public class Player {
 		this.projectedRound = projectedRound;
 		this.yearClass = yearClass;
 		this.year = year;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getRank() {
@@ -49,11 +61,11 @@ public class Player {
 		this.name = name;
 	}
 
-	public Integer getCollege() {
+	public College getCollege() {
 		return college;
 	}
 
-	public void setCollege(Integer college) {
+	public void setCollege(College college) {
 		this.college = college;
 	}
 
@@ -65,11 +77,11 @@ public class Player {
 		this.collegeText = collegeText;
 	}
 
-	public String getPosition() {
+	public Position getPosition() {
 		return position;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(Position position) {
 		this.position = position;
 	}
 
@@ -119,6 +131,14 @@ public class Player {
 
 	public void setYear(Integer year) {
 		this.year = year;
+	}
+
+	public PlayerNote getNotes() {
+		return notes;
+	}
+
+	public void setNotes(PlayerNote notes) {
+		this.notes = notes;
 	}
 
 }

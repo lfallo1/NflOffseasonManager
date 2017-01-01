@@ -5,13 +5,13 @@ import java.util.List;
 public class Position {
 
 	private Integer id;
-	private Integer category;
+	private PositionCategory category;
 	private String name;
 
 	public Position() {
 	}
 
-	public Position(Integer id, String name, Integer category) {
+	public Position(Integer id, String name, PositionCategory category) {
 		this.id = id;
 		this.category = category;
 		this.name = name;
@@ -25,11 +25,11 @@ public class Position {
 		this.id = id;
 	}
 
-	public Integer getCategory() {
+	public PositionCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(Integer category) {
+	public void setCategory(PositionCategory category) {
 		this.category = category;
 	}
 

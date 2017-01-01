@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.lancefallon.usermgmt.config.exception.model.CustomErrorMessage;
+import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.config.exception.model.InvalidCredentialsException;
 
 /**
@@ -27,5 +28,10 @@ public class ErrorResponseHandler {
 	@ExceptionHandler(InvalidCredentialsException.class)
     ResponseEntity<CustomErrorMessage> handleInvalidCredentialsException(InvalidCredentialsException ex) throws IOException {
         return new ResponseEntity<CustomErrorMessage>(ex.getError(), HttpStatus.FORBIDDEN);
+    }
+	
+	@ExceptionHandler(DatabaseException.class)
+    ResponseEntity<CustomErrorMessage> handleDatabaseException(DatabaseException ex) throws IOException {
+        return new ResponseEntity<CustomErrorMessage>(ex.getError(), HttpStatus.SERVICE_UNAVAILABLE);
     }
 }

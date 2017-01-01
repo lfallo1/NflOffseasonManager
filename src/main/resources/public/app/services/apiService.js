@@ -1,5 +1,5 @@
 
-	angular.module('springDemoApp').service('ApiService', ['$rootScope', '$http', '$q', '$location', 'DbService', function($rootScope, $http, $q, $location, DbService){
+	angular.module('nflDraftApp').service('ApiService', ['$rootScope', '$http', '$q', '$location', function($rootScope, $http, $q, $location){
 
 		/**
 		 * 				{
@@ -24,6 +24,16 @@
 				deferred.reject();
 			});
 			return deferred.promise;
+		};
+		
+		service.apiSendGetNoAuth = function(url){
+			var deferred = $q.defer();
+			$http.get(url).then(function(res){
+				deferred.resolve(res.data);
+			}, function(err){
+				deferred.reject(err);
+			});
+			return deferred.promise;
 		}
 
 		service.apiSendGet = function(url){
@@ -31,7 +41,23 @@
 			var token = localStorage.getItem('authorization')
 			if(token){
 				var headers = {headers : {'Authorization' : 'Bearer ' + token}}
-				$http.get(url + DbService.getDbKey(), headers).then(function(res){
+				$http.get(url, headers).then(function(res){
+					deferred.resolve(res.data);
+				}, function(err){
+					deferred.reject(err);
+				});
+			} else{
+				deferred.reject();
+			}
+			return deferred.promise;
+		};
+		
+		service.apiSendPost = function(url, payload){
+			var deferred = $q.defer();
+			var token = localStorage.getItem('authorization')
+			if(token){
+				var headers = {headers : {'Authorization' : 'Bearer ' + token}}
+				$http.post(url, payload, headers).then(function(res){
 					deferred.resolve(res.data);
 				}, function(err){
 					deferred.reject(err);
