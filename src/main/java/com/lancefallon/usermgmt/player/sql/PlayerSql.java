@@ -44,7 +44,7 @@ public interface PlayerSql {
 	  "left outer join conf on c.conf = conf.id "+
 	  "inner join position pos on p.position = pos.id "+
 	  "inner join position_category pc on pos.category = pc.id "+
-	  "inner join position_side_of_ball ps on pc.position_side_of_ball = ps.id";
+	  "inner join position_side_of_ball ps on pc.position_side_of_ball = ps.id where position_rank > 0";
 	
 	static final String PLAYER_FIND_ALL_WITH_NOTES = "SELECT pn.notes, pn.username, pn.id as notes_id, rank, p.name, height, weight, position_rank, projected_round, year_class,"+ 
 		       "p.id, year, p.position as position_id, p.college as college_id, college_text, c.name as college_name,"+ 
@@ -56,7 +56,7 @@ public interface PlayerSql {
 			  "left outer join player_notes pn on p.id = pn.player and pn.username = ?" +
 			  "inner join position pos on p.position = pos.id "+
 			  "inner join position_category pc on pos.category = pc.id "+
-			  "inner join position_side_of_ball ps on pc.position_side_of_ball = ps.id";
+			  "inner join position_side_of_ball ps on pc.position_side_of_ball = ps.id where position_rank > 0";
 	
 	static final String QUERY_YEARS = "select distinct year from player order by year;";
 

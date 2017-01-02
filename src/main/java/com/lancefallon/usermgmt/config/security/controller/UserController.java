@@ -12,6 +12,7 @@ import com.lancefallon.usermgmt.config.security.model.UserPrivileges;
 
 /**
  * endpoint to retrieve the currently authenticated user
+ * 
  * @author lancefallon
  *
  */
@@ -20,15 +21,24 @@ import com.lancefallon.usermgmt.config.security.model.UserPrivileges;
 public class UserController {
 
 	/**
-	 * get authenticated user.
-	 * authentication determined by a valid access_token
+	 * get authenticated user. authentication determined by a valid access_token
+	 * 
 	 * @param auth
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<UserPrivileges> getUser(OAuth2Authentication auth){
-		CustomUserPasswordAuthenticationToken token = (CustomUserPasswordAuthenticationToken) auth.getUserAuthentication();
-		return new ResponseEntity<>(token.getUserPrivileges(), HttpStatus.OK);
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<UserPrivileges> getUser(OAuth2Authentication auth) {
+
+		try {
+			// when retrieving an access token
+			CustomUserPasswordAuthenticationToken token = (CustomUserPasswordAuthenticationToken) auth
+					.getUserAuthentication();
+			return new ResponseEntity<>(token.getUserPrivileges(), HttpStatus.OK);
+		} catch (ClassCastException e) {
+			// when retrieving a refresh token
+			return new ResponseEntity<>((UserPrivileges) auth.getPrincipal(), HttpStatus.OK);
+		}
+
 	}
-	
+
 }

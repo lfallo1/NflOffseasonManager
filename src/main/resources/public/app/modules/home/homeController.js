@@ -1,54 +1,40 @@
 angular.module("nflDraftApp")
-        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal) {
+        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants) {
         	
-    		$scope.yearOptions = [];
-        	$scope.collegeOptions = [];
-        	$scope.conferenceOptions = [];
-        	$scope.positionOptions = [];
-        	$scope.positionCategoryOptions = [];
-        	$scope.positionSideOfBallOptions = [];
-        	
-        	$scope.filterParams = {
-        		years : [{id:0,name:2017}],
-        		positions : [],
-        		positionCategories : [],
-        		positionSidesOfBall : [],
-        		conferences : [],
-        		colleges : []
-        	};
-
-            $scope.smartButtonSettings = {
-            	displayProp: 'name',
-            	externalIdProp: '',
-            	smartButtonMaxItems: 3,
-            	smartButtonTextConverter: function(itemText, originalItem) {
-                    return itemText;
-                }
-            };
-            
-            $scope.onMultiSelectEvents = {
-            	onItemSelect : function(){$scope.loadPlayers();},
-	            onItemDeselect : function(){$scope.loadPlayers();}	
-            };
-        	
-        	$scope.sortParam = {
-        		value : 'positionRank',
-        		direction : 1
-        	}
+        	$scope.loadPlayers = function(){
+        		$scope.loading = true;
+        		var players = PlayerService.getPlayers();
+        		if(players.length == 0){
+    				if($rootScope.user){
+    					ApiService.apiSendGet(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
+    						$scope.loading = false;
+    						PlayerService.setPlayers(data);
+    						$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam);
+    			    	}, function(err){
+    			    		$scope.loading = false;
+    			    		console.log(err);
+    			    	});					
+    				} else{
+    					ApiService.apiSendGetNoAuth(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
+    						$scope.loading = false;
+    						PlayerService.setPlayers(data);
+    						$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam);
+    			    	}, function(err){
+    			    		$scope.loading = false;
+    			    		console.log(err);
+    			    	});
+    				}
+    			} else{
+    				$scope.loading = false;
+					$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam);
+    			}
+    		};
         	
         	$scope.sort = function(sortParam){
         		$scope.sortParam.value = sortParam;
         		$scope.sortParam.direction = $scope.sortParam.direction * -1; 
         		$scope.loadPlayers();
         	};
-        	
-        	$scope.loadPlayers = function(){
-        		$scope.loading = true;
-    			PlayerService.load($scope.filterParams, $scope.sortParam).then(function(players){
-    				$scope.players = players;
-    				$scope.loading = false;
-    			});
-    		};
     		
     		$scope.deleteNote = function(player){
     			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
@@ -88,6 +74,42 @@ angular.module("nflDraftApp")
     		};
     		
     		var init = function(){
+    			
+        		$scope.yearOptions = [];
+            	$scope.collegeOptions = [];
+            	$scope.conferenceOptions = [];
+            	$scope.positionOptions = [];
+            	$scope.positionCategoryOptions = [];
+            	$scope.positionSideOfBallOptions = [];
+            	
+            	$scope.filterParams = {
+            		years : [{id:0,name:2017}],
+            		positions : [],
+            		positionCategories : [],
+            		positionSidesOfBall : [],
+            		conferences : [],
+            		colleges : []
+            	};
+
+                $scope.smartButtonSettings = {
+                	displayProp: 'name',
+                	externalIdProp: '',
+                	smartButtonMaxItems: 3,
+                	smartButtonTextConverter: function(itemText, originalItem) {
+                        return itemText;
+                    }
+                };
+                
+                $scope.onMultiSelectEvents = {
+                	onItemSelect : function(){$scope.loadPlayers();},
+    	            onItemDeselect : function(){$scope.loadPlayers();}	
+                };
+            	
+            	$scope.sortParam = {
+            		value : 'positionRank',
+            		direction : 1
+            	}
+    			
     			$rootScope.currentPage = "Home";
     			$scope.loadPlayers();
     			

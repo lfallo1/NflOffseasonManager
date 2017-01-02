@@ -12,22 +12,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserPrivileges implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private boolean accountNonExpired;
-	
+
 	private boolean accountNonLocked;
-	
+
 	private boolean credentialsNonExpired;
-	
+
 	private boolean enabled;
-	
+
 	private Collection<GrantedAuthority> authorities;
 
 	private boolean isAuthenticated;
+
+	private String alias;
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
 	public boolean isAuthenticated() {
 		return isAuthenticated;

@@ -27,7 +27,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 	}
 
 	/**
-	 * Creating customized response
+	 * Creating customized response token
 	 * 
 	 * @param accessToken
 	 * @param authentication
@@ -40,23 +40,23 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 		final DefaultOAuth2AccessToken tempResult = (DefaultOAuth2AccessToken) accessToken;
 
 		if (authentication != null) {
+			
+			UserPrivileges userPrivileges = null;
+			try{
+				//when retrieving an access token
+				userPrivileges = ((CustomUserPasswordAuthenticationToken) authentication
+						.getUserAuthentication()).getUserPrivileges();
+			} catch(ClassCastException e){
+				//when retrieving a refresh token
+				userPrivileges = (UserPrivileges) authentication.getPrincipal();
+			}
+			userPrivileges.setPassword("");
 
 			final Map<String, Object> additionalInformation = new HashMap<String, Object>();
 
-			final CustomUserPasswordAuthenticationToken customToken = (CustomUserPasswordAuthenticationToken) authentication
-					.getUserAuthentication();
+			additionalInformation.put("user_details", userPrivileges);
+			tempResult.setAdditionalInformation(additionalInformation);
 
-			// Adding customized response
-			if (customToken != null) {
-				final UserPrivileges userPrivileges = customToken.getUserPrivileges();
-				if (userPrivileges != null) {
-					additionalInformation.put("user_details", customToken.getUserPrivileges());
-					tempResult.setAdditionalInformation(additionalInformation);
-				}
-			} else {
-				additionalInformation.put("error", "error attaching user_details to auth");
-				tempResult.setAdditionalInformation(additionalInformation);
-			}
 		}
 		OAuth2AccessToken result = tempResult;
 		for (TokenEnhancer enhancer : delegates) {

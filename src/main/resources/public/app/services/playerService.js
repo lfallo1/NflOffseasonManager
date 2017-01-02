@@ -1,34 +1,22 @@
 (function(){
 	
-	angular.module('nflDraftApp').service('PlayerService', ['$rootScope', 'ApiService', 'PlayersApiConstants', '$q', function($rootScope, ApiService, PlayersApiConstants, $q){
+	angular.module('nflDraftApp').service('PlayerService', ['$rootScope', '$q', function($rootScope, $q){
 		
 		var players = [];
 		
 		var service = {};
 		
+		service.getPlayers = function(){
+			return players;
+		};
+		
+		service.setPlayers = function(data){
+			players = data;
+		};
+
 		service.load = function(filterParams, sortParam){
-			
 			var deferred = $q.defer();
-			
-			if(players.length == 0){
-				if($rootScope.user){
-					ApiService.apiSendGet(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
-			    		players = data;
-			    		deferred.resolve(sortAndFilter(players, filterParams, sortParam));
-			    	}, function(err){
-			    		console.log(err);
-			    	});					
-				} else{
-					ApiService.apiSendGetNoAuth(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
-			    		players = data;
-			    		deferred.resolve(sortAndFilter(players, filterParams, sortParam));
-			    	}, function(err){
-			    		console.log(err);
-			    	});
-				}
-			} else{
-				deferred.resolve(sortAndFilter(players, filterParams, sortParam));
-			}
+			deferred.resolve(sortAndFilter(players, filterParams, sortParam));
 			return deferred.promise;
 		};
 		
@@ -60,8 +48,8 @@
         	}).length > 0;
         };
 		
-		var sortAndFilter = function(data, filterParams, sortParam){
-			return sort(data.filter(function(d){
+		service.sortAndFilter = function(filterParams, sortParam){
+			return sort(players.filter(function(d){
 				if(filterParams.positionSidesOfBall.length > 0 && !valueExistsInArray(filterParams.positionSidesOfBall, 'id', d.position.category.positionSideOfBall.id)){
 					return false;
 				}
@@ -80,8 +68,8 @@
 				if(filterParams.years.length > 0 && !valueExistsInArray(filterParams.years, 'name', d.year)){
 					return false;
 				}
-				return d.positionRank > 0;
-			}), sortParam);
+				return true;
+			}), sortParam).filter(function(d,idx){return idx < 750;});
 		};
 		
 		return service;

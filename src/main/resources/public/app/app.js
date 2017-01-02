@@ -22,32 +22,33 @@ angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angul
                 .when('/login', {
                     title: 'Login',
                     templateUrl: 'app/modules/login/login.html',
-                    controller: 'LoginCtrl'
+                    controller: 'LoginCtrl',
+                    resolve: {
+                    	rejectIfLoggedIn : function(LoginService){
+                    		return LoginService.rejectIfLoggedIn();
+                    	}
+                    }
                 })
                 .otherwise({
                     redirectTo: '/'
                 });
  
         }])
-        .run(['$rootScope', 'ApiService', '$location', '$http', 'PlayerService', '$route', function ($rootScope, ApiService, $location, $http, PlayerService, $route) {
+        .run(['$rootScope', 'ApiService', '$location', '$http', 'LoginService', '$route', function ($rootScope, ApiService, $location, $http, LoginService, $route) {
+        	
         		$rootScope.clientAuthHeader = {headers : {'Authorization' : 'Basic ' + btoa('trustedclient:secret')}};
         	
         		if(localStorage.getItem('authorization')){
         			ApiService.apiSendGet('getuser').then(function(res){
-        				$rootScope.user = res;
+        				LoginService.setUser(res);
+        			}, function(err){
+        				LoginService.clearUser();
         			});
-        			$rootScope.authenticated = true;
-        		}
+        		};
         		
         		$rootScope.logout = function(){
         			$http.post("logout", {headers : {Authorization : 'Bearer ' + localStorage.getItem("authorization")}}).then(function(){
-        				PlayerService.clear();
-        				$rootScope.user = undefined;
-        				$rootScope.authentication = false;
-        				localStorage.removeItem('authorization');
-        				if($location.path() == '/'){
-        					$route.reload();
-        				}
+        				LoginService.clearUser();
         			})
         		};
         		

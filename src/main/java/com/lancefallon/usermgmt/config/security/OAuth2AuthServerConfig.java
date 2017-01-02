@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -25,69 +26,73 @@ import com.lancefallon.usermgmt.config.security.service.CustomUserDetailsService
 @EnableAuthorizationServer
 public class OAuth2AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private TokenStore tokenStore;
+	private static final int MINUTE = 60;
+	private static final int HOUR = MINUTE * 60;
 	
 	@Autowired
+	private TokenStore tokenStore;
+
+	@Autowired
 	private ClientDetailsService clientService;
- 
+
 	@Autowired
 	private UserApprovalHandler handler;
 
 	@Autowired
 	private AuthenticationManager authenticationManagerBean;
-	
+
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private TokenEnhancer tokenEnhancer;
- 
-	//auth server config
-	
+
+	// auth server config
+
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-		//-- CLIENT CREDENTIALS --
-//		clients.inMemory()
-//        .withClient("trustedclient")
-//        .authorizedGrantTypes("client_credentials")
-//        .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-//        .scopes("read", "write", "trust")
-//        .secret("secret")
-//        .accessTokenValiditySeconds(120)
-//        .refreshTokenValiditySeconds(600);
-		
-		//-- RESOURCE OWNER PASSWORD FLOW --
-		clients.inMemory()
-        .withClient("trustedclient")
-        .authorizedGrantTypes("password", "refresh_token")
-        .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-        .scopes("read", "write", "trust")
-        .secret("secret")
-        .accessTokenValiditySeconds(3600)
-        .refreshTokenValiditySeconds(15000);
+		// -- CLIENT CREDENTIALS --
+		// clients.inMemory()
+		// .withClient("trustedclient")
+		// .authorizedGrantTypes("client_credentials")
+		// .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+		// .scopes("read", "write", "trust")
+		// .secret("secret")
+		// .accessTokenValiditySeconds(120)
+		// .refreshTokenValiditySeconds(600);
+
+		// -- RESOURCE OWNER PASSWORD FLOW --
+		clients.inMemory().withClient("trustedclient").authorizedGrantTypes("password", "refresh_token")
+				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT").scopes("read", "write", "trust").secret("secret")
+				.accessTokenValiditySeconds(60*MINUTE).refreshTokenValiditySeconds(24*HOUR);
 
 	}
-	
-	
+
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tokenStore)
+		endpoints
+			.tokenStore(tokenStore)
 			.tokenEnhancer(tokenEnhancer)
+			.accessTokenConverter(accessTokenConverter())
 			.userApprovalHandler(handler)
 			.userDetailsService(userDetailsService)
 			.authenticationManager(authenticationManagerBean);
 	}
 	
-	//token store
+	// token store
 	
 	@Bean
+	public DefaultAccessTokenConverter accessTokenConverter() {
+	    return new DefaultAccessTokenConverter();
+	}
+
+	@Bean
 	@Qualifier("inMemoryTokenStore")
-	public TokenStore tokenStore(){
+	public TokenStore tokenStore() {
 		return new InMemoryTokenStore();
 	}
- 
+
 	@Bean
 	@Autowired
 	public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore) {

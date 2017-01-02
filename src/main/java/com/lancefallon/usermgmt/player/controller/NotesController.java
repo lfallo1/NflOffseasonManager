@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +24,9 @@ public class NotesController {
 	@Autowired
 	private PlayerNotesService playerNotesService;
 
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<PlayerNote>> getNotes(OAuth2Authentication auth) throws DatabaseException{
+	@RequestMapping(value="/{username}", method=RequestMethod.GET)
+	@PreAuthorize("@authService.isSelf(#auth, #username)")
+	public ResponseEntity<List<PlayerNote>> getNotes(OAuth2Authentication auth, @PathVariable String username) throws DatabaseException{
 		return new ResponseEntity<>(this.playerNotesService.getNotes(auth.getName()), HttpStatus.OK);
 	}
 	

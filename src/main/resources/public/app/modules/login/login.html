@@ -17,6 +17,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<form id="login-form" role="form" ng-show="loginActive">
+									<div ng-if="error" class="text-center alert alert-danger">Invalid Credentials</div>
 									<div class="form-group">
 										<input ng-model="username" type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
 									</div>

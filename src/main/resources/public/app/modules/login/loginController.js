@@ -12,16 +12,11 @@ angular.module('nflDraftApp').controller('LoginCtrl', ['$q', '$http', '$scope', 
 	
 	$scope.login = function(){
 		var url = 'oauth/token?grant_type=password&username='+ $scope.username +'&password=' + $scope.password;
-		$http.post(url, {}, $rootScope.clientAuthHeader).then(function(res){
+		ApiService.tokenEndpoint(url).then(function(res){
 			PlayerService.clear();
-			localStorage.setItem("authorization", res.data.access_token);
-			$rootScope.authentication = true;
-			ApiService.apiSendGet('getuser').then(function(res){
-				$rootScope.user = res;
-				$location.path("/");
-			});
-			
+			$location.path("/");
 		}, function(err){
+			$scope.error = true;
 			console.log(err);
 		});
 	};
