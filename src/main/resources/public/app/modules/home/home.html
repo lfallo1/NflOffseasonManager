@@ -93,7 +93,7 @@
 		<tbody>
 			<tr ng-repeat="player in players" ng-class="{'highlight-table-row' : player.notes.id}">
 				<td>{{player.positionRank}}</td>
-				<td>{{player.name}}</td>
+				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name}}">{{player.name}}</a></td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>
 				<td>{{player.height}}</td>

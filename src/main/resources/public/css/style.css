@@ -20,7 +20,13 @@
 }
 
 tr.highlight-table-row {
-	background: rgba(116,202,227, 0.5);
+	background: #faa123;
+	color: white;
+	font-weight: bold;
+}
+
+tr.highlight-table-row td .text-danger{
+	font-size: 18px;
 	font-weight: bold;
 }
 
