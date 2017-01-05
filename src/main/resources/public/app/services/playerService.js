@@ -48,7 +48,7 @@
         	}).length > 0;
         };
 		
-		service.sortAndFilter = function(filterParams, sortParam){
+		service.sortAndFilter = function(filterParams, sortParam, favorite){
 			return sort(players.filter(function(d){
 				if(filterParams.positionSidesOfBall.length > 0 && !valueExistsInArray(filterParams.positionSidesOfBall, 'id', d.position.category.positionSideOfBall.id)){
 					return false;
@@ -68,7 +68,7 @@
 				if(filterParams.years.length > 0 && !valueExistsInArray(filterParams.years, 'name', d.year)){
 					return false;
 				}
-				return true;
+				return !favorite || d.notes.id;
 			}), sortParam).filter(function(d,idx){return idx < 750;});
 		};
 		

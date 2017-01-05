@@ -5,6 +5,7 @@
 		<form class="form-horizontal">
 		  <fieldset>
 		    <legend>Filters</legend>
+		    <label ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show favorites</label>
 		    <div class="form-group">
 		      	<div class="col-xs-4">
 		        	<div 
@@ -80,6 +81,7 @@
 		<thead>
 			<tr class="sortable-header">
 				<th ng-click="sort('positionRank')">Position Rank</th>
+				<th ng-click="sort('projectedRound')">Projected Round</th>
 				<th ng-click="sort('name')">Name</th>
 				<th ng-click="sort('position.name')">Position</th>
 				<th ng-click="sort('college.name')">College</th>
@@ -91,8 +93,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="player in players" ng-class="{'highlight-table-row' : player.notes.id}">
+			<tr ng-repeat="player in players" ng-class="{'highlight-table-row' : player.notes.id && !favorite}">
 				<td>{{player.positionRank}}</td>
+				<td>{{player.projectedRound}}</td>
 				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name}}">{{player.name}}</a></td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>
