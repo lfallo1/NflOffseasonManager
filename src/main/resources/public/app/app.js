@@ -41,6 +41,9 @@ angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angul
         		if(localStorage.getItem('authorization')){
         			ApiService.apiSendGet('getuser').then(function(res){
         				LoginService.setUser(res);
+        				if($location.path() !== '/'){
+        					$location.path('/');
+        				}
         			}, function(err){
         				LoginService.clearUser();
         			});
