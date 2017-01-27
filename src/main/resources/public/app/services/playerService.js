@@ -59,7 +59,7 @@
 				if(filterParams.positionCategories.length > 0 && !valueExistsInArray(filterParams.positionCategories, 'id', d.position.category.id)){
 					return false;
 				}
-				if(filterParams.conferences.length > 0 && !valueExistsInArray(filterParams.positionCategories, 'id', d.college.conference.id)){
+				if(filterParams.conferences.length > 0 && !valueExistsInArray(filterParams.conferences, 'id', d.college.conf.id)){
 					return false;
 				}
 				if(filterParams.colleges.length > 0 && !valueExistsInArray(filterParams.colleges, 'id', d.college.id)){
