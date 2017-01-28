@@ -73,6 +73,12 @@ angular.module("nflDraftApp")
     			
     		};
     		
+    		$scope.displayNotes = function(notes){
+    			if(notes){
+    				return notes.substring(0,50) + (notes.length > 30 ? '...' : '');
+    			}
+    		};
+    		
     		var init = function(){
     			
     			$scope.favorite = false;

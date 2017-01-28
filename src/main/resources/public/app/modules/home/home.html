@@ -103,7 +103,7 @@
 				<td>{{player.weight}}</td>
 				<td>{{player.year}}</td>
 				<td class="max-width-notes" ng-show="user">
-					<div ng-show="player.notes">{{player.notes.notes}}</div>
+					<div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
 				</td>
 				<td ng-show="user">
 					<div ng-show="player.notes.id">
