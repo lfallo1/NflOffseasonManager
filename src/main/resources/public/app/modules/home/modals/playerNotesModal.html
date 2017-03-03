@@ -3,8 +3,10 @@
 </div>
 <div class="modal-body">
     <textarea class="form-control" ng-model="player.notes.notes" />
+    <div class="text-center text-danger" ng-show="!isGradeValid(player.notes.grade)">Grade must be between 0 & 100</div>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-success" ng-click="submit()" >Save</button>
+<div class="modal-footer player-notes-footer">
+	<input id="player-grade-input" type="number" ng-model="player.notes.grade" />
+    <button ng-disabled="!isGradeValid(player.notes.grade)" class="btn btn-success" ng-click="submit()" >Save</button>
     <button class="btn-link" ng-click="cancel()">Cancel</button>
 </div>

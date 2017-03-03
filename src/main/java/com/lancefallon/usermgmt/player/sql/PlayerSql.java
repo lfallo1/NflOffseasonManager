@@ -72,6 +72,7 @@ public interface PlayerSql {
 	static final String NOTES_ID_COL = "notes_id";
 	static final String NOTES_USERNAME_COL = "username";
 	static final String NOTES_NOTE_COL = "notes";
+	static final String NOTES_GRADE_COL = "grade";
 		
 	RowMapper<Integer> YEARS_ROW_MAPPER = (rs, rowNum) ->{
 		return rs.getInt("year");
@@ -149,7 +150,7 @@ public interface PlayerSql {
 		try{
 			Player playerIdOnly = new Player();
 			playerIdOnly.setId(player.getId());
-			PlayerNote playerNotes = new PlayerNote(rs.getInt(NOTES_ID_COL), rs.getString(NOTES_USERNAME_COL), playerIdOnly, rs.getString(NOTES_NOTE_COL));		
+			PlayerNote playerNotes = new PlayerNote(rs.getInt(NOTES_ID_COL), rs.getString(NOTES_USERNAME_COL), playerIdOnly, rs.getString(NOTES_NOTE_COL), rs.getInt(NOTES_GRADE_COL));		
 			player.setNotes(playerNotes);
 		} catch(Exception e){
 			e.getMessage();

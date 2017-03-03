@@ -122,7 +122,7 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 	        // names
 	        jdbcInsert.setTableName("public.player_notes");
 	        jdbcInsert.setGeneratedKeyName("id");
-	        jdbcInsert.setColumnNames(Arrays.asList("username", "player", "notes"));
+	        jdbcInsert.setColumnNames(Arrays.asList("username", "player", "notes", "grade"));
 
 	        // set the values to be inserted
 	        Map<String, Object> parameters = new HashMap<String, Object>();
@@ -130,6 +130,7 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 	        parameters.put("username", username);
 	        parameters.put("player", notes.getPlayer().getId());
 	        parameters.put("notes", notes.getNotes());
+	        parameters.put("grade", notes.getGrade());
 
 	        // execute insert
 	        Number key = null;
@@ -153,7 +154,7 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 				public PlayerNote mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Player player = new Player();
 					player.setId(rs.getInt("player"));
-					return new PlayerNote(rs.getInt("id"), rs.getString("username"), player, rs.getString("notes"));
+					return new PlayerNote(rs.getInt("id"), rs.getString("username"), player, rs.getString("notes"), rs.getInt("grade"));
 				}
 				
 			});

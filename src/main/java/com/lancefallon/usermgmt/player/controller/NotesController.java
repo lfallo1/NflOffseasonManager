@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
+import com.lancefallon.usermgmt.config.exception.model.InvalidUserInputException;
 import com.lancefallon.usermgmt.player.model.PlayerNote;
 import com.lancefallon.usermgmt.player.service.PlayerNotesService;
 
@@ -32,7 +33,7 @@ public class NotesController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@PreAuthorize("@authService.isSelf(#auth, #notes.username)")
-	public ResponseEntity<Integer> addOrUpdateNote(OAuth2Authentication auth, @RequestBody PlayerNote notes) throws DatabaseException{
+	public ResponseEntity<Integer> addOrUpdateNote(OAuth2Authentication auth, @RequestBody PlayerNote notes) throws DatabaseException, InvalidUserInputException{
 		return new ResponseEntity<>(this.playerNotesService.addOrUpdate(auth.getName(), notes), HttpStatus.OK);
 	}
 	

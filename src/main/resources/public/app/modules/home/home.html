@@ -80,20 +80,21 @@
 	<table class="table">
 		<thead>
 			<tr class="sortable-header">
-				<th ng-click="sort('positionRank')">Position Rank</th>
-				<th ng-click="sort('projectedRound')">Projected Round</th>
+				<th ng-click="sort('positionRank')">Pos Rank</th>
+				<th ng-click="sort('projectedRound')">Proj Round</th>
 				<th ng-click="sort('name')">Name</th>
-				<th ng-click="sort('position.name')">Position</th>
-				<th ng-click="sort('college.name')">College</th>
-				<th ng-click="sort('height')">Height</th>
-				<th ng-click="sort('weight')">Weight</th>
-				<th ng-click="sort('rank')">Year</th>
+				<th ng-click="sort('position.name')">Pos</th>
+				<th ng-click="sort('college.name')">Col</th>
+				<th ng-click="sort('height')">Ht</th>
+				<th ng-click="sort('weight')">Wt</th>
+				<th ng-click="sort('year')">Yr</th>
 				<th ng-show="user">Notes</th>
+				<th ng-click="sort(notes.grade)" ng-show="user">Grade</th>
 				<th ng-show="user"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="player in players" ng-class="{'highlight-table-row' : player.notes.id && !favorite}">
+			<tr ng-repeat="player in players">
 				<td>{{player.positionRank}}</td>
 				<td>{{player.projectedRound}}</td>
 				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name}}">{{player.name}}</a></td>
@@ -105,6 +106,11 @@
 				<td class="max-width-notes" ng-show="user">
 					<div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
 				</td>
+				<td ng-show="user">
+					<button ng-class="loadButtonClassByGrade(player.notes.grade)" type="button" ng-show="player.notes.id">
+					  {{player.notes.grade}}
+					</button>
+				</td>				
 				<td ng-show="user">
 					<div ng-show="player.notes.id">
 						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit notes</button>

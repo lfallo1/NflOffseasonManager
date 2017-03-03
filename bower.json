@@ -20,7 +20,10 @@
     "angular-ui-router": "^0.3.2",
     "a0-angular-storage": "~0.0.15",
     "angularjs-dropdown-multiselect": "~1.5.2",
-    "lodash": "~4.17.4",
+    "lodash": "2.*",
     "angular-animate": "~1.4.7"
+  },
+  "resolutions" : {
+  	"lodash" : "3.*"
   }
 }

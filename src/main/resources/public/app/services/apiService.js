@@ -38,7 +38,7 @@
 
 		service.apiSendGet = function(url, deferred){
 			var deferred = deferred || $q.defer();
-			var token = JSON.parse(localStorage.getItem('authorization')).access_token
+			var token = getToken('access_token');
 			if(token){
 				var headers = {headers : {'Authorization' : 'Bearer ' + token}}
 				$http.get(url, headers).then(function(res){
@@ -63,7 +63,7 @@
 		
 		service.apiSendPost = function(url, payload, deferred){
 			var deferred = deferred || $q.defer();
-			var token = JSON.parse(localStorage.getItem('authorization')).access_token
+			var token = getToken('access_token');
 			if(token){
 				var headers = {headers : {'Authorization' : 'Bearer ' + token}}
 				$http.post(url, payload, headers).then(function(res){
@@ -88,7 +88,7 @@
 		
 		var tryRefreshToken = function(){
 			var deferred = $q.defer();
-			var url = 'oauth/token?grant_type=refresh_token&refresh_token=' + JSON.parse(localStorage.getItem('authorization')).refresh_token;
+			var url = 'oauth/token?grant_type=refresh_token&refresh_token=' + getToken('refresh_token');
 			service.tokenEndpoint(url).then(function(){
 				console.log('got refresh token');
 				deferred.resolve();
@@ -109,6 +109,14 @@
 				deferred.reject();
 			});
 			return deferred.promise;
+		};
+		
+		var getToken = function(prop){
+			try{
+				return JSON.parse(localStorage.getItem('authorization'))[prop];
+			} catch(err){
+				return '';
+			}
 		}
 
 		return service;

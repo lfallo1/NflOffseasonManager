@@ -79,6 +79,18 @@ angular.module("nflDraftApp")
     			}
     		};
     		
+    		$scope.loadButtonClassByGrade = function(grade){
+    			if(grade >= 90){
+    				return 'btn btn-success';
+    			} else if(grade >= 75){
+    				return 'btn btn-info';
+    			} else if(grade >= 45){
+    				return 'btn btn-warning';
+    			} else {
+    				return 'btn btn-danger';
+    			}
+    		};
+    		
     		var init = function(){
     			
     			$scope.favorite = false;
