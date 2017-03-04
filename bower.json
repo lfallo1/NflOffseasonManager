@@ -22,7 +22,6 @@
     "angularjs-dropdown-multiselect": "~1.5.2",
     "lodash": "~4.17.4",
     "angular-animate": "~1.4.7",
-    "AngularJS-Toaster": "angularjs-toaster#~2.1.0",
-    "angular-zeroclipboard": "~0.8.0"
+    "AngularJS-Toaster": "angularjs-toaster#~2.1.0"
   }
 }

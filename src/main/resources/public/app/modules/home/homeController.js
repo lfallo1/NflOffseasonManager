@@ -1,5 +1,5 @@
 angular.module("nflDraftApp")
-        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster) {
+        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", "ngClipboard", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster, ngClipboard) {
         	
         	$scope.loadPlayers = function(){
         		$scope.loading = true;
@@ -100,12 +100,13 @@ angular.module("nflDraftApp")
         		return PlayerService.getClassByPlayerGrade(prefix, grade);
         	};
         	
-        	$scope.clipboardText = function(player){
+        	$scope.copyToClipboard = function(player){
         		var text = player.name;
         		if($rootScope.user && player.notes.notes){
         			text += '- ' + player.notes.notes;
         		}
-        		return text;
+        		ngClipboard.toClipboard(text);
+        		toaster.pop('success', '', 'Player copied to clipboard');
         	}
         	
         	$scope.showMessage = function(type, message, title){

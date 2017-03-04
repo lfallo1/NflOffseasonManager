@@ -112,7 +112,7 @@
 						<div class="player-grade-button-number">{{player.notes.grade}}</div>
 					</div>
 				</td>
-				<td title="Copy player & notes to clipboard"><button ui-zeroclip zeroclip-copied="showMessage('success', '', 'Player copied to clipboard')" zeroclip-model="clipboardText(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
+				<td title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
 				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
 					<div ng-show="player.notes.id">
 						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit</button>
