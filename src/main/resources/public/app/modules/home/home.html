@@ -5,7 +5,7 @@
 		<form class="form-horizontal">
 		  <fieldset>
 		    <legend>Filters</legend>
-		    <label ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show favorites</label>
+		    <label ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
 		    <div class="form-group">
 		      	<div class="col-xs-4">
 		        	<div 
@@ -80,20 +80,21 @@
 	<table class="table">
 		<thead>
 			<tr class="sortable-header">
-				<th ng-click="sort('positionRank')">Position Rank</th>
-				<th ng-click="sort('projectedRound')">Projected Round</th>
+				<th ng-click="sort('positionRank')">Pos Rank</th>
+				<th ng-click="sort('projectedRound')">Proj Round</th>
 				<th ng-click="sort('name')">Name</th>
-				<th ng-click="sort('position.name')">Position</th>
-				<th ng-click="sort('college.name')">College</th>
-				<th ng-click="sort('height')">Height</th>
-				<th ng-click="sort('weight')">Weight</th>
-				<th ng-click="sort('rank')">Year</th>
+				<th ng-click="sort('position.name')">Pos</th>
+				<th ng-click="sort('college.name')">Col</th>
+				<th ng-click="sort('height')">Ht</th>
+				<th ng-click="sort('weight')">Wt</th>
+				<th ng-click="sort('year')">Yr</th>
 				<th ng-show="user">Notes</th>
+				<th ng-show="user" ng-click="sort('notes.grade')">Grade</th>
 				<th ng-show="user"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="player in players" ng-class="{'highlight-table-row' : player.notes.id && !favorite}">
+			<tr ng-repeat="player in players">
 				<td>{{player.positionRank}}</td>
 				<td>{{player.projectedRound}}</td>
 				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name}}">{{player.name}}</a></td>
@@ -105,13 +106,18 @@
 				<td class="max-width-notes" ng-show="user">
 					<div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
 				</td>
-				<td ng-show="user">
+				<td class="player-grade-button" ng-show="user">
+					<div ng-show="player.notes.id" ng-class="getClassByPlayerGrade('alert alert-', player.notes.grade)">
+						<div class="player-grade-button-number">{{player.notes.grade}}</div>
+					</div>
+				</td>
+				<td class="tag-player-button" ng-show="user">
 					<div ng-show="player.notes.id">
-						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit notes</button>
-						<div class="delete-note text-danger" ng-click="deleteNote(player)">Delete</div>
+						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit</button>
+						<div class="delete-note text-danger" ng-click="deleteNote(player)">Remove tag</div>
 					</div>
 					<div ng-show="!player.notes.id">
-						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Add notes</button>
+						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Tag Player</button>
 					</div>
 				</td>
 			</tr>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.lancefallon.usermgmt.config.security.model.UserPrivileges;
 
@@ -20,7 +21,7 @@ public class UserRepository extends JdbcDaoSupport {
 	}
 
 	public UserPrivileges tryLogin(String username) {
-		return getJdbcTemplate().queryForObject("select * from public.user where username = ? limit 1", new Object[]{username}, new RowMapper<UserPrivileges>(){
+		return getJdbcTemplate().queryForObject("select * from public.user where lower(username) = ? limit 1", new Object[]{username.toLowerCase()}, new RowMapper<UserPrivileges>(){
 
 			@Override
 			public UserPrivileges mapRow(ResultSet rs, int rowNum) throws SQLException {

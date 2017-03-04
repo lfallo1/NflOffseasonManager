@@ -30,6 +30,8 @@ public class UserPrivileges implements UserDetails, Serializable {
 	private boolean isAuthenticated;
 
 	private String alias;
+	
+	private String phone;
 
 	public String getAlias() {
 		return alias;
@@ -105,6 +107,14 @@ public class UserPrivileges implements UserDetails, Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

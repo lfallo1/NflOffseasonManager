@@ -6,15 +6,17 @@ public class PlayerNote {
 	private String username;
 	private Player player;
 	private String notes;
+	private Integer grade;
 
 	public PlayerNote() {
 	}
 
-	public PlayerNote(Integer id, String username, Player player, String notes) {
+	public PlayerNote(Integer id, String username, Player player, String notes, Integer grade) {
 		this.id = id;
 		this.username = username;
 		this.player = player;
 		this.notes = notes;
+		this.grade = grade;
 	}
 
 	public Integer getId() {
@@ -47,6 +49,14 @@ public class PlayerNote {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
 	}
 
 }

@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppProperties {
 
-	@Value("${email.host}")
+//	@Value("${email.host}")
 	private String emailHost;
-
-	@Value("${email.port}")
+//
+//	@Value("${email.port}")
 	private int emailPort;
 
 	@Value("${datasource.url.default}")

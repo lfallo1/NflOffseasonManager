@@ -158,3 +158,50 @@ legend{
 .max-width-notes{
 	max-width: 125px;
 }
+
+#player-grade-input{
+	text-align: left;
+	margin-bottom: -40px;
+}
+
+#player-grade-input input{
+	width: 20%;
+	text-align: center;
+	font-weight: bolder;
+	border: none;
+	border-radius: 5px;
+}
+
+#player-grade-input input, #player-grade-input label{
+	font-size: 30px;
+}
+
+#player-grade-input label{
+	margin-left: 5px;
+}
+
+#player-grade-section .progress{
+	margin-top: 10px;
+	height: 35px;
+	margin-bottom: -10px;
+}
+
+.tag-player-button .btn{
+	width: 100%;
+}
+
+.player-grade-button .alert {
+	height: 35px !important;
+	font-size: 20px;
+	margin-top: 2px;
+}
+
+.player-grade-button .player-grade-button-number{
+	margin-top: -12px;
+	font-weight: bolder;
+}
+
+#player-grade-section .text-danger{
+	font-size: 24px;
+	font-weight: bold;
+}

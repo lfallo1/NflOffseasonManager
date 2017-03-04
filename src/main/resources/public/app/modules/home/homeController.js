@@ -45,6 +45,18 @@ angular.module("nflDraftApp")
     		
     		$scope.openNotesModal = function(player){
     			
+    			var input = {
+    				id : player.id,
+    				name : player.name,
+    				notes : {
+    					id : player.notes.id,
+    					notes : player.notes.notes,
+    					username : player.notes.username,
+    					grade : player.notes.grade,
+    					player : player.notes.player
+    				}
+    			}
+    			
                 //open notes modal
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/modules/home/modals/playerNotesModal.html',
@@ -52,14 +64,16 @@ angular.module("nflDraftApp")
                     size: 'md',
                     resolve: {
                         player: function () {
-                            return player;
+                            return input;
                         }
                     }
                 });
 
                 //wait for the modal instance to resolve
-                modalInstance.result.then(function (player) {
+                modalInstance.result.then(function (result) {
 
+                	player.notes = result.notes;
+                	
                     //save / update notes for the player
                 	ApiService.apiSendPost('api/notes', player.notes).then(function (data) {
                     	if(!player.notes.id){
@@ -78,6 +92,10 @@ angular.module("nflDraftApp")
     				return notes.substring(0,50) + (notes.length > 30 ? '...' : '');
     			}
     		};
+    		
+        	$scope.getClassByPlayerGrade = function(prefix, grade){
+        		return PlayerService.getClassByPlayerGrade(prefix, grade);
+        	};
     		
     		var init = function(){
     			

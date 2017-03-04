@@ -1,5 +1,5 @@
 angular.module('nflDraftApp')
-        .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModalInstance", "player", function ($rootScope, $scope, $uibModalInstance, player) {
+        .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModalInstance", "player", 'PlayerService', function ($rootScope, $scope, $uibModalInstance, player, PlayerService) {
 
         	$scope.init = function(){
         		$scope.player = player;
@@ -8,13 +8,32 @@ angular.module('nflDraftApp')
         			$scope.player.notes = {
         				player : {id : $scope.player.id},
         				notes : '',
-        				username : $rootScope.user.username
+        				username : $rootScope.user.username,
+        				grade : 75
         			}
         		}
         	};
         	
+        	$scope.isValidGrade = function(grade){
+        		return PlayerService.isValidGrade(grade);
+        	};
+        	
+        	$scope.getClassByPlayerGrade = function(prefix, grade){
+        		if($scope.isValidGrade(grade)){
+        			return PlayerService.getClassByPlayerGrade(prefix, grade);
+        		}
+        		return 'danger';
+        	};
+        	
+        	//if the grade is invalid, the display value will be 100 for sake of the progress bar
+        	$scope.sanitizedGradeValue = function(grade){
+        		return $scope.isValidGrade(grade) ? grade : 100;
+        	};
+        	
         	$scope.submit = function(){
-        		$uibModalInstance.close($scope.player);
+        		if($scope.isValidGrade($scope.player.notes.grade)){
+        			$uibModalInstance.close($scope.player);
+        		}
         	};
         	
         	$scope.cancel = function(){

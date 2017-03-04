@@ -72,6 +72,25 @@
 			}), sortParam).filter(function(d,idx){return idx < 750;});
 		};
 		
+		/**
+		 * helper method to determine if valid grade
+		 */
+		service.isValidGrade = function(grade){
+			return grade && !isNaN(grade) && grade >= 0 && grade <= 100;
+		};
+		
+		service.getClassByPlayerGrade = function(prefix, grade){
+			if(grade >= 85){
+				return prefix + 'success';
+			} else if(grade >= 70){
+				return prefix + 'info';
+			} else if(grade >= 50){
+				return prefix + 'warning';
+			} else{
+				return prefix + 'danger';
+			}
+		};
+		
 		return service;
 		
 	}]);

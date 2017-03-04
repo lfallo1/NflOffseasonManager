@@ -2,9 +2,23 @@
     <h3 class="modal-title">Add / Update Notes for {{player.name}}</h3>
 </div>
 <div class="modal-body">
-    <textarea class="form-control" ng-model="player.notes.notes" />
+    <textarea rows="8" class="form-control" ng-model="player.notes.notes" />
+    <div id="player-grade-section">
+	    <div class="progress">
+		  <div ng-class="getClassByPlayerGrade('progress-bar progress-bar-', player.notes.grade)" 
+			  	role="progressbar" aria-valuenow="sanitizedGradeValue(player.notes.grade)" 
+			  	aria-valuemin="0" aria-valuemax="100" 
+			  	ng-style="{'width' : sanitizedGradeValue(player.notes.grade) + '%'}">
+		  </div>
+		  <div ng-show="!isValidGrade(player.notes.grade)" class="text-center text-danger">Please enter a value between 0 and 100</div>
+	  </div>
+	</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" ng-click="submit()" >Save</button>
+   	<div id="player-grade-input">
+   		<input name="grade" type="number" ng-model="player.notes.grade" />
+   		<label for="grade">Grade</label>
+   	</div>
+    <button ng-disabled="!isValidGrade(player.notes.grade)" class="btn btn-success" ng-click="submit()" >Save</button>
     <button class="btn-link" ng-click="cancel()">Cancel</button>
 </div>

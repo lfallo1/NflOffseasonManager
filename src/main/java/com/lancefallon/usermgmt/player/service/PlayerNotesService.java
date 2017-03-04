@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lancefallon.usermgmt.config.exception.model.CustomErrorMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
+import com.lancefallon.usermgmt.config.exception.model.InvalidUserInputException;
 import com.lancefallon.usermgmt.player.model.PlayerNote;
 import com.lancefallon.usermgmt.player.repository.PlayerRepository;
 
@@ -15,7 +17,12 @@ public class PlayerNotesService {
 	@Autowired
 	private PlayerRepository playerRepository;
 	
-	public Integer addOrUpdate(String username, PlayerNote notes) throws DatabaseException {
+	public Integer addOrUpdate(String username, PlayerNote notes) throws DatabaseException, InvalidUserInputException {
+		
+		if(notes.getGrade() == null || notes.getGrade() < 0 || notes.getGrade() > 100){
+			throw new InvalidUserInputException(new CustomErrorMessage("user_input", "Grade must be between 0 and 100"));
+		}
+		
 		if(notes.getId() != null){
 			this.playerRepository.updateNotes(username, notes);
 			return notes.getId();
