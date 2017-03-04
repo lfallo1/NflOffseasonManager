@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.lancefallon.usermgmt.config.security.model.UserPrivileges;
 

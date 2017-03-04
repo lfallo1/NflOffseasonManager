@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angularjs-dropdown-multiselect', 'ui.bootstrap'])
-        .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angularjs-dropdown-multiselect', 'ui.bootstrap', 'zeroclipboard', 'toaster'])
+        .config(['$routeProvider', '$httpProvider', 'uiZeroclipConfigProvider', function ($routeProvider, $httpProvider, uiZeroclipConfigProvider, toaster) {
 
         	//add an http request interceptor (userful for handling errors from server), or managing / monitoring api requests
             $httpProvider.interceptors.push('httpRequestInterceptor');
@@ -9,6 +9,11 @@ angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angul
             var LoadConfiguration = function (ConfigurationService) {
                 return ConfigurationService.initConfig();
             };
+            
+            // config ZeroClipboard
+            uiZeroclipConfigProvider.setZcConf({
+              swfPath: 'bower/zeroclipboard/dist/ZeroClipboard.swf'
+            });
             
             $routeProvider
                 .when('/', {

@@ -29,13 +29,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 		
 		user.setAuthenticated(true);
-		user.setUsername(username);
+		user.setUsername(user.getUsername());
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
 		user.setCredentialsNonExpired(true);
 		user.setAuthenticated(true);
 		user.setEnabled(true);
-		user.setAlias("Captain Justice");
+		user.setAlias(user.getUsername());
 		final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		user.setAuthorities(grantedAuthorities);

@@ -46,7 +46,7 @@ public class CustomUserAuthenticationProvider implements AuthenticationProvider 
 			UserPrivileges user = (UserPrivileges) userDetailsService.loadUserByUsername(username.toString());
 
 			if(passwordEncoder.checkpw(password.toString(), user.getPassword())){
-				auth = new CustomUserPasswordAuthenticationToken(authentication.getPrincipal(),
+				auth = new CustomUserPasswordAuthenticationToken(user.getUsername(),
 						authentication.getCredentials(), user.getAuthorities());
 				auth.setUserPrivileges(user);
 			}

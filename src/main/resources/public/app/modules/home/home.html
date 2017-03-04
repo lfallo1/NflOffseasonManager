@@ -90,6 +90,7 @@
 				<th ng-click="sort('year')">Yr</th>
 				<th ng-show="user">Notes</th>
 				<th ng-show="user" ng-click="sort('notes.grade')">Grade</th>
+				<th></th>
 				<th ng-show="user"></th>
 			</tr>
 		</thead>
@@ -97,7 +98,7 @@
 			<tr ng-repeat="player in players">
 				<td>{{player.positionRank}}</td>
 				<td>{{player.projectedRound}}</td>
-				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name}}">{{player.name}}</a></td>
+				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a></td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>
 				<td>{{player.height}}</td>
@@ -111,7 +112,8 @@
 						<div class="player-grade-button-number">{{player.notes.grade}}</div>
 					</div>
 				</td>
-				<td class="tag-player-button" ng-show="user">
+				<td title="Copy player & notes to clipboard"><button ui-zeroclip zeroclip-copied="showMessage('success', '', 'Player copied to clipboard')" zeroclip-model="clipboardText(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
+				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
 					<div ng-show="player.notes.id">
 						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit</button>
 						<div class="delete-note text-danger" ng-click="deleteNote(player)">Remove tag</div>

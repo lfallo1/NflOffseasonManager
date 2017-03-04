@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+<link rel="icon" href="https://images.seeklogo.net/2014/10/nfl-logo-National-Football-League.png">
 <title>NFL Draft Prospects Manager</title>
 <style type="text/css">
 [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -11,6 +12,7 @@
 <!-- css dependencies -->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="bower/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet" type="text/css" />
+<link href="bower/AngularJS-Toaster/toaster.min.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -48,6 +50,7 @@
 	
 	<div class="container">
 		<ng-view></ng-view>
+		<toaster-container></toaster-container>
 	</div>
 	
 	<!-- jquery / bootstrap -->
@@ -63,6 +66,9 @@
 	<script src="bower/a0-angular-storage/dist/angular-storage.js"></script>
 	<script type="text/javascript" src="bower/lodash/dist/lodash.js"></script>
 	<script type="text/javascript" src="bower/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+	<script src="bower/AngularJS-Toaster/toaster.min.js"></script>
+	<script src="bower/zeroclipboard/dist/ZeroClipboard.js"></script>
+	<script src="bower/angular-zeroclipboard/dist/angular-zeroclipboard.min.js"></script>
 	
 	
 	<!-- Angular Modules -->

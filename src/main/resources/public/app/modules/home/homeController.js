@@ -1,5 +1,5 @@
 angular.module("nflDraftApp")
-        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants) {
+        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster) {
         	
         	$scope.loadPlayers = function(){
         		$scope.loading = true;
@@ -40,6 +40,7 @@ angular.module("nflDraftApp")
     			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
     				console.log('deleted');
     				player.notes = {};
+    				$scope.showMessage('danger', '', 'Player notes removed');
     			});
     		};
     		
@@ -79,8 +80,10 @@ angular.module("nflDraftApp")
                     	if(!player.notes.id){
                     		player.notes.id = data;
                     	}
+                    	$scope.showMessage('success', '', 'Notes saved for ' + player.name);
                     	console.log('success');
                     }, function (err) {
+                    	$scope.showMessage('error', '', 'Something tragic happened & we couldn\'t save :-(');
                         console.log(err);
                     });
                 });
@@ -95,6 +98,18 @@ angular.module("nflDraftApp")
     		
         	$scope.getClassByPlayerGrade = function(prefix, grade){
         		return PlayerService.getClassByPlayerGrade(prefix, grade);
+        	};
+        	
+        	$scope.clipboardText = function(player){
+        		var text = player.name;
+        		if($rootScope.user && player.notes.notes){
+        			text += '- ' + player.notes.notes;
+        		}
+        		return text;
+        	}
+        	
+        	$scope.showMessage = function(type, message, title){
+        		toaster.pop(type, message, title);
         	};
     		
     		var init = function(){
