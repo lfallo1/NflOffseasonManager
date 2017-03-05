@@ -247,3 +247,18 @@ legend{
 	font-size: 14px;
 }
 
+.no-value-available{
+	color: #b60000 !important;
+	font-weight: normal !important;
+	opacity: 0.7;
+	font-size: 19px !important;
+}
+
+.selected-page{
+	background: #0d253d !important;
+}
+
+#pagination{
+	text-align: center;
+	font-size: 20px;
+}

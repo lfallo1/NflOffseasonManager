@@ -85,6 +85,23 @@
 	</div>
 
 	<div ng-if="loading" class="loading-text text-center">Loading...</div>
+	
+	<nav id="pagination" aria-label="Page navigation">
+	  <ul class="pagination">
+	    <li>
+	      <a ng-click="prevPage()" href="" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    <li ng-repeat="p in getPageNumbers()"><a ng-class="{'selected-page' : getCurrentPageNumber() == p}" ng-click="gotoPage(p)" href="">{{p}}</a></li>
+	    <li>
+	      <a ng-click="nextPage()" href="" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+	
 	<table class="table">
 		<thead>
 			<tr class="sortable-header">
@@ -98,8 +115,7 @@
 				<th ng-click="sort('year')">Yr</th>
 				<th ng-show="user">Notes</th>
 				<th ng-show="user" ng-click="sort('notes.grade')">Grade</th>
-				<th></th>
-				<th ng-show="user"></th>
+				<th ng-show="user" colspan="2"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -123,7 +139,7 @@
 						<div class="player-grade-button-number">{{player.notes.grade}}</div>
 					</div>
 				</td>
-				<td title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
+				<td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
 				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
 					<div ng-show="player.notes.id">
 						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit</button>
@@ -138,31 +154,31 @@
 				<td colspan=""></td>
 				<td>
 					<div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
-					<div class="combine-data">{{player.fortyYardDash}}</div>
+					<div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">{{player.fortyYardDash || 'N/A'}}</div>
 				</td>
 				<td>
 					<div ng-click="sort('twentyYardShuttle')" class="combine-logo">20-Yd</div>
-					<div class="combine-data">{{player.twentyYardShuttle}}</div>
+					<div ng-class="{'no-value-available' : !player.twentyYardShuttle}" class="combine-data">{{player.twentyYardShuttle || 'N/A'}}</div>
 				</td>
 				<td>
 					<div ng-click="sort('sixtyYardShuttle')" class="combine-logo">60-Yd</div>
-					<div class="combine-data">{{player.sixtyYardShuttle}}</div>
+					<div ng-class="{'no-value-available' : !player.sixtyYardShuttle}" class="combine-data">{{player.sixtyYardShuttle || 'N/A'}}</div>
 				</td>
 				<td>
 					<div ng-click="sort('threeConeDrill')" class="combine-logo">3-Cone</div>
-					<div class="combine-data">{{player.threeConeDrill}}</div>
+					<div ng-class="{'no-value-available' : !player.threeConeDrill}" class="combine-data">{{player.threeConeDrill || 'N/A'}}</div>
 				</td>
 				<td>
 					<div ng-click="sort('benchPress')" class="combine-logo">Bench</div>
-					<div class="combine-data">{{player.benchPress}}</div>
+					<div ng-class="{'no-value-available' : !player.benchPress}" class="combine-data">{{player.benchPress || 'N/A'}}</div>
 				</td>
 				<td>
 					<div ng-click="sort('verticalJump')" class="combine-logo">Vert</div>
-					<div class="combine-data">{{player.verticalJump}}</div>
+					<div ng-class="{'no-value-available' : !player.verticalJump}" class="combine-data">{{player.verticalJump || 'N/A'}}</div>
 				</td>
 				<td>
 					<div ng-click="sort('broadJump')" class="combine-logo">Broad</div>
-					<div class="combine-data">{{player.broadJump}}</div>
+					<div ng-class="{'no-value-available' : !player.broadJump}" class="combine-data">{{player.broadJump || 'N/A'}}</div>
 				</td>
 				<td colspan="{{user ? 4 : 1}}"></td>
 			</tr>

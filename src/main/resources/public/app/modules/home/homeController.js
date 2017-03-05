@@ -35,6 +35,31 @@ angular.module("nflDraftApp")
         		$scope.sortParam.direction = $scope.sortParam.direction * -1; 
         		$scope.loadPlayers();
         	};
+        	
+        	$scope.prevPage = function(){
+        		$scope.players = PlayerService.gotoPage(PlayerService.pagination.currentPage - 1);
+        	};
+        	
+        	$scope.nextPage = function(){
+        		$scope.players = PlayerService.gotoPage(PlayerService.pagination.currentPage + 1);
+        	};
+        	
+        	$scope.gotoPage = function(pg){
+        		$scope.players = PlayerService.gotoPage(pg);
+        	};
+        	
+        	$scope.getCurrentPageNumber = function(){
+        		return PlayerService.pagination.currentPage;
+        	};
+        	
+            //helper to return number of pages for a dropdown
+            $scope.getPageNumbers = function () {
+                var dummy = [];
+                for (var i = 0; i < PlayerService.pagination.totalPages; i++) {
+                    dummy.push(i + 1);
+                }
+                return dummy;
+            };
     		
     		$scope.deleteNote = function(player){
     			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
