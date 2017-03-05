@@ -4,7 +4,15 @@
 	
 		<form class="form-horizontal">
 		  <fieldset>
-		    <legend>Filters</legend>
+		    <legend>
+		    	Filters
+		    	<button ng-show="isCurrentYearSelected()" class="btn btn-default expand-combine-row" ng-click="combine.expanded = !combine.expanded">
+					<div class="inner-button-text">
+						Toggle Combine
+						<img src="https://upload.wikimedia.org/wikipedia/en/c/c4/NFL_Combine.png" width="40px" />
+					</div>
+				</button>
+		    </legend>
 		    <label ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
 		    <div class="form-group">
 		      	<div class="col-xs-4">
@@ -83,7 +91,7 @@
 				<th ng-click="sort('positionRank')">Pos Rank</th>
 				<th ng-click="sort('projectedRound')">Proj Round</th>
 				<th ng-click="sort('name')">Name</th>
-				<th ng-click="sort('position.name')">Pos</th>
+				<th ng-click="sort('position.name')">Position</th>
 				<th ng-click="sort('college.name')">Col</th>
 				<th ng-click="sort('height')">Ht</th>
 				<th ng-click="sort('weight')">Wt</th>
@@ -95,10 +103,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="player in players">
+			<tr class="primary-data-row" ng-repeat-start="player in players">
 				<td>{{player.positionRank}}</td>
 				<td>{{player.projectedRound}}</td>
-				<td><a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a></td>
+				<td class="player-name-row">
+					<button class="btn btn-default" ng-click="player.expanded = !player.expanded" ng-show="!combine.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
+					<a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
+				</td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>
 				<td>{{player.height}}</td>
@@ -122,6 +133,38 @@
 						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Tag Player</button>
 					</div>
 				</td>
+			</tr>
+			<tr ng-show="(combine.expanded || player.expanded) && isCurrentYearSelected()" class="combine-row-header" ng-repeat-end>
+				<td colspan=""></td>
+				<td>
+					<div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
+					<div class="combine-data">{{player.fortyYardDash}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('twentyYardShuttle')" class="combine-logo">20-Yd</div>
+					<div class="combine-data">{{player.twentyYardShuttle}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('sixtyYardShuttle')" class="combine-logo">60-Yd</div>
+					<div class="combine-data">{{player.sixtyYardShuttle}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('threeConeDrill')" class="combine-logo">3-Cone</div>
+					<div class="combine-data">{{player.threeConeDrill}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('benchPress')" class="combine-logo">Bench</div>
+					<div class="combine-data">{{player.benchPress}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('verticalJump')" class="combine-logo">Vert</div>
+					<div class="combine-data">{{player.verticalJump}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('broadJump')" class="combine-logo">Broad</div>
+					<div class="combine-data">{{player.broadJump}}</div>
+				</td>
+				<td colspan="{{user ? 4 : 1}}"></td>
 			</tr>
 		</tbody>
 	</table>

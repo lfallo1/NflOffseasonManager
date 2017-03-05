@@ -34,11 +34,24 @@ public interface PlayerSql {
 	static final String CONF_COL_CONFERENCE_NAME = "conf_name";
 	static final String PLAYER_COL_COLLEGE_TEXT = "college_text";
 	
+	//combine properties
+	static final String PLAYER_COL_FORTY_TEXT = "forty_yard_dash";
+	static final String PLAYER_COL_BENCH_TEXT = "bench_press";
+	static final String PLAYER_COL_VERTICAL_TEXT = "vertical_jump";
+	static final String PLAYER_COL_BROARD_TEXT = "broad_jump";
+	static final String PLAYER_COL_THREECONE_TEXT = "three_cone_drill";
+	static final String PLAYER_COL_TWENTY_TEXT = "twenty_yard_shuttle";
+	static final String PLAYER_COL_SIXTY_TEXT = "sixty_yard_shuttle";
+	static final String PLAYER_COL_HANDS_TEXT = "hand_size";
+	static final String PLAYER_COL_ARMS_TEXT = "arm_length";
+	
 	//sql
 	static final String PLAYER_FIND_ALL = "SELECT rank, p.name, height, weight, position_rank, projected_round, year_class,"+ 
        "p.id, year, p.position as position_id, p.college as college_id, college_text, c.name as college_name,"+ 
        "conf.id as conf_id, conf.name as conf_name, pos.id as position_id, pos.name as position_name, "+
-       "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name "+
+       "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name, "+
+       "p.forty_yard_dash, p.bench_press, p.vertical_jump, p.broad_jump, p.three_cone_drill, p.twenty_yard_shuttle, " +
+       "p.sixty_yard_shuttle, p.hand_size, p.arm_length " + 
 	  "FROM player p "+
 	  "left outer join college c on p.college = c.id "+
 	  "left outer join conf on c.conf = conf.id "+
@@ -49,7 +62,9 @@ public interface PlayerSql {
 	static final String PLAYER_FIND_ALL_WITH_NOTES = "SELECT pn.notes, pn.username, pn.id as notes_id, pn.grade, rank, p.name, height, weight, position_rank, projected_round, year_class,"+ 
 		       "p.id, year, p.position as position_id, p.college as college_id, college_text, c.name as college_name,"+ 
 		       "conf.id as conf_id, conf.name as conf_name, pos.id as position_id, pos.name as position_name, "+
-		       "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name "+
+		       "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name, "+
+		       "p.forty_yard_dash, p.bench_press, p.vertical_jump, p.broad_jump, p.three_cone_drill, p.twenty_yard_shuttle, " +
+		       "p.sixty_yard_shuttle, p.hand_size, p.arm_length " + 
 			  "FROM player p "+
 			  "left outer join college c on p.college = c.id "+
 			  "left outer join conf on c.conf = conf.id "+
@@ -121,6 +136,18 @@ public interface PlayerSql {
 		player.setCollegeText(rs.getString(PLAYER_COL_COLLEGE_TEXT));
 		player.setPosition(position);
 		player.setCollege(college);
+		
+		//combine properties
+		player.setFortyYardDash(rs.getDouble(PLAYER_COL_FORTY_TEXT));
+		player.setBenchPress(rs.getDouble(PLAYER_COL_BENCH_TEXT));
+		player.setVerticalJump(rs.getDouble(PLAYER_COL_VERTICAL_TEXT));
+		player.setBroadJump(rs.getDouble(PLAYER_COL_BROARD_TEXT));
+		player.setThreeConeDrill(rs.getDouble(PLAYER_COL_THREECONE_TEXT));
+		player.setTwentyYardShuttle(rs.getDouble(PLAYER_COL_TWENTY_TEXT));
+		player.setSixtyYardShuttle(rs.getDouble(PLAYER_COL_SIXTY_TEXT));
+		player.setHandSize(rs.getDouble(PLAYER_COL_HANDS_TEXT));
+		player.setArmLength(rs.getDouble(PLAYER_COL_ARMS_TEXT));
+		
 		return player;
 	};
 	
@@ -155,6 +182,17 @@ public interface PlayerSql {
 		} catch(Exception e){
 			e.getMessage();
 		}
+		
+		//combine properties
+		player.setFortyYardDash(rs.getDouble(PLAYER_COL_FORTY_TEXT));
+		player.setBenchPress(rs.getDouble(PLAYER_COL_BENCH_TEXT));
+		player.setVerticalJump(rs.getDouble(PLAYER_COL_VERTICAL_TEXT));
+		player.setBroadJump(rs.getDouble(PLAYER_COL_BROARD_TEXT));
+		player.setThreeConeDrill(rs.getDouble(PLAYER_COL_THREECONE_TEXT));
+		player.setTwentyYardShuttle(rs.getDouble(PLAYER_COL_TWENTY_TEXT));
+		player.setSixtyYardShuttle(rs.getDouble(PLAYER_COL_SIXTY_TEXT));
+		player.setHandSize(rs.getDouble(PLAYER_COL_HANDS_TEXT));
+		player.setArmLength(rs.getDouble(PLAYER_COL_ARMS_TEXT));
 		
 		return player;
 	};

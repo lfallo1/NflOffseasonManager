@@ -15,6 +15,17 @@ public class Player {
 	private String yearClass;
 	private Integer year;
 
+	// workout properties
+	private Double fortyYardDash;
+	private Double benchPress;
+	private Double verticalJump;
+	private Double broadJump;
+	private Double threeConeDrill;
+	private Double twentyYardShuttle;
+	private Double sixtyYardShuttle;
+	private Double handSize;
+	private Double armLength;
+
 	private PlayerNote notes;
 
 	public Player() {
@@ -139,6 +150,78 @@ public class Player {
 
 	public void setNotes(PlayerNote notes) {
 		this.notes = notes;
+	}
+
+	public Double getFortyYardDash() {
+		return fortyYardDash;
+	}
+
+	public void setFortyYardDash(Double fortyYardDash) {
+		this.fortyYardDash = fortyYardDash;
+	}
+
+	public Double getBenchPress() {
+		return benchPress;
+	}
+
+	public void setBenchPress(Double benchPress) {
+		this.benchPress = benchPress;
+	}
+
+	public Double getVerticalJump() {
+		return verticalJump;
+	}
+
+	public void setVerticalJump(Double verticalJump) {
+		this.verticalJump = verticalJump;
+	}
+
+	public Double getBroadJump() {
+		return broadJump;
+	}
+
+	public void setBroadJump(Double broadJump) {
+		this.broadJump = broadJump;
+	}
+
+	public Double getThreeConeDrill() {
+		return threeConeDrill;
+	}
+
+	public void setThreeConeDrill(Double threeConeDrill) {
+		this.threeConeDrill = threeConeDrill;
+	}
+
+	public Double getTwentyYardShuttle() {
+		return twentyYardShuttle;
+	}
+
+	public void setTwentyYardShuttle(Double twentyYardShuttle) {
+		this.twentyYardShuttle = twentyYardShuttle;
+	}
+
+	public Double getSixtyYardShuttle() {
+		return sixtyYardShuttle;
+	}
+
+	public void setSixtyYardShuttle(Double sixtyYardShuttle) {
+		this.sixtyYardShuttle = sixtyYardShuttle;
+	}
+
+	public Double getHandSize() {
+		return handSize;
+	}
+
+	public void setHandSize(Double handSize) {
+		this.handSize = handSize;
+	}
+
+	public Double getArmLength() {
+		return armLength;
+	}
+
+	public void setArmLength(Double armLength) {
+		this.armLength = armLength;
 	}
 
 }

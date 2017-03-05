@@ -112,6 +112,13 @@ angular.module("nflDraftApp")
         	$scope.showMessage = function(type, message, title){
         		toaster.pop(type, message, title);
         	};
+        	
+        	$scope.isCurrentYearSelected = function(){
+        		var currentYear = new Date().getFullYear();
+        		return $scope.filterParams.years.filter(function(y){
+        			return y.name == currentYear;
+        		}).length > 0;
+        	};
     		
     		var init = function(){
     			
@@ -161,6 +168,11 @@ angular.module("nflDraftApp")
             	$scope.positionOptions = ConfigurationService.getPositions();
             	$scope.positionCategoryOptions = ConfigurationService.getPositionCategories();
             	$scope.positionSideOfBallOptions = ConfigurationService.getPositionSidesOfBall();
+            	
+            	//flag determining whether to show the combine results row
+            	$scope.combine = {
+            		expanded : false
+            	};
     		};
     		
     		init();

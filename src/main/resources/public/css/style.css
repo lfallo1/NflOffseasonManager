@@ -1,5 +1,5 @@
 .sortable-header th{
-	color: #faa123;
+	color: white;
 }
 
 .sortable-header th:hover{
@@ -51,7 +51,6 @@ legend{
 	text-align: center;
 	font-size: 34px;
 	font-weight: bolder;
-	opacity: 0.3;
 }
 
 .panel-login {
@@ -157,6 +156,8 @@ legend{
 
 .max-width-notes{
 	max-width: 125px;
+	font-size: 14px !important;
+	font-weight: normal !important;
 }
 
 #player-grade-input{
@@ -206,6 +207,43 @@ legend{
 	font-weight: bold;
 }
 
-button.zeroclipboard-is-hover{
-	opacity: 0.6;
+.combine-row-header{
+	background-image: -webkit-linear-gradient(#0f1822, #0d253d 60%, #0e1822);
 }
+
+.combine-row-header .combine-logo{
+	font-size: 14px;
+	color: #999;
+	font-weight: bolder;
+}
+
+.combine-row-header .combine-logo:hover{
+	cursor: pointer;
+	color: white;
+}
+
+.combine-row-header .combine-data{
+	font-weight: bolder;
+	color: #ccc;
+	font-size: 22px;
+}
+
+.expand-combine-row{
+	height: 40px;
+	margin-left: 25px;
+}
+
+.expand-combine-row .inner-button-text{
+	margin-top: -9px;
+}
+
+.primary-data-row td{
+	font-size: 16px;
+	font-weight: bold;
+	font-family: sans-serif
+}
+
+.delete-note {
+	font-size: 14px;
+}
+
