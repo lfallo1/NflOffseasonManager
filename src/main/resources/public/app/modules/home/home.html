@@ -14,6 +14,8 @@
 				</button>
 		    </legend>
 		    <label ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
+		    <!-- additionally update playerService.js -->
+			<!-- <label for="availableOnly"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="loadPlayers()" />Only show available players</label> -->
 		    <div class="form-group">
 		      	<div class="col-xs-4">
 		        	<div 
@@ -105,10 +107,10 @@
 	<table class="table">
 		<thead>
 			<tr class="sortable-header">
-				<th ng-click="sort('positionRank')">Pos Rank</th>
-				<th ng-click="sort('projectedRound')">Proj Round</th>
+				<th ng-click="sort('positionRank')">Pos Rnk</th>
+				<th ng-click="sort('projectedRound')">Proj Rd</th>
 				<th ng-click="sort('name')">Name</th>
-				<th ng-click="sort('position.name')">Position</th>
+				<th ng-click="sort('position.name')">Pos</th>
 				<th ng-click="sort('college.name')">Col</th>
 				<th ng-click="sort('height')">Ht</th>
 				<th ng-click="sort('weight')">Wt</th>
@@ -125,6 +127,7 @@
 				<td class="player-name-row">
 					<button class="btn btn-default" ng-click="player.expanded = !player.expanded" ng-show="!combine.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
 					<a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
+					<i ng-show="player.round">({{player.team + ' ' + player.round + ':' + player.pick}})</i>
 				</td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>
@@ -151,7 +154,6 @@
 				</td>
 			</tr>
 			<tr ng-show="(combine.expanded || player.expanded) && isCurrentYearSelected()" class="combine-row-header" ng-repeat-end>
-				<td colspan=""></td>
 				<td>
 					<div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
 					<div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">{{player.fortyYardDash || 'N/A'}}</div>
@@ -180,7 +182,15 @@
 					<div ng-click="sort('broadJump')" class="combine-logo">Broad</div>
 					<div ng-class="{'no-value-available' : !player.broadJump}" class="combine-data">{{player.broadJump || 'N/A'}}</div>
 				</td>
-				<td colspan="{{user ? 4 : 1}}"></td>
+				<td>
+					<div ng-click="sort('handSize')" class="combine-logo">Hands</div>
+					<div ng-class="{'no-value-available' : !player.handSize}" class="combine-data">{{player.handSize || 'N/A'}}</div>
+				</td>
+				<td>
+					<div ng-click="sort('armLength')" class="combine-logo">Arms</div>
+					<div ng-class="{'no-value-available' : !player.armLength}" class="combine-data">{{player.armLength || 'N/A'}}</div>
+				</td>
+				<td ng-show="user" colspan="3"></td>
 			</tr>
 		</tbody>
 	</table>

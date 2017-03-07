@@ -45,13 +45,18 @@ public interface PlayerSql {
 	static final String PLAYER_COL_HANDS_TEXT = "hand_size";
 	static final String PLAYER_COL_ARMS_TEXT = "arm_length";
 	
+	//draft pick props
+	static final String PLAYER_COL_ROUND = "round";
+	static final String PLAYER_COL_PICK = "pick";
+	static final String PLAYER_COL_TEAM = "team";
+	
 	//sql
 	static final String PLAYER_FIND_ALL = "SELECT rank, p.name, height, weight, position_rank, projected_round, year_class,"+ 
        "p.id, year, p.position as position_id, p.college as college_id, college_text, c.name as college_name,"+ 
        "conf.id as conf_id, conf.name as conf_name, pos.id as position_id, pos.name as position_name, "+
        "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name, "+
        "p.forty_yard_dash, p.bench_press, p.vertical_jump, p.broad_jump, p.three_cone_drill, p.twenty_yard_shuttle, " +
-       "p.sixty_yard_shuttle, p.hand_size, p.arm_length " + 
+       "p.sixty_yard_shuttle, p.hand_size, p.arm_length, p.round, p.pick, p.team " + 
 	  "FROM player p "+
 	  "left outer join college c on p.college = c.id "+
 	  "left outer join conf on c.conf = conf.id "+
@@ -64,7 +69,7 @@ public interface PlayerSql {
 		       "conf.id as conf_id, conf.name as conf_name, pos.id as position_id, pos.name as position_name, "+
 		       "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name, "+
 		       "p.forty_yard_dash, p.bench_press, p.vertical_jump, p.broad_jump, p.three_cone_drill, p.twenty_yard_shuttle, " +
-		       "p.sixty_yard_shuttle, p.hand_size, p.arm_length " + 
+		       "p.sixty_yard_shuttle, p.hand_size, p.arm_length, p.round, p.pick, p.team " + 
 			  "FROM player p "+
 			  "left outer join college c on p.college = c.id "+
 			  "left outer join conf on c.conf = conf.id "+
@@ -148,6 +153,11 @@ public interface PlayerSql {
 		player.setHandSize(rs.getDouble(PLAYER_COL_HANDS_TEXT));
 		player.setArmLength(rs.getDouble(PLAYER_COL_ARMS_TEXT));
 		
+		//draft props
+		player.setRound(rs.getInt(PLAYER_COL_ROUND));
+		player.setPick(rs.getInt(PLAYER_COL_PICK));
+		player.setTeam(rs.getString(PLAYER_COL_TEAM));
+		
 		return player;
 	};
 	
@@ -193,6 +203,11 @@ public interface PlayerSql {
 		player.setSixtyYardShuttle(rs.getDouble(PLAYER_COL_SIXTY_TEXT));
 		player.setHandSize(rs.getDouble(PLAYER_COL_HANDS_TEXT));
 		player.setArmLength(rs.getDouble(PLAYER_COL_ARMS_TEXT));
+		
+		//draft props
+		player.setRound(rs.getInt(PLAYER_COL_ROUND));
+		player.setPick(rs.getInt(PLAYER_COL_PICK));
+		player.setTeam(rs.getString(PLAYER_COL_TEAM));
 		
 		return player;
 	};

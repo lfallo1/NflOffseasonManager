@@ -9,7 +9,7 @@ angular.module("nflDraftApp")
     					ApiService.apiSendGet(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
     						$scope.loading = false;
     						PlayerService.setPlayers(data);
-    						$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user);
+    						$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
     			    	}, function(err){
     			    		$scope.loading = false;
     			    		console.log(err);
@@ -18,7 +18,7 @@ angular.module("nflDraftApp")
     					ApiService.apiSendGetNoAuth(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
     						$scope.loading = false;
     						PlayerService.setPlayers(data);
-    						$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user);
+    						$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
     			    	}, function(err){
     			    		$scope.loading = false;
     			    		console.log(err);
@@ -26,7 +26,7 @@ angular.module("nflDraftApp")
     				}
     			} else{
     				$scope.loading = false;
-					$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user);
+					$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
     			}
     		};
         	
@@ -148,6 +148,7 @@ angular.module("nflDraftApp")
     		var init = function(){
     			
     			$scope.favorite = false;
+    			$scope.availableOnly = false;
     			
         		$scope.yearOptions = [];
             	$scope.collegeOptions = [];

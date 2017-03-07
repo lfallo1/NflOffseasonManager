@@ -79,7 +79,7 @@
         	}).length > 0;
         };
 		
-		service.sortAndFilter = function(filterParams, sortParam, favorite, pagination){
+		service.sortAndFilter = function(filterParams, sortParam, favorite, availableOnly){
 			filtered = sort(players.filter(function(d){
 				if(filterParams.positionSidesOfBall.length > 0 && !valueExistsInArray(filterParams.positionSidesOfBall, 'id', d.position.category.positionSideOfBall.id)){
 					return false;
@@ -99,6 +99,10 @@
 				if(filterParams.years.length > 0 && !valueExistsInArray(filterParams.years, 'name', d.year)){
 					return false;
 				}
+//				if(availableOnly && d.round){
+//					//if only showing available players & this player has a pick associated, do not return
+//					return false;
+//				}
 				return !favorite || d.notes.id;
 			}), sortParam);
 			
