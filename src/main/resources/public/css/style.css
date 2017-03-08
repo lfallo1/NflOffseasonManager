@@ -162,29 +162,26 @@ legend{
 
 #player-grade-input{
 	text-align: left;
-	margin-bottom: -40px;
-}
-
-#player-grade-input input{
-	width: 20%;
-	text-align: center;
-	font-weight: bolder;
-	border: none;
-	border-radius: 5px;
-}
-
-#player-grade-input input, #player-grade-input label{
-	font-size: 30px;
-}
-
-#player-grade-input label{
-	margin-left: 5px;
+	margin-top: 30px;
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: -10px;
 }
 
 #player-grade-section .progress{
 	margin-top: 10px;
 	height: 35px;
 	margin-bottom: -10px;
+}
+
+.rzslider .rz-bubble.rz-limit{
+	color: #999 !important;
+	font-size: 22px;
+}
+
+.rzslider .rz-bubble{
+	font-size: 26px;
+	color: white !important;
 }
 
 .tag-player-button .btn{
@@ -261,4 +258,25 @@ legend{
 #pagination{
 	text-align: center;
 	font-size: 20px;
+}
+
+.modal-footer .btn{
+	font-size: 24px;
+	width: 100%;
+	float: left;
+}
+
+.modal-footer .btn-link{
+	margin-top: 15px;
+	margin-bottom: -20px;
+	color: #a94442;
+	font-size: 24px;
+	font-weight: bolder;
+	width: 100%;
+	text-align: center !important;
+}
+
+.modal-footer .btn-link:hover{
+	text-decoration: none;
+	opacity: 0.7;
 }

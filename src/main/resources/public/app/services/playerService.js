@@ -144,7 +144,7 @@
 		 * helper method to determine if valid grade
 		 */
 		service.isValidGrade = function(grade){
-			return grade && !isNaN(grade) && grade >= 0 && grade <= 100;
+			return grade === 0 || (grade && !isNaN(grade) && grade > 0 && grade <= 100);
 		};
 		
 		service.getClassByPlayerGrade = function(prefix, grade){

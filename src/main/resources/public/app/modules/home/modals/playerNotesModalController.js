@@ -1,7 +1,8 @@
 angular.module('nflDraftApp')
-        .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModalInstance", "player", 'PlayerService', function ($rootScope, $scope, $uibModalInstance, player, PlayerService) {
+        .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModalInstance", "$timeout", "player", 'PlayerService', function ($rootScope, $scope, $uibModalInstance, $timeout, player, PlayerService) {
 
         	$scope.init = function(){
+        		
         		$scope.player = player;
         		
         		if(!$scope.player.notes.id){
@@ -12,7 +13,15 @@ angular.module('nflDraftApp')
         				grade : 75
         			}
         		}
+        		$scope.sliderVisible = true;
+        		refreshSlider();
         	};
+        	
+        	var refreshSlider = function(){
+        		$timeout(function () {
+        			$scope.$broadcast('rzSliderForceRender');
+        	    });
+        	}
         	
         	$scope.isValidGrade = function(grade){
         		return PlayerService.isValidGrade(grade);

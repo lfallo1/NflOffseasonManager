@@ -13,12 +13,15 @@
 		  <div ng-show="!isValidGrade(player.notes.grade)" class="text-center text-danger">Please enter a value between 0 and 100</div>
 	  </div>
 	</div>
+   	<div id="player-grade-input">
+   		<rzslider ng-show="sliderVisible"
+         rz-slider-model="player.notes.grade"
+         rz-slider-options="{floor: 0, ceil: 100}"></rzslider>
+   		<!-- <input name="grade" type="number" ng-model="player.notes.grade" />
+   		<label for="grade">Grade</label> -->
+   	</div>
 </div>
 <div class="modal-footer">
-   	<div id="player-grade-input">
-   		<input name="grade" type="number" ng-model="player.notes.grade" />
-   		<label for="grade">Grade</label>
-   	</div>
     <button ng-disabled="!isValidGrade(player.notes.grade)" class="btn btn-success" ng-click="submit()" >Save</button>
     <button class="btn-link" ng-click="cancel()">Cancel</button>
 </div>
