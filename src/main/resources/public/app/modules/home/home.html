@@ -121,13 +121,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="primary-data-row" ng-repeat-start="player in players">
+			<tr class="primary-data-row" ng-class="{'player-drafted-row' : player.round}" ng-repeat-start="player in players">
 				<td>{{player.positionRank}}</td>
 				<td>{{player.projectedRound}}</td>
 				<td class="player-name-row">
 					<button class="btn btn-default" ng-click="player.expanded = !player.expanded" ng-show="!combine.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
 					<a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
-					<i ng-show="player.round">({{player.team + ' ' + player.round + ':' + player.pick}})</i>
+					<i ng-show="player.round"  >({{player.team + ' ' + player.round + ':' + player.pick}})</i>
 				</td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>
