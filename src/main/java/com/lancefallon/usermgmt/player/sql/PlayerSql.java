@@ -1,6 +1,7 @@
 package com.lancefallon.usermgmt.player.sql;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.util.StringUtils;
 
 import com.lancefallon.usermgmt.player.model.College;
 import com.lancefallon.usermgmt.player.model.Conference;
@@ -93,6 +94,7 @@ public interface PlayerSql {
 	static final String NOTES_USERNAME_COL = "username";
 	static final String NOTES_NOTE_COL = "notes";
 	static final String NOTES_GRADE_COL = "grade";
+	static final String PLAYER_COLLEGE_TEXT = "college_text";
 		
 	RowMapper<Integer> YEARS_ROW_MAPPER = (rs, rowNum) ->{
 		return rs.getInt("year");
@@ -127,6 +129,9 @@ public interface PlayerSql {
 		
 		Conference conference = new Conference(rs.getInt(CONF_COL_CONFERENCE_ID), rs.getString(CONF_COL_CONFERENCE_NAME));
 		College college = new College(rs.getInt(COLLEGE_COL_COLLEGE_ID), rs.getString(COLLEGE_COL_COLLEGE_NAME), conference);
+		if(StringUtils.isEmpty(college.getName())){
+			college.setName(rs.getString(PLAYER_COLLEGE_TEXT));
+		}
 		
 		Player player = new Player();
 		player.setId(rs.getInt(PLAYER_COL_ID));
@@ -169,6 +174,9 @@ public interface PlayerSql {
 		
 		Conference conference = new Conference(rs.getInt(CONF_COL_CONFERENCE_ID), rs.getString(CONF_COL_CONFERENCE_NAME));
 		College college = new College(rs.getInt(COLLEGE_COL_COLLEGE_ID), rs.getString(COLLEGE_COL_COLLEGE_NAME), conference);
+		if(StringUtils.isEmpty(college.getName())){
+			college.setName(rs.getString(PLAYER_COLLEGE_TEXT));
+		}
 		
 		Player player = new Player();
 		player.setId(rs.getInt(PLAYER_COL_ID));
