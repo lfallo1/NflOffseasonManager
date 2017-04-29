@@ -113,6 +113,14 @@
 			<version>7.6.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.lance.stringutil</groupId>
+			<artifactId>LanceStringUtil</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/LanceStringUtilJar.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
 	<build>
