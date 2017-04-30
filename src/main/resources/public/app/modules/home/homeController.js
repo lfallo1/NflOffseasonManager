@@ -1,6 +1,6 @@
 angular.module("nflDraftApp")
         .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", "ngClipboard", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster, ngClipboard) {
-        	
+
         	$scope.loadPlayers = function(){
         		$scope.loading = true;
         		var players = PlayerService.getPlayers();
@@ -13,7 +13,7 @@ angular.module("nflDraftApp")
     			    	}, function(err){
     			    		$scope.loading = false;
     			    		console.log(err);
-    			    	});					
+    			    	});
     				} else{
     					ApiService.apiSendGetNoAuth(PlayersApiConstants.PLAYERS_FIND_ALL).then(function(data){
     						$scope.loading = false;
@@ -29,29 +29,29 @@ angular.module("nflDraftApp")
 					$scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
     			}
     		};
-        	
+
         	$scope.sort = function(sortParam){
         		$scope.sortParam.value = sortParam;
-        		$scope.sortParam.direction = $scope.sortParam.direction * -1; 
+        		$scope.sortParam.direction = $scope.sortParam.direction * -1;
         		$scope.loadPlayers();
         	};
-        	
+
         	$scope.prevPage = function(){
         		$scope.players = PlayerService.gotoPage(PlayerService.pagination.currentPage - 1);
         	};
-        	
+
         	$scope.nextPage = function(){
         		$scope.players = PlayerService.gotoPage(PlayerService.pagination.currentPage + 1);
         	};
-        	
+
         	$scope.gotoPage = function(pg){
         		$scope.players = PlayerService.gotoPage(pg);
         	};
-        	
+
         	$scope.getCurrentPageNumber = function(){
         		return PlayerService.pagination.currentPage;
         	};
-        	
+
             //helper to return number of pages for a dropdown
             $scope.getPageNumbers = function () {
                 var dummy = [];
@@ -60,7 +60,7 @@ angular.module("nflDraftApp")
                 }
                 return dummy;
             };
-    		
+
     		$scope.deleteNote = function(player){
     			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
     				console.log('deleted');
@@ -68,9 +68,9 @@ angular.module("nflDraftApp")
     				$scope.showMessage('danger', '', 'Player notes removed');
     			});
     		};
-    		
+
     		$scope.openNotesModal = function(player){
-    			
+
     			var input = {
     				id : player.id,
     				name : player.name,
@@ -82,7 +82,7 @@ angular.module("nflDraftApp")
     					player : player.notes.player
     				}
     			}
-    			
+
                 //open notes modal
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/modules/home/modals/playerNotesModal.html',
@@ -99,7 +99,7 @@ angular.module("nflDraftApp")
                 modalInstance.result.then(function (result) {
 
                 	player.notes = result.notes;
-                	
+
                     //save / update notes for the player
                 	ApiService.apiSendPost('api/notes', player.notes).then(function (data) {
                     	if(!player.notes.id){
@@ -112,96 +112,104 @@ angular.module("nflDraftApp")
                         console.log(err);
                     });
                 });
-    			
+
     		};
-    		
+
     		$scope.displayNotes = function(notes){
     			if(notes){
     				return notes.substring(0,50) + (notes.length > 30 ? '...' : '');
     			}
     		};
-    		
-        	$scope.getClassByPlayerGrade = function(prefix, grade){
-        		return PlayerService.getClassByPlayerGrade(prefix, grade);
-        	};
-        	
-        	$scope.copyToClipboard = function(player){
-        		var text = player.name;
-        		if($rootScope.user && player.notes.notes){
-        			text += '- ' + player.notes.notes;
-        		}
-        		ngClipboard.toClipboard(text);
-        		toaster.pop('success', '', 'Player copied to clipboard');
-        	}
-        	
-        	$scope.showMessage = function(type, message, title){
-        		toaster.pop(type, message, title);
-        	};
-        	
-        	$scope.isCurrentYearSelected = function(){
-        		var currentYear = new Date().getFullYear();
-        		return $scope.filterParams.years.filter(function(y){
-        			return y.name == currentYear;
-        		}).length > 0;
-        	};
-    		
-    		var init = function(){
-    			
-    			$scope.favorite = false;
-    			$scope.availableOnly = false;
-    			
-        		$scope.yearOptions = [];
-            	$scope.collegeOptions = [];
-            	$scope.conferenceOptions = [];
-            	$scope.positionOptions = [];
-            	$scope.positionCategoryOptions = [];
-            	$scope.positionSideOfBallOptions = [];
-            	
-            	$scope.filterParams = {
-            		years : [{id:0,name:2017}],
-            		positions : [],
-            		positionCategories : [],
-            		positionSidesOfBall : [],
-            		conferences : [],
-            		colleges : []
-            	};
 
-                $scope.smartButtonSettings = {
-                	displayProp: 'name',
-                	externalIdProp: '',
-                	smartButtonMaxItems: 3,
-                	smartButtonTextConverter: function(itemText, originalItem) {
-                        return itemText;
-                    }
-                };
-                
-                $scope.onMultiSelectEvents = {
-                	onItemSelect : function(){$scope.loadPlayers();},
-    	            onItemDeselect : function(){$scope.loadPlayers();}	
-                };
-            	
-            	$scope.sortParam = {
-            		value : 'positionRank',
-            		direction : 1
-            	}
-    			
+      	$scope.getClassByPlayerGrade = function(prefix, grade){
+      		return PlayerService.getClassByPlayerGrade(prefix, grade);
+      	};
+
+      	$scope.copyToClipboard = function(player){
+      		var text = player.name;
+      		if($rootScope.user && player.notes.notes){
+      			text += '- ' + player.notes.notes;
+      		}
+      		ngClipboard.toClipboard(text);
+      		toaster.pop('success', '', 'Player copied to clipboard');
+      	}
+
+      	$scope.showMessage = function(type, message, title){
+      		toaster.pop(type, message, title);
+      	};
+
+      	$scope.isCurrentYearSelected = function(){
+      		var currentYear = new Date().getFullYear();
+      		return $scope.filterParams.years.filter(function(y){
+      			return y.name == currentYear;
+      		}).length > 0;
+      	};
+      	
+        var logoPlaceholder = 'http://i.nflcdn.com/static/site/7.5/img/teams/{TEAM}/{TEAM}_logo-80x90.gif';
+        $scope.getNflTeamLogo = function(player){
+          return (player && player.team && player.team.team) ? logoPlaceholder.replace(/{TEAM}/g,player.team.team) : '';
+        };
+
+    		var init = function(){
+
+    			$scope.favorite = false;
+    			$scope.availableOnly = true;
+
+    		$scope.yearOptions = [];
+        	$scope.collegeOptions = [];
+        	$scope.conferenceOptions = [];
+        	$scope.positionOptions = [];
+        	$scope.positionCategoryOptions = [];
+        	$scope.positionSideOfBallOptions = [];
+        	$scope.nflTeamOptions = [];
+
+        	$scope.filterParams = {
+        		years : [{id:0,name:2017}],
+        		positions : [],
+        		positionCategories : [],
+        		positionSidesOfBall : [{"id": 1,"name": "offense"},{"id": 2,"name": "defense"}],
+        		conferences : [],
+        		colleges : [],
+        		nflTeams: []
+        	};
+
+          $scope.smartButtonSettings = {
+          	displayProp: 'name',
+          	externalIdProp: '',
+          	smartButtonMaxItems: 3,
+          	smartButtonTextConverter: function(itemText, originalItem) {
+                  return itemText;
+              }
+          };
+
+          $scope.onMultiSelectEvents = {
+          	onItemSelect : function(){$scope.loadPlayers();},
+            onItemDeselect : function(){$scope.loadPlayers();}
+          };
+
+        	$scope.sortParam = {
+        		value : 'projectedRound',
+        		direction : 1
+        	}
+
     			$rootScope.currentPage = "Home";
     			$scope.loadPlayers();
-    			
-            	$scope.yearOptions = ConfigurationService.getYears();
-            	$scope.collegeOptions = ConfigurationService.getColleges();
-            	$scope.conferenceOptions = ConfigurationService.getConferences();
-            	$scope.positionOptions = ConfigurationService.getPositions();
-            	$scope.positionCategoryOptions = ConfigurationService.getPositionCategories();
-            	$scope.positionSideOfBallOptions = ConfigurationService.getPositionSidesOfBall();
-            	
-            	//flag determining whether to show the combine results row
-            	$scope.combine = {
-            		expanded : false
-            	};
+
+        	$scope.yearOptions = ConfigurationService.getYears();
+        	$scope.collegeOptions = ConfigurationService.getColleges();
+        	$scope.conferenceOptions = ConfigurationService.getConferences();
+        	$scope.positionOptions = ConfigurationService.getPositions();
+        	$scope.positionCategoryOptions = ConfigurationService.getPositionCategories();
+        	$scope.positionSideOfBallOptions = ConfigurationService.getPositionSidesOfBall();
+          $scope.nflTeamOptions = ConfigurationService.getNflTeams();
+
+        	//flag determining whether to show the combine results row
+        	$scope.combine = {
+        		expanded : false
+        	};
     		};
-    		
+
     		init();
-        	
-        	
+
+
 }]);

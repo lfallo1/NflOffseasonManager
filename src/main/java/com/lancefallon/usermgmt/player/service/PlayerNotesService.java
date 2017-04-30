@@ -19,8 +19,16 @@ public class PlayerNotesService {
 	
 	public Integer addOrUpdate(String username, PlayerNote notes) throws DatabaseException, InvalidUserInputException {
 		
-		if(notes.getGrade() == null || notes.getGrade() < 0 || notes.getGrade() > 100){
+		if(notes.getOverallGrade() == null || notes.getOverallGrade() < 0 || notes.getOverallGrade() > 100){
 			throw new InvalidUserInputException(new CustomErrorMessage("user_input", "Grade must be between 0 and 100"));
+		}
+		
+		if(notes.getLikeness() != null && (notes.getLikeness() < 1 || notes.getLikeness() > 5)){
+			throw new InvalidUserInputException(new CustomErrorMessage("user_input", "Likeness must be between 1 and 5"));
+		}
+		
+		if(notes.getProjectedRound() != null && (notes.getProjectedRound() < 0 || notes.getProjectedRound() > 7)){
+			throw new InvalidUserInputException(new CustomErrorMessage("user_input", "Likeness must be between 0 and 7"));
 		}
 		
 		if(notes.getId() != null){

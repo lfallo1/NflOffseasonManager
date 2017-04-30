@@ -1,5 +1,7 @@
 package com.lancefallon.usermgmt.player.model;
 
+import com.lancefallon.usermgmt.team.model.NflTeam;
+
 public class Player {
 
 	private Integer id;
@@ -29,7 +31,7 @@ public class Player {
 	// draft props
 	private Integer round;
 	private Integer pick;
-	private String team;
+	private NflTeam team;
 
 	private PlayerNote notes;
 
@@ -245,11 +247,11 @@ public class Player {
 		this.pick = pick;
 	}
 
-	public String getTeam() {
+	public NflTeam getTeam() {
 		return team;
 	}
 
-	public void setTeam(String team) {
+	public void setTeam(NflTeam team) {
 		this.team = team;
 	}
 

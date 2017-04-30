@@ -108,7 +108,10 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 
 	public void updateNotes(String username, PlayerNote notes) throws DatabaseException {
 		try{
-			getJdbcTemplate().update("update player_notes set notes = ?, grade = ? where username = ? and id = ?", new Object[]{notes.getNotes(), notes.getGrade(), username, notes.getId()});
+			getJdbcTemplate().update("update player_notes set summary=?, strengths=?, weakness=?,likeness=?,projected_round=?,overall_grade = ? where username = ? and id = ?", 
+					new Object[]{notes.getSummary(), notes.getStrengths(), notes.getWeaknesses(), 
+					notes.getLikeness(), notes.getProjectedRound(), 
+					notes.getOverallGrade(), username, notes.getId()});
 		}
 		catch(DataAccessException e){
 			throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
@@ -122,15 +125,19 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 	        // names
 	        jdbcInsert.setTableName("public.player_notes");
 	        jdbcInsert.setGeneratedKeyName("id");
-	        jdbcInsert.setColumnNames(Arrays.asList("username", "player", "notes", "grade"));
+	        jdbcInsert.setColumnNames(Arrays.asList("username", "player", "summary", "strengths", "weaknesses", "likeness", "projected_round", "overall_grade"));
 
 	        // set the values to be inserted
 	        Map<String, Object> parameters = new HashMap<String, Object>();
 
 	        parameters.put("username", username);
 	        parameters.put("player", notes.getPlayer().getId());
-	        parameters.put("notes", notes.getNotes());
-	        parameters.put("grade", notes.getGrade());
+	        parameters.put("summary", notes.getSummary());
+	        parameters.put("strengths", notes.getStrengths());
+	        parameters.put("weaknesses", notes.getWeaknesses());
+	        parameters.put("likeness", notes.getLikeness());
+	        parameters.put("projected_round", notes.getProjectedRound());
+	        parameters.put("overall_grade", notes.getOverallGrade());
 
 	        // execute insert
 	        Number key = null;
@@ -154,7 +161,9 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 				public PlayerNote mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Player player = new Player();
 					player.setId(rs.getInt("player"));
-					return new PlayerNote(rs.getInt("id"), rs.getString("username"), player, rs.getString("notes"), rs.getInt("grade"));
+					return new PlayerNote(rs.getInt("id"), rs.getString("username"), player, rs.getString("summary"),
+							rs.getString("strengths"),rs.getString("weaknesses"),rs.getInt("likeness"),
+							rs.getInt("proected_round"),rs.getInt("overall_grade"));
 				}
 				
 			});

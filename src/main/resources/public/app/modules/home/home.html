@@ -1,80 +1,95 @@
 <div class="container">
 
 	<div id="filters" class="well">
-	
-		<form class="form-horizontal">
-		  <fieldset>
-		    <legend>
-		    	Filters
+
+		<div id="title-area" class="row">
+			<div id="filters-title">Filters</div>
+	    	<div id="combine-button">
 		    	<button ng-show="isCurrentYearSelected()" class="btn btn-default expand-combine-row" ng-click="combine.expanded = !combine.expanded">
 					<div class="inner-button-text">
 						Toggle Combine
 						<img src="https://upload.wikimedia.org/wikipedia/en/c/c4/NFL_Combine.png" width="40px" />
 					</div>
 				</button>
-		    </legend>
-		    <label ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
-		    <!-- additionally update playerService.js -->
-			<!-- <label for="availableOnly"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="loadPlayers()" />Only show available players</label> -->
+			</div>
+			<div id="nfl-team-options">
+				<div ng-show="isCurrentYearSelected()" >
+					<div
+						class="full-width"
+						ng-dropdown-multiselect=""
+						options="nflTeamOptions"
+						selected-model="filterParams.nflTeams"
+						extra-settings="smartButtonSettings"
+						translation-texts="{buttonDefaultText: 'Nfl Team'}"
+						events="onMultiSelectEvents">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form class="form-horizontal">
+		  <fieldset>
+		    <label id="show-favorite-checkbox" class="checkbox-label" ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
+			<label id="show-available-checkbox" class="checkbox-label" id="showAvailablePlayersCheckbox" for="availableOnly"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="didChangeAvailableOnly(); loadPlayers()" />Only show available players</label>
 		    <div class="form-group">
 		      	<div class="col-xs-4">
-		        	<div 
+		        	<div
 		        		class="full-width"
-		        		ng-dropdown-multiselect="" 
-		        		options="positionOptions" 
-		        		selected-model="filterParams.positions" 
+		        		ng-dropdown-multiselect=""
+		        		options="positionOptions"
+		        		selected-model="filterParams.positions"
 		        		extra-settings="smartButtonSettings"
 		        		translation-texts="{buttonDefaultText: 'Positions'}"
 			        	events="onMultiSelectEvents">
 		        	</div>
 		      	</div>
 				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect="" 
+		        	<div ng-dropdown-multiselect=""
 		        		class="full-width"
-			        	options="positionCategoryOptions" 
-			        	selected-model="filterParams.positionCategories" 
+			        	options="positionCategoryOptions"
+			        	selected-model="filterParams.positionCategories"
 			        	extra-settings="smartButtonSettings"
 			        	translation-texts="{buttonDefaultText: 'Position Groups'}"
 			        	events="onMultiSelectEvents">
 			        </div>
 		      	</div>
 				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect="" 
+		        	<div ng-dropdown-multiselect=""
 		        		class="full-width"
-			        	options="positionSideOfBallOptions" 
-			        	selected-model="filterParams.positionSidesOfBall" 
+			        	options="positionSideOfBallOptions"
+			        	selected-model="filterParams.positionSidesOfBall"
 			        	extra-settings="smartButtonSettings"
 			        	translation-texts="{buttonDefaultText: 'Off / Def / Spt'}"
 			        	events="onMultiSelectEvents">
 			        </div>
 		      	</div>
-		      	
+
 		      	<div class="col-xs-4">
-		        	<div 
-		        		ng-dropdown-multiselect="" 
+		        	<div
+		        		ng-dropdown-multiselect=""
 		        		class="full-width"
-		        		options="collegeOptions" 
-		        		selected-model="filterParams.colleges" 
+		        		options="collegeOptions"
+		        		selected-model="filterParams.colleges"
 		        		extra-settings="smartButtonSettings"
 		        		translation-texts="{buttonDefaultText: 'Colleges'}"
 			        	events="onMultiSelectEvents">
 		        	</div>
 		      	</div>
 				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect="" 
+		        	<div ng-dropdown-multiselect=""
 		        		class="full-width"
-			        	options="conferenceOptions" 
-			        	selected-model="filterParams.conferences" 
+			        	options="conferenceOptions"
+			        	selected-model="filterParams.conferences"
 			        	extra-settings="smartButtonSettings"
 			        	translation-texts="{buttonDefaultText: 'Conferences'}"
 			        	events="onMultiSelectEvents">
 			        </div>
 		      	</div>
 				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect="" 
+		        	<div ng-dropdown-multiselect=""
 		        		class="full-width"
-			        	options="yearOptions" 
-			        	selected-model="filterParams.years" 
+			        	options="yearOptions"
+			        	selected-model="filterParams.years"
 			        	extra-settings="smartButtonSettings"
 			        	translation-texts="{buttonDefaultText: 'Years'}"
 			        	events="onMultiSelectEvents">
@@ -83,11 +98,11 @@
 		    </div>
 		  </fieldset>
 		</form>
-	
+
 	</div>
 
 	<div ng-if="loading" class="loading-text text-center">Loading...</div>
-	
+
 	<nav id="pagination" aria-label="Page navigation">
 	  <ul class="pagination">
 	    <li>
@@ -103,7 +118,7 @@
 	    </li>
 	  </ul>
 	</nav>
-	
+
 	<table class="table">
 		<thead>
 			<tr class="sortable-header">
@@ -127,7 +142,7 @@
 				<td class="player-name-row">
 					<button class="btn btn-default" ng-click="player.expanded = !player.expanded" ng-show="!combine.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
 					<a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
-					<i ng-show="player.round"  >({{player.team + ' ' + player.round + ':' + player.pick}})</i>
+					<div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}" width="50px" /><i>{{player.round + ':' + player.pick}}</i></div>
 				</td>
 				<td>{{player.position.name}}</td>
 				<td>{{player.college.name}}</td>

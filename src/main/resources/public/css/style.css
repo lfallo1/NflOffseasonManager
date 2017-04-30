@@ -282,9 +282,56 @@ legend{
 }
 
 .primary-data-row.player-drafted-row{
-	background: rgba(2, 0, 255, 0.15);
+	background: rgba(21, 129, 193, 0.2)
 }
 
 .player-drafted-row i{
 	color: rgb(196, 141, 64);
+}
+
+#draft-team-info{
+	margin-left: 5px;
+	display: inline;
+}
+
+#draft-team-info img{
+	height: 25px;
+	width: 25px;
+	opacity: 1;
+	border-radius: 5px;
+}
+#nfl-team-options{
+	width: 200px;
+	display: inline-block;
+	margin-top: 15px;
+}
+
+#nfl-team-options .dropdown-toggle{
+	font-size: 18px;
+}
+
+#title-area{
+	text-align: center;
+}
+
+#title-area div{
+	display: inline-block !important;
+}
+
+#title-area #filters-title{
+	font-size: 34px;
+	font-weight: bold;
+}
+
+.checkbox-label {
+	display: block !important;
+}
+
+.checkbox-label input{
+	margin-right: 4px;
+}
+
+#show-available-checkbox{
+	margin-top: -3px;
+	margin-bottom: 20px;
 }

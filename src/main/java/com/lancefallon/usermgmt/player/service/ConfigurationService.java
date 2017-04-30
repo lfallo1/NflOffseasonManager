@@ -6,12 +6,16 @@ import org.springframework.stereotype.Service;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.player.model.Config;
 import com.lancefallon.usermgmt.player.repository.PlayerRepository;
+import com.lancefallon.usermgmt.team.repository.NflTeamRepository;
 
 @Service
 public class ConfigurationService {
 
 	@Autowired
 	private PlayerRepository playerRepository;
+	
+	@Autowired
+	private NflTeamRepository nflTeamRepository;
 	
 	public Config loadConfiguration() throws DatabaseException{
 		Config config = new Config();
@@ -21,6 +25,7 @@ public class ConfigurationService {
 		config.setPositionCategories(this.playerRepository.allPositionCategories());
 		config.setPositionSidesOfBall(this.playerRepository.allPositionSidesOfBall());
 		config.setYears(this.playerRepository.allYears());
+		config.setNflTeams(this.nflTeamRepository.findAll());
 		return config;
 	}
 	
