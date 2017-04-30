@@ -315,7 +315,12 @@ legend{
 }
 
 #title-area div{
-	display: inline-block !important;
+	display: inline-block;
+    margin-bottom: -15px;
+}
+
+#title-area div .btn{
+	padding: 6px 22px;;
 }
 
 #title-area #filters-title{
@@ -334,4 +339,71 @@ legend{
 #show-available-checkbox{
 	margin-top: -3px;
 	margin-bottom: 20px;
+}
+
+#likeness-options{
+	text-align: center;
+	margin: 18px 0px;
+}
+
+#likeness-options .btn{
+	margin-left: 5px;
+	font-size: 20px;
+	color: white;
+	color: #ddd
+}
+
+#likeness-options .btn.active{
+	font-weight: bold;
+	color: white;
+}
+
+#projected-round-options{
+	font-size: 24px;
+	text-align: center;
+	margin-bottom: 75px;
+	margin-top: 45px;
+}
+
+#projected-round-options label{
+	margin-left: 20px;
+}
+
+.player-notes-table-row{
+	background: rgba(0,0,0,0.5);	
+}
+
+.player-notes-table-row-title{
+	font-weight: bold;
+	text-transform: uppercase;
+    color: #a6a6a6;
+    margin-bottom: -7px;
+}
+
+.player-notes-table-row pre{
+	white-space: pre-line;
+	background: none;
+	color: white;
+	border: none;
+	font-family: sans-serif;
+	border-bottom: 1px solid rgba(0,0,0,0.5);
+	width: 85%;
+	margin: 0px auto;
+}
+
+.player-strengths-table, .player-weaknesses-table, .player-summary-table{
+	margin-bottom: 22px;
+}
+
+.player-grade-brief{
+	padding: 3px;
+	border-radius: 4px;
+	color: white;
+}
+
+.player-projected-round-brief{
+	font-style: italic;
+	font-size: 12px;
+	opacity: 0.4;
+	margin-top: 3px;
 }

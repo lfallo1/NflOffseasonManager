@@ -2,15 +2,22 @@ angular.module('nflDraftApp')
         .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModalInstance", "$timeout", "player", 'PlayerService', function ($rootScope, $scope, $uibModalInstance, $timeout, player, PlayerService) {
 
         	$scope.init = function(){
+        		
+        		$scope.projectedRoundOptions = PlayerService.getProjectedRoundOptions();
+        		$scope.likenessOptions = PlayerService.getLikenessOptions();
 
         		$scope.player = player;
 
         		if(!$scope.player.notes.id){
         			$scope.player.notes = {
         				player : {id : $scope.player.id},
-        				notes : '',
         				username : $rootScope.user.username,
-        				grade : 75
+        				summary : '',
+        				strengths : '',
+        				weaknesses : '',
+        				likeness : 3,
+        				projectedRound : 2,
+        				overallGrade : 75
         			}
         		}
         		$scope.sliderVisible = true;
@@ -23,24 +30,24 @@ angular.module('nflDraftApp')
         	    });
         	}
 
-        	$scope.isValidGrade = function(grade){
-        		return PlayerService.isValidGrade(grade);
+        	$scope.isValidGrade = function(overallGrade){
+        		return PlayerService.isValidGrade(overallGrade);
         	};
 
-        	$scope.getClassByPlayerGrade = function(prefix, grade){
-        		if($scope.isValidGrade(grade)){
-        			return PlayerService.getClassByPlayerGrade(prefix, grade);
+        	$scope.getColorByPlayerGrade = function(overallGrade){
+        		if($scope.isValidGrade(overallGrade)){
+        			return 'hsl(' + overallGrade * (1.25) + ', 58%, 50%)';
         		}
-        		return 'danger';
+        		return 'hsl(0, 58%, 50%)';
         	};
 
         	//if the grade is invalid, the display value will be 100 for sake of the progress bar
-        	$scope.sanitizedGradeValue = function(grade){
-        		return $scope.isValidGrade(grade) ? grade : 100;
+        	$scope.sanitizedGradeValue = function(overallGrade){
+        		return $scope.isValidGrade(overallGrade) ? overallGrade : 100;
         	};
 
         	$scope.submit = function(){
-        		if($scope.isValidGrade($scope.player.notes.grade)){
+        		if($scope.isValidGrade($scope.player.notes.overallGrade)){
         			$uibModalInstance.close($scope.player);
         		}
         	};

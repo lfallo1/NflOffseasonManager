@@ -5,15 +5,15 @@
 		<div id="title-area" class="row">
 			<div id="filters-title">Filters</div>
 	    	<div id="combine-button">
-		    	<button ng-show="isCurrentYearSelected()" class="btn btn-default expand-combine-row" ng-click="combine.expanded = !combine.expanded">
+		    	<button class="btn btn-default expand-combine-row" ng-click="toggleExpandAll()">
 					<div class="inner-button-text">
-						Toggle Combine
-						<img src="https://upload.wikimedia.org/wikipedia/en/c/c4/NFL_Combine.png" width="40px" />
+						Toggle Player Details
+						<img src="https://upload.wikimedia.org/wikipedia/en/f/fd/NFL_Draft.png" width="40px" />
 					</div>
 				</button>
 			</div>
-			<div id="nfl-team-options">
-				<div ng-show="isCurrentYearSelected()" >
+			<div id="nfl-team-options" ng-show="isCurrentYearSelected()">
+				<div>
 					<div
 						class="full-width"
 						ng-dropdown-multiselect=""
@@ -30,7 +30,7 @@
 		<form class="form-horizontal">
 		  <fieldset>
 		    <label id="show-favorite-checkbox" class="checkbox-label" ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
-			<label id="show-available-checkbox" class="checkbox-label" id="showAvailablePlayersCheckbox" for="availableOnly"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="didChangeAvailableOnly(); loadPlayers()" />Only show available players</label>
+			<label id="show-available-checkbox" class="checkbox-label" id="showAvailablePlayersCheckbox" for="availableOnly" ng-show="isCurrentYearSelected()"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="didChangeAvailableOnly(); loadPlayers()" />Only show available players</label>
 		    <div class="form-group">
 		      	<div class="col-xs-4">
 		        	<div
@@ -130,8 +130,8 @@
 				<th ng-click="sort('height')">Ht</th>
 				<th ng-click="sort('weight')">Wt</th>
 				<th ng-click="sort('year')">Yr</th>
-				<th ng-show="user">Notes</th>
-				<th ng-show="user" ng-click="sort('notes.grade')">Grade</th>
+				<!-- <th ng-show="user">Notes</th> -->
+				<th ng-show="user" ng-click="sort('notes.overallGrade')">Grade</th>
 				<th ng-show="user" colspan="2"></th>
 			</tr>
 		</thead>
@@ -140,7 +140,7 @@
 				<td>{{player.positionRank}}</td>
 				<td>{{player.projectedRound}}</td>
 				<td class="player-name-row">
-					<button class="btn btn-default" ng-click="player.expanded = !player.expanded" ng-show="!combine.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
+					<button class="btn btn-default" ng-click="player.expanded = !player.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
 					<a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
 					<div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}" width="50px" /><i>{{player.round + ':' + player.pick}}</i></div>
 				</td>
@@ -149,13 +149,18 @@
 				<td>{{player.height}}</td>
 				<td>{{player.weight}}</td>
 				<td>{{player.year}}</td>
-				<td class="max-width-notes" ng-show="user">
+<!-- 				<td class="max-width-notes" ng-show="user">
 					<div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
-				</td>
+				</td> -->
 				<td class="player-grade-button" ng-show="user">
-					<div ng-show="player.notes.id" ng-class="getClassByPlayerGrade('alert alert-', player.notes.grade)">
-						<div class="player-grade-button-number">{{player.notes.grade}}</div>
+					<div class="player-grade-brief" ng-show="player.notes.id">
+						<span ng-class="'player-grade-likeness ' + getLikenessGlyphicon(player.notes)"></span>
+						<span class="player-grade-brief" ng-style="{background: calculateBgColor(player.notes.overallGrade)}">{{player.notes.overallGrade}}</span>
+						<div class="player-projected-round-brief">{{getProjectedRoundText(player.notes)}}&nbsp;</div>
 					</div>
+					<!-- <div ng-show="player.notes.id" ng-class="getClassByPlayerGrade('alert alert-', player.notes.grade)">
+						<div class="player-grade-button-number">{{player.notes.grade}}</div>
+					</div> -->
 				</td>
 				<td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
 				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
@@ -168,7 +173,28 @@
 					</div>
 				</td>
 			</tr>
-			<tr ng-show="(combine.expanded || player.expanded) && isCurrentYearSelected()" class="combine-row-header" ng-repeat-end>
+			<tr ng-show="user && player.expanded && player.notes.id">
+				<td class="player-notes-table-row" colspan="{{user ? 13 : 10}}">
+					<div class="player-strengths-table">
+						<div class="player-notes-table-row-title">Strengths</div>
+						<pre>{{player.notes.strengths || 'N/A'}}</pre>
+					</div>
+					<div class="player-weaknesses-table">
+						<div class="player-notes-table-row-title">Weaknesses</div>
+						<pre>{{player.notes.weaknesses || 'N/A'}}</pre>
+					</div>
+					<div class="player-summary-table">
+						<div class="player-notes-table-row-title">Summary</div>
+						<pre>{{player.notes.summary || 'N/A'}}</pre>
+					</div>
+				</td>
+			</tr>
+			<tr ng-show="user && player.expanded && !player.notes.id">
+				<td class="player-notes-table-row" colspan="{{user ? 13 : 10}}">
+					<div class="player-notes-table-no-data">Click <button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Tag Player</button> to add notes for this prospect</div>
+				</td>
+			</tr>
+			<tr ng-show="player.year < 2018 && player.expanded" class="combine-row-header" ng-repeat-end>
 				<td>
 					<div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
 					<div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">{{player.fortyYardDash || 'N/A'}}</div>

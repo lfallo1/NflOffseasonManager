@@ -60,6 +60,12 @@ angular.module("nflDraftApp")
                 }
                 return dummy;
             };
+            
+            $scope.toggleExpandAll = function(){
+            	for(var i = 0; i < $scope.players.length; i++){
+            		$scope.players[i].expanded = !$scope.players[i].expanded;
+            	}
+            };
 
     		$scope.deleteNote = function(player){
     			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
@@ -76,9 +82,13 @@ angular.module("nflDraftApp")
     				name : player.name,
     				notes : {
     					id : player.notes.id,
-    					notes : player.notes.notes,
+    					summary : player.notes.summary,
+    					strengths : player.notes.strengths,
+    					weaknesses : player.notes.weaknesses,
+    					likeness : player.notes.likeness,
+    					projectedRound : player.notes.projectedRound,
+    					overallGrade : player.notes.overallGrade,
     					username : player.notes.username,
-    					grade : player.notes.grade,
     					player : player.notes.player
     				}
     			}
@@ -87,7 +97,7 @@ angular.module("nflDraftApp")
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/modules/home/modals/playerNotesModal.html',
                     controller: 'PlayerNotesModalCtrl',
-                    size: 'md',
+                    size: 'lg',
                     resolve: {
                         player: function () {
                             return input;
@@ -115,12 +125,6 @@ angular.module("nflDraftApp")
 
     		};
 
-    		$scope.displayNotes = function(notes){
-    			if(notes){
-    				return notes.substring(0,50) + (notes.length > 30 ? '...' : '');
-    			}
-    		};
-
       	$scope.getClassByPlayerGrade = function(prefix, grade){
       		return PlayerService.getClassByPlayerGrade(prefix, grade);
       	};
@@ -138,10 +142,11 @@ angular.module("nflDraftApp")
       		toaster.pop(type, message, title);
       	};
 
+      	//gonna just hard code this. once next years combine starts, i'll change the year.
       	$scope.isCurrentYearSelected = function(){
-      		var currentYear = new Date().getFullYear();
+//      		var currentYear = new Date().getFullYear();
       		return $scope.filterParams.years.filter(function(y){
-      			return y.name == currentYear;
+      			return y.name <= 2017;
       		}).length > 0;
       	};
       	
@@ -149,64 +154,91 @@ angular.module("nflDraftApp")
         $scope.getNflTeamLogo = function(player){
           return (player && player.team && player.team.team) ? logoPlaceholder.replace(/{TEAM}/g,player.team.team) : '';
         };
+        
+        $scope.getProjectedRoundText = function(notes){
+        	if(notes && notes.id){
+        		return PlayerService.getProjectedRoundOptions().filter(function(d){
+        			return d.round == notes.projectedRound;
+        		})[0].text + ' rd';
+        	}
+        	return '';
+        };
+        
+        $scope.getLikenessGlyphicon = function(notes){
+        	if(!notes || !notes.id){ return ''; }
+        	var base = 'glyphicon glyphicon-';
+        	if(notes.likeness > 3){
+        		return base+='thumbs-up text-success';
+        	} else if(notes.likeness < 3){
+        		return base +='thumbs-down text-danger';
+        	}
+        	return base+='hand-left text-warning';
+        };
+        
+        //given a number b/w 0 and 100, get the color value
+        $scope.calculateBgColor = function(overallGrade){
+        	return 'hsl(' + overallGrade * (1.25) + ', 58%, 50%)';
+        };
+        
+        
 
     		var init = function(){
 
     			$scope.favorite = false;
     			$scope.availableOnly = true;
 
-    		$scope.yearOptions = [];
-        	$scope.collegeOptions = [];
-        	$scope.conferenceOptions = [];
-        	$scope.positionOptions = [];
-        	$scope.positionCategoryOptions = [];
-        	$scope.positionSideOfBallOptions = [];
-        	$scope.nflTeamOptions = [];
+	    		$scope.yearOptions = [];
+	        	$scope.collegeOptions = [];
+	        	$scope.conferenceOptions = [];
+	        	$scope.positionOptions = [];
+	        	$scope.positionCategoryOptions = [];
+	        	$scope.positionSideOfBallOptions = [];
+	        	$scope.nflTeamOptions = [];
+	
+	        	$scope.filterParams = {
+	        		years : [{id:1,name:2018}],
+	        		positions : [],
+	        		positionCategories : [],
+	        		positionSidesOfBall : [{"id": 1,"name": "offense"},{"id": 2,"name": "defense"}],
+	        		conferences : [],
+	        		colleges : [],
+	        		nflTeams: []
+	        	};
 
-        	$scope.filterParams = {
-        		years : [{id:0,name:2017}],
-        		positions : [],
-        		positionCategories : [],
-        		positionSidesOfBall : [{"id": 1,"name": "offense"},{"id": 2,"name": "defense"}],
-        		conferences : [],
-        		colleges : [],
-        		nflTeams: []
-        	};
+		          $scope.smartButtonSettings = {
+		          	displayProp: 'name',
+		          	externalIdProp: '',
+		          	smartButtonMaxItems: 3,
+		          	smartButtonTextConverter: function(itemText, originalItem) {
+		                  return itemText;
+		              }
+		          };
 
-          $scope.smartButtonSettings = {
-          	displayProp: 'name',
-          	externalIdProp: '',
-          	smartButtonMaxItems: 3,
-          	smartButtonTextConverter: function(itemText, originalItem) {
-                  return itemText;
-              }
-          };
+		          $scope.onMultiSelectEvents = {
+		          	onItemSelect : function(){$scope.loadPlayers();},
+		            onItemDeselect : function(){$scope.loadPlayers();}
+		          };
 
-          $scope.onMultiSelectEvents = {
-          	onItemSelect : function(){$scope.loadPlayers();},
-            onItemDeselect : function(){$scope.loadPlayers();}
-          };
-
-        	$scope.sortParam = {
-        		value : 'projectedRound',
-        		direction : 1
-        	}
+	        	$scope.sortParam = {
+	        		value : 'positionRank',
+	        		direction : 1
+	        	}
 
     			$rootScope.currentPage = "Home";
     			$scope.loadPlayers();
 
-        	$scope.yearOptions = ConfigurationService.getYears();
-        	$scope.collegeOptions = ConfigurationService.getColleges();
-        	$scope.conferenceOptions = ConfigurationService.getConferences();
-        	$scope.positionOptions = ConfigurationService.getPositions();
-        	$scope.positionCategoryOptions = ConfigurationService.getPositionCategories();
-        	$scope.positionSideOfBallOptions = ConfigurationService.getPositionSidesOfBall();
-          $scope.nflTeamOptions = ConfigurationService.getNflTeams();
+	        	$scope.yearOptions = ConfigurationService.getYears();
+	        	$scope.collegeOptions = ConfigurationService.getColleges();
+	        	$scope.conferenceOptions = ConfigurationService.getConferences();
+	        	$scope.positionOptions = ConfigurationService.getPositions();
+	        	$scope.positionCategoryOptions = ConfigurationService.getPositionCategories();
+	        	$scope.positionSideOfBallOptions = ConfigurationService.getPositionSidesOfBall();
+	        	$scope.nflTeamOptions = ConfigurationService.getNflTeams();
 
-        	//flag determining whether to show the combine results row
-        	$scope.combine = {
-        		expanded : false
-        	};
+	        	//flag determining whether to show the combine results row
+	        	$scope.combine = {
+	        		expanded : false
+	        	};
     		};
 
     		init();

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.lancefallon.usermgmt.config.exception.model.CustomErrorMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.config.exception.model.InvalidCredentialsException;
+import com.lancefallon.usermgmt.config.exception.model.InvalidUserInputException;
 
 /**
  * global error handler / response generator
@@ -33,5 +34,10 @@ public class ErrorResponseHandler {
 	@ExceptionHandler(DatabaseException.class)
     ResponseEntity<CustomErrorMessage> handleDatabaseException(DatabaseException ex) throws IOException {
         return new ResponseEntity<CustomErrorMessage>(ex.getError(), HttpStatus.SERVICE_UNAVAILABLE);
+    }
+	
+	@ExceptionHandler(InvalidUserInputException.class)
+    ResponseEntity<CustomErrorMessage> handleInvalidUserInputException(InvalidUserInputException ex) throws IOException {
+        return new ResponseEntity<CustomErrorMessage>(ex.getError(), HttpStatus.BAD_REQUEST);
     }
 }

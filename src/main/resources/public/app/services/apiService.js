@@ -44,14 +44,15 @@
 				$http.get(url, headers).then(function(res){
 					deferred.resolve(res.data);
 				}, function(err){
-					if(err.data.error_description.indexOf('expired') > -1){
+					if(err.data.error_description && err.data.error_description.indexOf('expired') > -1){
 						tryRefreshToken().then(function(){
 							return service.apiSendGet(url, deferred);
 						}, function(err){
 							deferred.reject();
 						});
 					} else{
-						LoginService.clearUser();
+						console.log(err.data);
+//						LoginService.clearUser();
 						deferred.reject(err);
 					}
 				});
@@ -69,14 +70,15 @@
 				$http.post(url, payload, headers).then(function(res){
 					deferred.resolve(res.data);
 				}, function(err){
-					if(err.data.error_description.indexOf('expired')){
+					if(err.data.error_description && err.data.error_description.indexOf('expired')){
 						tryRefreshToken().then(function(){
 							return service.apiSendPost(url, payload, deferred);
 						}, function(err){
 							deferred.reject();
 						})
 					} else{
-						LoginService.clearUser();
+						console.log(err);
+//						LoginService.clearUser();
 						deferred.reject(err);
 					}
 				});

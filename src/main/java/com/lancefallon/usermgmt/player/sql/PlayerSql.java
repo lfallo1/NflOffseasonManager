@@ -66,7 +66,7 @@ public interface PlayerSql {
 	  "inner join position_category pc on pos.category = pc.id "+
 	  "inner join position_side_of_ball ps on pc.position_side_of_ball = ps.id where position_rank > 0";
 	
-	static final String PLAYER_FIND_ALL_WITH_NOTES = "SELECT pn.summary, pn.strengths, pn.weaknesses, pn.likeness, pn.projected_round as notes_projected_round, pn.username, pn.id as notes_id, pn.overall_grade, rank, p.name, height, weight, position_rank, projected_round, year_class,"+ 
+	static final String PLAYER_FIND_ALL_WITH_NOTES = "SELECT pn.summary, pn.strengths, pn.weaknesses, pn.likeness, pn.projected_round as notes_projected_round, pn.username, pn.id as notes_id, pn.overall_grade, rank, p.name, height, weight, position_rank, p.projected_round, year_class,"+ 
 		       "p.id, year, p.position as position_id, p.college as college_id, college_text, c.name as college_name,"+ 
 		       "conf.id as conf_id, conf.name as conf_name, pos.id as position_id, pos.name as position_name, "+
 		       "pc.id as position_category_id, pc.name as position_category_name, ps.id as position_sideofball_id, ps.name as position_sideofball_name, "+
@@ -97,7 +97,7 @@ public interface PlayerSql {
 	static final String NOTES_STRENGTHS_COL = "strengths";
 	static final String NOTES_WEAKNESSES_COL = "weaknesses";
 	static final String NOTES_LIKENESS_COL = "likeness";
-	static final String NOTES_PROJECTEDROUND_COL = "projected_round";
+	static final String NOTES_PROJECTEDROUND_COL = "notes_projected_round";
 	static final String NOTES_OVERALLGRADE_COL = "overall_grade";
 	
 		

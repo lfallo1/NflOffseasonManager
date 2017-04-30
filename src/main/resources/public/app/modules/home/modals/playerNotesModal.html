@@ -2,26 +2,56 @@
     <h3 class="modal-title">Add / Update Notes for {{player.name}}</h3>
 </div>
 <div class="modal-body">
-    <textarea rows="8" class="form-control" ng-model="player.notes.notes" />
+	<div>
+		<h3>Summary</h3>
+	    <textarea rows="8" class="form-control" ng-model="player.notes.summary"></textarea>
+	</div>
+	<div>
+	    <h3>Strengths</h3>
+	    <textarea rows="8" class="form-control" ng-model="player.notes.strengths"></textarea>
+	</div>
+    <div class="text-area-input">
+	    <h3>Weaknesses</h3>
+	    <textarea rows="8" class="form-control" ng-model="player.notes.weaknesses"></textarea>
+	</div>
+	<div id="likeness-options">
+		<div class="grade-title">General Assessment</div>
+		<div class="btn-group" ng-repeat="option in likenessOptions">
+			<button type="button"
+				ng-class="{'active':player.notes.likeness === option.likeness, 'btn btn-sm btn-default':true}"
+				ng-click="player.notes.likeness = option.likeness"
+				ng-style="player.notes.likeness === option.likeness && {background:getColorByPlayerGrade(player.notes.likeness*20)}">
+				{{option.text}}
+			</button>
+		</div>
+	</div>
+	<div id="projected-round-options">
+		<div class="grade-title">Projected Round</div>
+		<label class="radio-inline" ng-repeat="option in projectedRoundOptions">
+	  		<input type="radio" name="projectedRoundOptions" 
+	  			id="inlineRadioButton{{option.round}}" 
+	  			value={{option.round}}
+	  			ng-model="player.notes.projectedRound" > {{option.text}}
+		</label>
+	</div>
     <div id="player-grade-section">
+    	<div>{{getColorByPlayerGrade(player.notes.overallGrade)}}</div>
 	    <div class="progress">
-		  <div ng-class="getClassByPlayerGrade('progress-bar progress-bar-', player.notes.grade)" 
-			  	role="progressbar" aria-valuenow="sanitizedGradeValue(player.notes.grade)" 
+		  <div class="progress-bar" role="progressbar" aria-valuenow="sanitizedGradeValue(player.notes.overallGrade)" 
 			  	aria-valuemin="0" aria-valuemax="100" 
-			  	ng-style="{'width' : sanitizedGradeValue(player.notes.grade) + '%'}">
+			  	ng-style="{'background-color': getColorByPlayerGrade(player.notes.overallGrade), 'width' : sanitizedGradeValue(player.notes.overallGrade) + '%'}">
 		  </div>
-		  <div ng-show="!isValidGrade(player.notes.grade)" class="text-center text-danger">Please enter a value between 0 and 100</div>
+		  <div ng-show="!isValidGrade(player.notes.overallGrade)" class="text-center text-danger">Please enter a value between 0 and 100</div>
 	  </div>
 	</div>
    	<div id="player-grade-input">
    		<rzslider ng-show="sliderVisible"
-         rz-slider-model="player.notes.grade"
-         rz-slider-options="{floor: 0, ceil: 100}"></rzslider>
-   		<!-- <input name="grade" type="number" ng-model="player.notes.grade" />
-   		<label for="grade">Grade</label> -->
+         rz-slider-model="player.notes.overallGrade"
+         rz-slider-options="{floor: 0, ceil: 100}">
+        </rzslider>
    	</div>
 </div>
 <div class="modal-footer">
-    <button ng-disabled="!isValidGrade(player.notes.grade)" class="btn btn-success" ng-click="submit()" >Save</button>
+    <button ng-disabled="!isValidGrade(player.notes.overallGrade)" class="btn btn-success" ng-click="submit()" >Save</button>
     <button class="btn-link" ng-click="cancel()">Cancel</button>
 </div>

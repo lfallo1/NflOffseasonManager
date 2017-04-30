@@ -5,8 +5,18 @@
 		var players = [];
 		var filtered = [];
 
-		var ignoreNullOrZeroWhenSortingList = ['broadJump', 'verticalJump', 'benchPress', 'threeConeDrill', 'sixtyYardShuttle', 'twentyYardShuttle', 'fortyYardDash'];
+		var ignoreNullOrZeroWhenSortingList = ['broadJump', 'verticalJump', 'benchPress', 'threeConeDrill', 'sixtyYardShuttle', 'twentyYardShuttle', 'fortyYardDash', 'notes.overallGrade'];
 
+		var projectedRoundOptions = [{ round: 1, text: '1st'},{round: 2,text: '2nd'},{round: 3,text: '3rd'},
+		        	        		{round: 4,text: '4th'},{round: 5,text: '5th'},{round: 6,text: '6th'},
+		        	        		{round: 7,text: '7th'},{round: 0,text: 'UDFA'}];
+
+		var likenessOptions = [{ likeness: 1, text: 'Poor'},
+		        {likeness: 2,text: 'Below Average'},
+				{likeness: 3,text: 'Average'},
+				{likeness: 4,text: 'Good'},
+				{likeness: 5,text: 'Great'}];
+		
 		var service = {};
 
 		service.getPlayers = function(){
@@ -164,7 +174,26 @@
 				return prefix + 'danger';
 			}
 		};
-
+		
+		/**
+		 * dropdown options
+		 */
+		service.getProjectedRoundOptions = function(){
+			return projectedRoundOptions;
+		}
+		
+		service.getLikenessOptions = function(){
+			return likenessOptions;
+		}
+		
+		/**
+		 * http://stackoverflow.com/questions/17525215/calculate-color-values-from-green-to-red
+		 */
+		service.percentageToHsl = function(percentage, hue0, hue1) {
+		    var hue = (percentage * (hue1 - hue0)) + hue0;
+		    return 'hsl(' + hue + ', 100%, 50%)';
+		}
+		
 		return service;
 
 	}]);

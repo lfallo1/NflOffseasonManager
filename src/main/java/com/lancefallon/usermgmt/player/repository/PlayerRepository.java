@@ -108,7 +108,7 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 
 	public void updateNotes(String username, PlayerNote notes) throws DatabaseException {
 		try{
-			getJdbcTemplate().update("update player_notes set summary=?, strengths=?, weakness=?,likeness=?,projected_round=?,overall_grade = ? where username = ? and id = ?", 
+			getJdbcTemplate().update("update player_notes set summary=?, strengths=?, weaknesses=?,likeness=?,projected_round=?,overall_grade = ? where username = ? and id = ?", 
 					new Object[]{notes.getSummary(), notes.getStrengths(), notes.getWeaknesses(), 
 					notes.getLikeness(), notes.getProjectedRound(), 
 					notes.getOverallGrade(), username, notes.getId()});
