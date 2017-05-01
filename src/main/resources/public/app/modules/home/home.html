@@ -155,7 +155,7 @@
 				<th ng-click="sort('year')">Yr</th>
 				<!-- <th ng-show="user">Notes</th> -->
 				<th ng-show="user" ng-click="sort('notes.overallGrade')">Grade</th>
-				<th ng-show="user" colspan="2"></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -185,7 +185,7 @@
 						<div class="player-grade-button-number">{{player.notes.grade}}</div>
 					</div> -->
 				</td>
-				<td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
+				<!-- <td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td> -->
 				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
 					<div ng-show="player.notes.id">
 						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit Notes</button>
@@ -194,9 +194,10 @@
 						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Add Notes</button>
 					</div>
 				</td>
+				<td ng-show="!user">&nbsp;</td>
 			</tr>
 			<tr ng-show="user && player.expanded && player.notes.id">
-				<td class="player-notes-table-row" colspan="{{user ? 13 : 10}}">
+				<td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
 					<div class="player-strengths-table">
 						<div class="player-notes-table-row-title">Strengths</div>
 						<pre>{{player.notes.strengths || 'N/A'}}</pre>
@@ -212,12 +213,12 @@
 				</td>
 			</tr>
 			<tr ng-show="user && player.expanded && !player.notes.id">
-				<td class="player-notes-table-row" colspan="{{user ? 13 : 10}}">
+				<td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
 					<div class="player-notes-table-no-data"><button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Click here</button> to add notes for this prospect</div>
 				</td>
 			</tr>
 			<tr ng-show="!user && player.expanded">
-				<td class="player-notes-table-row" colspan="10">
+				<td class="player-notes-table-row" colspan="9">
 					<div class="player-notes-table-no-data">Must be <a class="btn btn-info btn-sm" href="#/login">Logged In</a> to view / edit your player notes</div>
 				</td>
 			</tr>
@@ -258,7 +259,7 @@
 					<div ng-click="sort('armLength')" class="combine-logo">Arms</div>
 					<div ng-class="{'no-value-available' : !player.armLength}" class="combine-data">{{player.armLength || 'N/A'}}</div>
 				</td>
-				<td ng-show="user" colspan="3"></td>
+				<td ng-show="user" colspan="2"></td>
 			</tr>
 		</tbody>
 	</table>

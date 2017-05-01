@@ -154,14 +154,14 @@ angular.module("nflDraftApp")
       		return PlayerService.getClassByPlayerGrade(prefix, grade);
       	};
 
-      	$scope.copyToClipboard = function(player){
-      		var text = player.name;
-      		if($rootScope.user && player.notes.notes){
-      			text += '- ' + player.notes.notes;
-      		}
-      		ngClipboard.toClipboard(text);
-      		toaster.pop('success', '', 'Player copied to clipboard');
-      	}
+//      	$scope.copyToClipboard = function(player){
+//      		var text = player.name;
+//      		if($rootScope.user && player.notes.notes){
+//      			text += '- ' + player.notes.notes;
+//      		}
+//      		ngClipboard.toClipboard(text);
+//      		toaster.pop('success', '', 'Player copied to clipboard');
+//      	}
 
       	$scope.showMessage = function(type, message, title){
       		toaster.pop(type, message, title);

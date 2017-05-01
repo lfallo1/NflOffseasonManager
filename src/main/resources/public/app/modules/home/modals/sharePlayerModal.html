@@ -4,7 +4,7 @@
 <div class="modal-body">
 	<div id="share-modal-friends-list">
 		<div id="no-friends-loser" ng-show="!friends || friends.length === 0">No friends available</div>
-		<div id="select-friends-checkboxes">	
+		<div id="select-friends-checkboxes" ng-show="friends && friends.length > 0">	
 			<div id="select-friends-checkboxes-label">Select friends:</div>	
 		 	<label for="friendscheckbox{{f.friend}}" ng-repeat="f in friends">
 				<input type="checkbox" 
@@ -17,13 +17,13 @@
 		</div>
 	</div>
 	
-	<div id="share-modal-message">
+	<div id="share-modal-message" ng-show="friends && friends.length > 0">
 		<div id="share-modal-message-label">Notes</div>
 		<textarea class="form-control" rows="3" ng-model="notes"></textarea>
 	</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-info full-width" ng-click="share()" >
+    <button class="btn btn-info full-width" ng-click="share()" ng-show="friends && friends.length > 0">
     	<span class="glyphicon glyphicon-share"></span>&nbsp;
     	Share
     </button>
