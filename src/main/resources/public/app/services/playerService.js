@@ -11,11 +11,11 @@
 		        	        		{round: 4,text: '4th'},{round: 5,text: '5th'},{round: 6,text: '6th'},
 		        	        		{round: 7,text: '7th'},{round: 0,text: 'UDFA'}];
 
-		var likenessOptions = [{ likeness: 1, text: 'Poor'},
-		        {likeness: 2,text: 'Below Average'},
-				{likeness: 3,text: 'Average'},
-				{likeness: 4,text: 'Good'},
-				{likeness: 5,text: 'Great'}];
+		var likenessOptions = [{ likeness: 1, text: 'Never'},
+		        {likeness: 2,text: 'Unlikely'},
+				{likeness: 3,text: 'Perhaps'},
+				{likeness: 4,text: 'Yes'},
+				{likeness: 5,text: 'Absolutely'}];
 		
 		var service = {};
 

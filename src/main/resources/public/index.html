@@ -53,6 +53,7 @@
 	<div class="container">
 		<ng-view></ng-view>
 		<toaster-container></toaster-container>
+		<toaster-container toaster-options="{'position-class': 'toast-top-full-width', 'toaster-id': 2}"></toaster-container>
 	</div>
 	
 	<!-- jquery / bootstrap -->
@@ -78,6 +79,8 @@
 	<!-- Controllers -->
 	<script src="app/modules/home/homeController.js"></script>
 	<script src="app/modules/home/modals/playerNotesModalController.js"></script>
+	<script src="app/modules/home/modals/confirmModalController.js"></script>
+	<script src="app/modules/home/modals/sharePlayerModalController.js"></script>
 	<script src="app/modules/login/loginController.js"></script>
 	
 	<!-- Config -->
@@ -91,5 +94,6 @@
 	<script src="app/services/playerService.js"></script>
 	<script src="app/services/configurationService.js"></script>
 	<script src="app/services/loginService.js"></script>
+	<script src="app/services/sharedPlayerPollingService.js"></script>
 </body>
 </html>

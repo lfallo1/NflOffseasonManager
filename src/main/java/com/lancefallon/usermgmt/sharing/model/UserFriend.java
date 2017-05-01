@@ -1,8 +1,10 @@
 package com.lancefallon.usermgmt.sharing.model;
 
 /**
- * represents a "friend" object (a user who initiated a friend request, and the "friend").
- * the state of this object can be pending a response, accepted, or declined
+ * represents a "friend" object (a user who initiated a friend request, and the
+ * "friend"). the state of this object can be pending a response, accepted, or
+ * declined
+ * 
  * @author lancefallon
  *
  */
@@ -14,6 +16,13 @@ public class UserFriend {
 	private Boolean acceptedRequest;
 
 	public UserFriend() {
+	}
+
+	public UserFriend(String user, String friend, Boolean pendingResponse, Boolean acceptedRequest) {
+		this.user = user;
+		this.friend = friend;
+		this.pendingResponse = pendingResponse;
+		this.acceptedRequest = acceptedRequest;
 	}
 
 	public String getUser() {

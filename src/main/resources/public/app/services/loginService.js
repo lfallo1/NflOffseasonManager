@@ -12,9 +12,11 @@
 		
 		service.setUser = function(userDetails){
 			$rootScope.user = userDetails;
+			$rootScope.$emit('begin_polling');
 		};
 		
 		service.clearUser = function(){
+			$rootScope.$emit('stop_polling');
 			PlayerService.clear();
 			$rootScope.user = undefined;
 			$rootScope.authentication = false;

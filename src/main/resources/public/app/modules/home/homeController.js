@@ -1,6 +1,10 @@
 angular.module("nflDraftApp")
-        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", "ngClipboard", function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster, ngClipboard) {
+        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", "ngClipboard", 'SharedPlayerPollingService', function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster, ngClipboard, SharedPlayerPollingService) {
 
+        	$rootScope.$on('new_shared_players', function(){
+        		$scope.sharedPlayers = SharedPlayerPollingService.getSharedPlayers();
+        	});
+        	
         	$scope.loadPlayers = function(){
         		$scope.loading = true;
         		var players = PlayerService.getPlayers();
@@ -68,11 +72,27 @@ angular.module("nflDraftApp")
             };
 
     		$scope.deleteNote = function(player){
-    			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
-    				console.log('deleted');
-    				player.notes = {};
-    				$scope.showMessage('danger', '', 'Player notes removed');
-    			});
+    			
+    			$uibModal.open({
+                    templateUrl: 'app/modules/home/modals/confirmModal.html',
+                    controller: 'ConfirmModalCtrl',
+                    size: 'sm',
+                    resolve: {
+                        data: function () {
+                            return {
+                            	title: 'Confirm Note Deletion',
+                            	message: 'Are you sure you want delete note for ' + player.name + '?'
+                            }
+                        }
+                    }
+                }).result.then(function () {
+        			ApiService.apiSendPost('api/notes/delete', player.notes).then(function(){
+        				console.log('deleted');
+        				player.notes = {};
+        				$scope.showMessage('danger', '', 'Player notes removed');
+        			});
+                });
+
     		};
 
     		$scope.openNotesModal = function(player){
@@ -107,20 +127,25 @@ angular.module("nflDraftApp")
 
                 //wait for the modal instance to resolve
                 modalInstance.result.then(function (result) {
-
-                	player.notes = result.notes;
-
-                    //save / update notes for the player
-                	ApiService.apiSendPost('api/notes', player.notes).then(function (data) {
-                    	if(!player.notes.id){
-                    		player.notes.id = data;
-                    	}
-                    	$scope.showMessage('success', '', 'Notes saved for ' + player.name);
-                    	console.log('success');
-                    }, function (err) {
-                    	$scope.showMessage('error', '', 'Something tragic happened & we couldn\'t save :-(');
-                        console.log(err);
-                    });
+                	if(result.action && result.action === 'DELETE_NOTE'){
+                		$scope.deleteNote(player);
+                	} else{
+	                	player.notes = result.notes;
+	
+	                    //save / update notes for the player
+	                	ApiService.apiSendPost('api/notes', player.notes).then(function (data) {
+	                		 
+	                    	if(!player.notes.id){
+	                    		player.notes.id = data;
+	                    	}
+	                    	$scope.showMessage('success', '', 'Notes saved for ' + player.name);
+	                    	console.log('success');
+	
+	                    }, function (err) {
+	                    	$scope.showMessage('error', '', 'Something tragic happened & we couldn\'t save :-(');
+	                        console.log(err);
+	                    });
+                	}
                 });
 
     		};
@@ -179,11 +204,10 @@ angular.module("nflDraftApp")
         $scope.calculateBgColor = function(overallGrade){
         	return 'hsl(' + overallGrade * (1.25) + ', 58%, 50%)';
         };
-        
-        
 
     		var init = function(){
-
+    			
+    			$scope.sharedPlayers = [];
     			$scope.favorite = false;
     			$scope.availableOnly = true;
 

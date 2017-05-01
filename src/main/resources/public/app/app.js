@@ -34,7 +34,7 @@ angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angul
                 });
  
         }])
-        .run(['$rootScope', 'ApiService', '$location', '$http', 'LoginService', '$route', function ($rootScope, ApiService, $location, $http, LoginService, $route) {
+        .run(['$rootScope', 'ApiService', 'SharedPlayerPollingService', '$location', '$http', 'LoginService', '$route', function ($rootScope, ApiService, SharedPlayerPollingService, $location, $http, LoginService, $route) {
         	
         		$rootScope.clientAuthHeader = {headers : {'Authorization' : 'Basic ' + btoa('trustedclient:secret')}};
         	

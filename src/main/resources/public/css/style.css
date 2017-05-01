@@ -260,10 +260,14 @@ legend{
 	font-size: 20px;
 }
 
-.modal-footer .btn{
+.modal-footer .btn.full-width{
 	font-size: 24px;
 	width: 100%;
-	float: left;
+}
+
+#share-player-button{
+	margin-left: -15px;
+	margin-top: 10px;
 }
 
 .modal-footer .btn-link{
@@ -417,4 +421,11 @@ legend{
 
 #primary-filters{
 	margin-top: 25px;
+}
+
+#delete-notes-button{
+	padding: 7px 20px;
+	font-size: 18px;
+	margin-top: -37px;
+	float: right;
 }

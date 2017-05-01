@@ -1,5 +1,5 @@
 angular.module('nflDraftApp')
-        .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModalInstance", "$timeout", "player", 'PlayerService', function ($rootScope, $scope, $uibModalInstance, $timeout, player, PlayerService) {
+        .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModal", "$uibModalInstance", "$timeout", "player", 'PlayerService', function ($rootScope, $scope, $uibModal, $uibModalInstance, $timeout, player, PlayerService) {
 
         	$scope.init = function(){
         		
@@ -59,6 +59,27 @@ angular.module('nflDraftApp')
 
         	$scope.cancel = function(){
         		$uibModalInstance.dismiss();
+        	};
+        	
+        	$scope.delete = function(){
+        		$uibModalInstance.close({
+        			action: 'DELETE_NOTE'
+        		});
+        	};
+        	
+        	$scope.share = function(){
+                $uibModal.open({
+                    templateUrl: 'app/modules/home/modals/sharePlayerModal.html',
+                    controller: 'SharePlayerModalCtrl',
+                    size: 'lg',
+                    resolve: {
+                        player: function () {
+                            return $scope.player;
+                        }
+                    }
+                }).result.then(function (result) {
+                	//TODO
+                });
         	};
 
         	$scope.init();

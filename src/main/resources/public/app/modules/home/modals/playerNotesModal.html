@@ -1,5 +1,6 @@
 <div class="modal-header">
-    <h3 class="modal-title">Add / Update Notes for {{playerDetails}}</h3>
+    <h3 class="modal-title">{{player.notes.id ? 'Update' : 'Add'}} Notes for {{playerDetails}}</h3>
+    <button ng-show="player.notes.id" id="delete-notes-button" class="btn btn-sm btn-danger" ng-click="delete()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
 </div>
 <div class="modal-body">
 	<div>
@@ -15,7 +16,7 @@
 	    <textarea rows="8" class="form-control" ng-model="player.notes.weaknesses"></textarea>
 	</div>
 	<div id="likeness-options">
-		<div class="grade-title">General Assessment</div>
+		<div class="grade-title">Would Draft?</div>
 		<div class="btn-group" ng-repeat="option in likenessOptions">
 			<button type="button"
 				ng-class="{'active':player.notes.likeness === option.likeness, 'btn btn-sm btn-default':true}"
@@ -52,6 +53,7 @@
    	</div>
 </div>
 <div class="modal-footer">
-    <button ng-disabled="!isValidGrade(player.notes.overallGrade)" class="btn btn-success" ng-click="submit()" >Save</button>
-    <button class="btn-link" ng-click="cancel()">Cancel</button>
+    <button ng-disabled="!isValidGrade(player.notes.overallGrade)" class="btn btn-success full-width" ng-click="submit()" ><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+    <button ng-show="player.notes.id" id="share-player-button" class="btn btn-info full-width" ng-click="share()" ><span class="glyphicon glyphicon-share"></span> Share</button>
+    <button id="cancel-notes-button" class="btn-link"><span ng-click="cancel()">Close</span></button>
 </div>

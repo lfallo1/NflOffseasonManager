@@ -102,6 +102,27 @@
 	</div>
 
 	<div ng-if="loading" class="loading-text text-center">Loading...</div>
+	
+	<div id="shared-players">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Shared By</th>
+					<th>Player</th>
+					<th>Notes</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="shared in sharedPlayers">
+					<td>{{shared.username_sender}}</td>
+					<td>{{shared.player.name}} - {{shared.player.collegeText}}</td>
+					<td>{{shared.messageBody}}</td>
+					<td>{{shared.date | date }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 	<nav id="pagination" aria-label="Page navigation">
 	  <ul class="pagination">
@@ -165,11 +186,10 @@
 				<td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td>
 				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
 					<div ng-show="player.notes.id">
-						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit</button>
-						<div class="delete-note text-danger" ng-click="deleteNote(player)">Remove tag</div>
+						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit Notes</button>
 					</div>
 					<div ng-show="!player.notes.id">
-						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Tag Player</button>
+						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Add Notes</button>
 					</div>
 				</td>
 			</tr>

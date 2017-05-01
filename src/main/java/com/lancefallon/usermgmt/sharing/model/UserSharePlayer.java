@@ -1,6 +1,6 @@
 package com.lancefallon.usermgmt.sharing.model;
 
-import java.sql.Time;
+import java.util.Date;
 
 import com.lancefallon.usermgmt.player.model.Player;
 
@@ -15,7 +15,7 @@ public class UserSharePlayer {
 	private String usernameSender;
 	private String usernameReceiver;
 	private Boolean hasViewed;
-	private Time date;
+	private Date date;
 	private Player player;
 	private String messageBody;
 	private String messageMediaUrl;
@@ -55,11 +55,11 @@ public class UserSharePlayer {
 		this.hasViewed = hasViewed;
 	}
 
-	public Time getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(Time date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
