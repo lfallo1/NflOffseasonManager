@@ -191,7 +191,12 @@
 			</tr>
 			<tr ng-show="user && player.expanded && !player.notes.id">
 				<td class="player-notes-table-row" colspan="{{user ? 13 : 10}}">
-					<div class="player-notes-table-no-data">Click <button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Tag Player</button> to add notes for this prospect</div>
+					<div class="player-notes-table-no-data"><button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Click here</button> to add notes for this prospect</div>
+				</td>
+			</tr>
+			<tr ng-show="!user && player.expanded">
+				<td class="player-notes-table-row" colspan="10">
+					<div class="player-notes-table-no-data">Must be <a class="btn btn-info btn-sm" href="#/login">Logged In</a> to view / edit your player notes</div>
 				</td>
 			</tr>
 			<tr ng-show="player.year < 2018 && player.expanded" class="combine-row-header" ng-repeat-end>
