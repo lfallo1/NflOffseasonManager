@@ -429,3 +429,53 @@ legend{
 	margin-top: -37px;
 	float: right;
 }
+
+#toggle-shared-players{
+	width: 100%;
+	background: linear-gradient(#0d253d, #011 60%, #0d253d)
+}
+
+#shared-players thead{
+	background: #0d253d;
+	color: white;
+}
+
+#shared-players tbody{
+	background: #1c1e22;
+	text-align: center;
+}
+
+#shared-players pre{
+	max-width: 600px;
+	margin: 0px auto;
+	white-space: pre-line;
+	max-height: 60px;
+	background: none;
+	color: white;
+}
+
+#no-shared-players{
+	color: #ee5f5b;
+	text-align: center;
+	font-size: 18px;
+	background: rgba(0,0,0,0.4);
+	padding: 5px 0px;
+	border-radius: 10px;
+	margin-top: -5px;
+}
+
+#select-friends-checkboxes-label{
+	font-size: 18px;
+}
+
+#select-friends-checkboxes label{
+	font-size: 18px;
+	font-weight: bolder;
+	margin-left: 14px;
+	color: #5bc0de;
+}
+
+#share-modal-message-label{
+	margin-top: 15px;
+	font-size: 18px;
+}

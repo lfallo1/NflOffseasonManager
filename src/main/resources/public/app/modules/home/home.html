@@ -103,8 +103,10 @@
 
 	<div ng-if="loading" class="loading-text text-center">Loading...</div>
 	
-	<div id="shared-players">
-		<table class="table table-hover">
+	<div id="shared-players" ng-show="user">
+		<div id="toggle-shared-players" class="btn btn-default btn-lg" ng-click="showSharedPlayers=!showSharedPlayers">Toggle Shared Players</div>
+		<div id="no-shared-players" ng-show="showSharedPlayers && sharedPlayers.length === 0">No shared players available</div>
+		<table class="table table-hover" ng-show="showSharedPlayers && sharedPlayers.length > 0">
 			<thead>
 				<tr>
 					<th>Shared By</th>
@@ -115,9 +117,9 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="shared in sharedPlayers">
-					<td>{{shared.username_sender}}</td>
-					<td>{{shared.player.name}} - {{shared.player.collegeText}}</td>
-					<td>{{shared.messageBody}}</td>
+					<td>{{shared.usernameSender}}</td>
+					<td>{{shared.player.name}} {{shared.player.position.name}} {{shared.player.year}} - {{shared.player.collegeText}}</td>
+					<td><pre>{{shared.messageBody || 'No notes available'}}</pre></td>
 					<td>{{shared.date | date }}</td>
 				</tr>
 			</tbody>
@@ -169,7 +171,7 @@
 				<td>{{player.college.name}}</td>
 				<td>{{player.height}}</td>
 				<td>{{player.weight}}</td>
-				<td>{{player.year}}</td>
+				<td>{{player.year}} (<i>{{player.yearClass}}</i>)</td>
 <!-- 				<td class="max-width-notes" ng-show="user">
 					<div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
 				</td> -->

@@ -8,6 +8,9 @@ angular.module('nflDraftApp')
         		$scope.player = player;
         		ApiService.apiSendGet('api/share/friends').then(function(data){
         			$scope.friends = data;
+        			for(var i = 0; i < $scope.friends.length; i++){
+        				$scope.selectedFriends[$scope.friends[i].friend] = true;
+        			}
         		})
         	};
         	

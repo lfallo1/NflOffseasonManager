@@ -1,5 +1,5 @@
 
-	angular.module('nflDraftApp').service('SharedPlayerPollingService', ['$rootScope', '$q', 'toaster', 'ApiService', function($rootScope, $q, toaster, ApiService){
+	angular.module('nflDraftApp').service('SharedPlayerPollingService', ['$rootScope', '$q', '$timeout', 'toaster', 'ApiService', function($rootScope, $q, $timeout, toaster, ApiService){
 		
 		var service = {};
 		var sharedPlayers = [];
@@ -15,13 +15,16 @@
 		
 		//begin polling
 		service.beginPoll = function(){
-			sharedPlayers = [];
-			//load all shared players that have already been viewed
-			getSharedPlayers().then(function(){
-				running = true;
-				startPoll();
-			})
 			
+			//create a 1 sec delay to allow listeners to register for shared players received events
+			$timeout(function(){
+				sharedPlayers = [];
+				//load all shared players that have already been viewed
+				getSharedPlayers().then(function(){
+					running = true;
+					startPoll();
+				});
+			},1000);			
 		};
 		
 		//turn off flag which will stop the poll after its current request
@@ -34,9 +37,9 @@
 			return sharedPlayers;
 		};
 		
-		var addSharedPlayers = function(sharedPlayers){
-			for(var i = 0; i < sharedPlayers.length; i++){
-				sharedPlayers.push(sharedPlayers[i]);
+		var addSharedPlayers = function(data){
+			for(var i = 0; i < data.length; i++){
+				sharedPlayers.push(data[i]);
 			}
 			$rootScope.$emit('new_shared_players');
 		}
@@ -65,7 +68,7 @@
 		
 		//show notification of new messages
 		var displayResults = function(messages){
-			if(messages.length > 0){
+			if(messages.length > 0 && running){
 				addSharedPlayers(messages);
 				var body = '<div id="messages-toaster">';
 				for(var i = 0; i < messages.length; i++){
@@ -74,7 +77,7 @@
 				body += '</div>'
 				toaster.pop({
 	                type: 'info',
-	                title: 'You have new shared players',
+	                title: 'You have new shared players (Click on this popup to dismiss)',
 	                body: body,
 	                timeout: 300000,
 	                bodyOutputType: 'trustedHtml',

@@ -1,22 +1,26 @@
 <div class="modal-header">
-    <h3 class="modal-title">Share Player Placeholder</h3>
+    <h3 class="modal-title">Share <span class="text-info">{{player.details.name}} {{player.details.position.name}} - {{player.details.collegeText}}</span></h3>
 </div>
 <div class="modal-body">
-	<h3>selected friends: {{selectedFriends}}</h3>
-	<h3>notes: {{notes}}</h3>
-	<h3>mediaUrl: {{mediaUrl}}</h3>
+	<div id="share-modal-friends-list">
+		<div id="no-friends-loser" ng-show="!friends || friends.length === 0">No friends available</div>
+		<div id="select-friends-checkboxes">	
+			<div id="select-friends-checkboxes-label">Select friends:</div>	
+		 	<label for="friendscheckbox{{f.friend}}" ng-repeat="f in friends">
+				<input type="checkbox" 
+					id="friendscheckbox{{f.friend}}"  
+					name="friends" 
+					value="{{f.friend}}" 
+					ng-model="selectedFriends[f.friend]">
+					{{f.friend}}
+			</label>
+		</div>
+	</div>
 	
- 	<label for="friendscheckbox{{f.friend}}" ng-repeat="f in friends">
-		<input type="checkbox" 
-			id="friendscheckbox{{f.friend}}"  
-			name="friends" 
-			value="{{f.friend}}" 
-			ng-model="selectedFriends[f.friend]">
-			{{f.friend}}
-	</label>
-	
-	<textarea class="form-control" ng-model="notes"></textarea>
-	<input class="form-control" type="text" ng-model="mediaUrl" />
+	<div id="share-modal-message">
+		<div id="share-modal-message-label">Notes</div>
+		<textarea class="form-control" rows="3" ng-model="notes"></textarea>
+	</div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-info full-width" ng-click="share()" >
