@@ -361,7 +361,7 @@ legend{
 #projected-round-options{
 	font-size: 24px;
 	text-align: center;
-	margin-bottom: 75px;
+	margin-bottom: 45px;
 	margin-top: 45px;
 }
 
@@ -406,4 +406,15 @@ legend{
 	font-size: 12px;
 	opacity: 0.4;
 	margin-top: 3px;
+}
+
+.grade-title{
+	font-size: 17px;
+	font-weight: bold;
+	opacity: 0.6;
+	text-align: center;
+}
+
+#primary-filters{
+	margin-top: 25px;
 }

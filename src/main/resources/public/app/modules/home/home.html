@@ -31,7 +31,7 @@
 		  <fieldset>
 		    <label id="show-favorite-checkbox" class="checkbox-label" ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
 			<label id="show-available-checkbox" class="checkbox-label" id="showAvailablePlayersCheckbox" for="availableOnly" ng-show="isCurrentYearSelected()"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="didChangeAvailableOnly(); loadPlayers()" />Only show available players</label>
-		    <div class="form-group">
+		    <div id="primary-filters" class="form-group">
 		      	<div class="col-xs-4">
 		        	<div
 		        		class="full-width"

@@ -7,6 +7,10 @@ angular.module('nflDraftApp')
         		$scope.likenessOptions = PlayerService.getLikenessOptions();
 
         		$scope.player = player;
+        		$scope.playerDetails = player.details.name;
+        		if(player.details.position.name && player.details.collegeText){
+        			$scope.playerDetails += ' (' + player.details.position.name +  ' - ' + player.details.collegeText + ')';
+        		}
 
         		if(!$scope.player.notes.id){
         			$scope.player.notes = {
@@ -36,7 +40,8 @@ angular.module('nflDraftApp')
 
         	$scope.getColorByPlayerGrade = function(overallGrade){
         		if($scope.isValidGrade(overallGrade)){
-        			return 'hsl(' + overallGrade * (1.25) + ', 58%, 50%)';
+        			var hue = Math.max(overallGrade * (1.25) - (100-overallGrade)*.67, 0);
+        			return 'hsl(' + hue + ', 58%, 50%)';
         		}
         		return 'hsl(0, 58%, 50%)';
         	};

@@ -79,7 +79,7 @@ angular.module("nflDraftApp")
 
     			var input = {
     				id : player.id,
-    				name : player.name,
+    				details : {position: player.position, name: player.name, collegeText: player.collegeText},
     				notes : {
     					id : player.notes.id,
     					summary : player.notes.summary,
