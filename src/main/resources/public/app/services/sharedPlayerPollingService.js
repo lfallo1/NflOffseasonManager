@@ -85,7 +85,7 @@
 	                type: 'info',
 	                title: 'You have new shared players (Click on this popup to dismiss)',
 	                body: body,
-	                timeout: 300000,
+	                timeout: 30000,
 	                bodyOutputType: 'trustedHtml',
 	                toasterId: 2
 	            });
