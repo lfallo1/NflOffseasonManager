@@ -52,36 +52,11 @@ public class UserSharePlayerService {
 	}
 
 	public List<UserSharePlayer> getSharedPlayers(OAuth2Authentication auth, SharedPlayersDashboardRequestDto dto) throws DatabaseException, InterruptedException {
+		Calendar defaultDateObject = Calendar.getInstance();
+		defaultDateObject.add(Calendar.HOUR, -24*31); //set a default date of 31 days back
+		Date date = dto.getFromDate() != null ? dto.getFromDate() : defaultDateObject.getTime();
 		
-		if(dto.getWaitTimeSeconds() > 0){
-			
-			Calendar dtoDate = Calendar.getInstance();
-			dtoDate.add(Calendar.HOUR, -24); // go back 24 hours to be sure not missing any
-			//if polling, always going to want to exclude old / already viewed entries
-			dto.setHasViewed(false);
-			
-			return this.userShareRepository.getSharedPlayers(auth.getName(), dtoDate.getTime(), dto.getHasViewed());
-			
-			//********* just gonna do the long poll from the front for now *************
-//			//set target time in future (max of two minutes)
-//			Calendar untilTime = Calendar.getInstance();
-//			untilTime.add(Calendar.SECOND, Math.min(dto.getWaitTimeSeconds(), 120));
-//			List<UserSharePlayer> sharedList = new ArrayList<>();
-//			boolean found = false;
-//			
-//			//loop until found or a new result returned
-//			while(Calendar.getInstance().getTimeInMillis() < untilTime.getTimeInMillis() && !found){
-//				sharedList = this.userShareRepository.getSharedPlayers(auth.getName(), dateParam, dto.getHasViewed());
-//				found = sharedList.size() > 0;
-//				Thread.sleep(2000);
-//			}
-//			return sharedList;
-		} else{
-			//for non polling, go back two weeks, and get all messages that HAVE been shown
-			Calendar defaultDateObject = Calendar.getInstance();
-			defaultDateObject.add(Calendar.HOUR, -24*14);
-			return this.userShareRepository.getSharedPlayers(auth.getName(), defaultDateObject.getTime(), dto.getHasViewed());
-		}
+		return this.userShareRepository.getSharedPlayers(auth.getName(), date, dto.getHasViewed());
 	}
 	
 	/**

@@ -57,15 +57,13 @@
 		};
 		
 		//start the poll for new shared players
-		var startPoll = function(date){
+		var startPoll = function(){
 			if(running){
-				ApiService.apiSendPost('api/share/load', {fromDate: date, waitTimeSeconds: 60, hasViewed: false}).then(function(data){
+				ApiService.apiSendPost('api/share/load', {fromDate: null, waitTimeSeconds: 0, hasViewed: false}).then(function(data){
 					displayResults(data);
-//					startPoll(new Date());
-					
 					//for now, not gonna have the server sleep due to thread count issues
 					$timeout(function(){
-						startPoll(new Date())
+						startPoll()
 					},5000);
 					
 				});	
