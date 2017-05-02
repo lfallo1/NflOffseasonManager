@@ -64,20 +64,22 @@ public class UserSharePlayerService {
 			
 			//if polling, always going to want to exclude old / already viewed entries
 			dto.setHasViewed(false);
+			return this.userShareRepository.getSharedPlayers(auth.getName(), dateParam, dto.getHasViewed());
 			
-			//set target time in future (max of two minutes)
-			Calendar untilTime = Calendar.getInstance();
-			untilTime.add(Calendar.SECOND, Math.min(dto.getWaitTimeSeconds(), 120));
-			List<UserSharePlayer> sharedList = new ArrayList<>();
-			boolean found = false;
-			
-			//loop until found or a new result returned
-			while(Calendar.getInstance().getTimeInMillis() < untilTime.getTimeInMillis() && !found){
-				sharedList = this.userShareRepository.getSharedPlayers(auth.getName(), dateParam, dto.getHasViewed());
-				found = sharedList.size() > 0;
-				Thread.sleep(2000);
-			}
-			return sharedList;
+			//********* just gonna do the long poll from the front for now *************
+//			//set target time in future (max of two minutes)
+//			Calendar untilTime = Calendar.getInstance();
+//			untilTime.add(Calendar.SECOND, Math.min(dto.getWaitTimeSeconds(), 120));
+//			List<UserSharePlayer> sharedList = new ArrayList<>();
+//			boolean found = false;
+//			
+//			//loop until found or a new result returned
+//			while(Calendar.getInstance().getTimeInMillis() < untilTime.getTimeInMillis() && !found){
+//				sharedList = this.userShareRepository.getSharedPlayers(auth.getName(), dateParam, dto.getHasViewed());
+//				found = sharedList.size() > 0;
+//				Thread.sleep(2000);
+//			}
+//			return sharedList;
 		} else{
 			//if wait time not set, then just make one query
 			return this.userShareRepository.getSharedPlayers(auth.getName(), dateParam, dto.getHasViewed());

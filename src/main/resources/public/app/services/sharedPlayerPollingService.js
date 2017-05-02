@@ -61,7 +61,13 @@
 			if(running){
 				ApiService.apiSendPost('api/share/load', {fromDate: date, waitTimeSeconds: 60, hasViewed: false}).then(function(data){
 					displayResults(data);
-					startPoll(new Date());
+//					startPoll(new Date());
+					
+					//for now, not gonna have the server sleep due to thread count issues
+					$timeout(function(){
+						startPoll(new Date())
+					},5000);
+					
 				});	
 			}
 		};
