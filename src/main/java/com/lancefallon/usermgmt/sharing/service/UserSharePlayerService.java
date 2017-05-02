@@ -53,7 +53,7 @@ public class UserSharePlayerService {
 
 	public List<UserSharePlayer> getSharedPlayers(OAuth2Authentication auth, SharedPlayersDashboardRequestDto dto) throws DatabaseException, InterruptedException {
 		Calendar defaultDateObject = Calendar.getInstance();
-		defaultDateObject.add(Calendar.HOUR, -24*31); //set a default date of 31 days back
+		defaultDateObject.add(Calendar.HOUR, -24*90); //set a default date of 90 days back
 		Date date = dto.getFromDate() != null ? dto.getFromDate() : defaultDateObject.getTime();
 		
 		return this.userShareRepository.getSharedPlayers(auth.getName(), date, dto.getHasViewed());

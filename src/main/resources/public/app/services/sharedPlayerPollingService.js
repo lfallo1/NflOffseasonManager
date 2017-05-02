@@ -47,8 +47,8 @@
 		var getSharedPlayers = function(){
 			var deferred = $q.defer();
 			ApiService.apiSendPost('api/share/load', {fromDate: null, waitTimeSeconds: 0, hasViewed: true}).then(function(data){
-				deferred.resolve();
 				addSharedPlayers(data);
+				deferred.resolve();
 			}, function(err){
 				console.log(err);
 				deferred.reject();
@@ -57,13 +57,15 @@
 		};
 		
 		//start the poll for new shared players
-		var startPoll = function(){
+		var startPoll = function(date){
 			if(running){
-				ApiService.apiSendPost('api/share/load', {fromDate: null, waitTimeSeconds: 0, hasViewed: false}).then(function(data){
+				ApiService.apiSendPost('api/share/load', {fromDate: date, waitTimeSeconds: 0, hasViewed: false}).then(function(data){
 					displayResults(data);
 					//for now, not gonna have the server sleep due to thread count issues
+					
 					$timeout(function(){
-						startPoll()
+						var ms = new Date().getTime() - (1000*60*60*24*2); //two days back --- still excessive, but safe
+						startPoll(new Date(ms))
 					},5000);
 					
 				});	
