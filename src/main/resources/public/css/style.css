@@ -479,3 +479,23 @@ legend{
 	margin-top: 15px;
 	font-size: 18px;
 }
+
+#shared-players-duration-label{
+	font-size: 16px;
+	font-weight: bolder;
+	margin-top: 10px;
+	margin-bottom: -17px;
+}
+
+#shared-players{
+	border-radius: 5px;
+	background: #1c1e22;
+}
+
+#shared-players-table-duration{
+	margin-bottom: -17px;
+}
+
+#shared-players .table{
+	margin-bottom: 0px;
+}

@@ -37,6 +37,11 @@
 			return sharedPlayers;
 		};
 		
+		service.reloadSharedPlayers = function(date){
+			sharedPlayers = [];
+			return getSharedPlayers(date);
+		};
+		
 		var addSharedPlayers = function(data){
 			for(var i = 0; i < data.length; i++){
 				sharedPlayers.push(data[i]);
@@ -44,9 +49,9 @@
 			$rootScope.$emit('new_shared_players');
 		}
 		
-		var getSharedPlayers = function(){
+		var getSharedPlayers = function(date){
 			var deferred = $q.defer();
-			ApiService.apiSendPost('api/share/load', {fromDate: null, waitTimeSeconds: 0, hasViewed: true}).then(function(data){
+			ApiService.apiSendPost('api/share/load', {fromDate: date, waitTimeSeconds: 0, hasViewed: true}).then(function(data){
 				addSharedPlayers(data);
 				deferred.resolve();
 			}, function(err){

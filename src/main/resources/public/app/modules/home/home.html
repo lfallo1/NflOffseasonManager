@@ -106,6 +106,19 @@
 	<div id="shared-players" ng-show="user">
 		<div id="toggle-shared-players" class="btn btn-default btn-lg" ng-click="showSharedPlayers=!showSharedPlayers">Toggle Shared Players</div>
 		<div id="no-shared-players" ng-show="showSharedPlayers && sharedPlayers.length === 0">No shared players available</div>
+		<div id="shared-players-table-duration" ng-show="showSharedPlayers && sharedPlayers.length > 0">
+			<nav id="pagination" aria-label="Shared Player navigation">
+			  <div id="shared-players-duration-label">Days back</div>
+			  <ul class="pagination">
+			    <li>
+			    	<a ng-repeat="d in selectedDurationOptions"
+			    		ng-class="{'selected-page' : selectedDuration == d.val}" 
+			    		ng-click="reloadSharedPlayers(d)" 
+			    		href="">{{d.text}}</a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
 		<table class="table table-hover" ng-show="showSharedPlayers && sharedPlayers.length > 0">
 			<thead>
 				<tr>

@@ -38,7 +38,7 @@ public interface UserShareSql {
 			"union " +
 			"select receiver, sender, pending, accepted from user_friend where receiver = ? and accepted = true;";
 	
-	static final String GET_SHARED_PLAYERS = "select share.*, p.name, p.college_text, p.height, p.weight, p.year, pos.name as position_name from user_share_player share inner join player p on share.player = p.id inner join position pos on p.position = pos.id where username_receiver = ? and date >= ? and has_viewed = ?";
+	static final String GET_SHARED_PLAYERS = "select share.*, p.name, p.college_text, p.height, p.weight, p.year, pos.name as position_name from user_share_player share inner join player p on share.player = p.id inner join position pos on p.position = pos.id where username_receiver = ? and date >= ? and has_viewed = ? order by date desc";
 	
 	//mappers
 	RowMapper<UserFriend> USERFRIEND_ROW_MAPPER = (rs, rowNum) -> {

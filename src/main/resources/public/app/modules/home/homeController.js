@@ -204,9 +204,18 @@ angular.module("nflDraftApp")
         $scope.calculateBgColor = function(overallGrade){
         	return 'hsl(' + overallGrade * (1.25) + ', 58%, 50%)';
         };
+        
+        //reload the shared players
+        $scope.reloadSharedPlayers = function(option){
+        	$scope.selectedDuration = option.val; //set this so the html page has a flag to determine active class
+        	var duration = $scope.selectedDuration * 1000 * 60 * 60 * 24;
+        	var date = new Date().getTime() - duration;
+        	SharedPlayerPollingService.reloadSharedPlayers(date);
+        };
 
     		var init = function(){
-    			
+    			$scope.selectedDurationOptions = [{val:30,text:'30'},{val:90,text:'90'}, {val:1000,text:'All'}];
+    			$scope.selectedDuration = $scope.selectedDurationOptions[1].val;
     			$scope.sharedPlayers = [];
     			$scope.favorite = false;
     			$scope.availableOnly = true;
