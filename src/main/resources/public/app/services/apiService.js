@@ -111,7 +111,20 @@
 				deferred.reject();
 			});
 			return deferred.promise;
-		}
+		};
+		
+		/**
+		 * update the user metadata table (should only occur after logins)
+		 */
+		service.updateUserMeta = function(){
+			var token = JSON.parse(localStorage.getItem('authorization')).access_token
+			var headers = {headers : {'Authorization' : 'Bearer ' + token}}
+			$http.put('getuser', {}, headers).then(function(res){
+				console.log('user metadata updated result: ' + res.data);
+			}, function(err){
+				console.log('unable to update user metadata', err);
+			});
+		};
 
 		return service;
 

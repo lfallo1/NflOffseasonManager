@@ -13,6 +13,7 @@ angular.module('nflDraftApp').controller('LoginCtrl', ['$q', '$http', '$scope', 
 	$scope.login = function(){
 		var url = 'oauth/token?grant_type=password&username='+ $scope.username +'&password=' + $scope.password;
 		ApiService.tokenEndpoint(url).then(function(res){
+			ApiService.updateUserMeta(); //update the user metadata table
 			PlayerService.clear();
 			$location.path("/");
 		}, function(err){
