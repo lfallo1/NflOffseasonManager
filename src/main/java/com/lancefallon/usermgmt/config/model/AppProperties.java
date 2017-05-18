@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppProperties {
 
-//	@Value("${email.host}")
+	// @Value("${email.host}")
 	private String emailHost;
-//
-//	@Value("${email.port}")
+	//
+	// @Value("${email.port}")
 	private int emailPort;
 
 	@Value("${datasource.url.default}")
@@ -31,7 +31,10 @@ public class AppProperties {
 	@Value("${datasource.driver}")
 	private String dbDriver;
 
-//	@Value("${flyway.locations}")
+	@Value("${nginx.host}")
+	private String nginxHost;
+
+	// @Value("${flyway.locations}")
 	private String flywayLocations;
 
 	public String getEmailHost() {
@@ -60,6 +63,10 @@ public class AppProperties {
 
 	public String getFlywayLocations() {
 		return flywayLocations;
+	}
+
+	public String getNginxHost() {
+		return nginxHost;
 	}
 
 }

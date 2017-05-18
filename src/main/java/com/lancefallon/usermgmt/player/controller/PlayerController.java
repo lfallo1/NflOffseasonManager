@@ -1,6 +1,8 @@
 package com.lancefallon.usermgmt.player.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +38,7 @@ public class PlayerController {
 	}
 	
 	@RequestMapping(value="/export", method=RequestMethod.GET)
-	public ResponseEntity<Boolean> exportAllPlayers(OAuth2Authentication auth) throws DatabaseException, IllegalArgumentException, IllegalAccessException{
-		this.outputService.outputToExcel(auth);
-		return new ResponseEntity<>(true, HttpStatus.OK);
+	public ResponseEntity<Map<String,String>> exportAllPlayers(OAuth2Authentication auth) throws DatabaseException, IllegalArgumentException, IllegalAccessException{
+		return new ResponseEntity<>(Collections.singletonMap("response", this.outputService.outputToExcel(auth)), HttpStatus.OK);
 	}
 }

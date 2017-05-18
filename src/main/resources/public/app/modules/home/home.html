@@ -1,4 +1,6 @@
 <div class="container">
+	
+	<div ng-show="user" ng-disabled="exporting" class="btn btn-success" ng-click="exportPlayers()">{{exporting ? 'Exporting...' : 'Export to excel'}}</div>
 
 	<div id="filters" class="well">
 

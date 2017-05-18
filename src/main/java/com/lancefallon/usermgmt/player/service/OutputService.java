@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -19,7 +18,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 import com.lancefallon.usermgmt.common.util.AppConstants;
+import com.lancefallon.usermgmt.config.exception.model.CustomErrorMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
+import com.lancefallon.usermgmt.config.model.AppProperties;
 import com.lancefallon.usermgmt.player.model.Player;
 
 @Service
@@ -28,7 +29,10 @@ public class OutputService {
 	@Autowired
 	private PlayerService playerService;
 	
-	public void outputToExcel(OAuth2Authentication auth) throws IllegalArgumentException, IllegalAccessException, DatabaseException{
+	@Autowired
+	private AppProperties appProperties;
+	
+	public String outputToExcel(OAuth2Authentication auth) throws IllegalArgumentException, IllegalAccessException, DatabaseException{
 		List<Player> players = playerService.findAll(auth);
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFFont bold = this.createFont(workbook, "Arial", true, (short)12);
@@ -76,16 +80,17 @@ public class OutputService {
 	        }
 		}
 
-        String filename = "player_export_" + auth.getName() + "_" + new Date().getTime() + ".xls";
+        String filename = "nfldraft_export/player_export_" + auth.getName() + "_" + new Date().getTime() + ".xls";
         try {
-            FileOutputStream outputStream = new FileOutputStream("/Users/lancefallon/Desktop/nfldraft_export/" + filename);
+            FileOutputStream outputStream = new FileOutputStream("/usr/local/var/www/" + filename);
             workbook.write(outputStream);
             workbook.close();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new DatabaseException(new CustomErrorMessage("server error","error writing file from db"));
         }
 
-        System.out.println("Done");
+        return appProperties.getNginxHost() + filename;
 	}
 	
 	private XSSFFont createFont(XSSFWorkbook wb, String fontName, boolean isBold, short fontSize){

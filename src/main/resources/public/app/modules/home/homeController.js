@@ -1,9 +1,19 @@
 angular.module("nflDraftApp")
-        .controller("HomeCtrl", ["$rootScope", "$scope", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", "ngClipboard", 'SharedPlayerPollingService', function ($rootScope, $scope, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster, ngClipboard, SharedPlayerPollingService) {
+        .controller("HomeCtrl", ["$rootScope", "$scope", "$window", "PlayerService", "ConfigurationService", "ApiService", "$uibModal", "PlayersApiConstants", "toaster", "ngClipboard", 'SharedPlayerPollingService', function ($rootScope, $scope, $window, PlayerService, ConfigurationService, ApiService, $uibModal, PlayersApiConstants, toaster, ngClipboard, SharedPlayerPollingService) {
 
         	$rootScope.$on('new_shared_players', function(){
         		$scope.sharedPlayers = SharedPlayerPollingService.getSharedPlayers();
         	});
+        	
+        	$scope.exportPlayers = function(){
+        		$scope.exporting = true;
+        		ApiService.apiSendGet("api/players/export").then(function(data){
+        			$scope.exporting = false;
+        			$window.location.href = data.response;
+        		}, function(err){
+        			$scope.exporting = false;
+        		});
+        	};
         	
         	$scope.loadPlayers = function(){
         		$scope.loading = true;
