@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.player.model.Player;
+import com.lancefallon.usermgmt.player.service.OutputService;
 import com.lancefallon.usermgmt.player.service.PlayerService;
 
 /**
@@ -26,8 +27,17 @@ public class PlayerController {
 	@Autowired
 	private PlayerService playerService;
 
+	@Autowired
+	private OutputService outputService;
+
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Player>> findAllPlayers(OAuth2Authentication auth) throws DatabaseException{
 		return new ResponseEntity<>(playerService.findAll(auth), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/export", method=RequestMethod.GET)
+	public ResponseEntity<Boolean> exportAllPlayers(OAuth2Authentication auth) throws DatabaseException, IllegalArgumentException, IllegalAccessException{
+		this.outputService.outputToExcel(auth);
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 }
