@@ -19,6 +19,9 @@ public class AppProperties {
 	// @Value("${email.port}")
 	private int emailPort;
 
+	@Value("${datasource.yt.url}")
+	private String dbYoutubeAgentUrl;
+
 	@Value("${datasource.url.default}")
 	private String dbDefaultUrl;
 
@@ -67,6 +70,10 @@ public class AppProperties {
 
 	public String getNginxHost() {
 		return nginxHost;
+	}
+
+	public String getDbYoutubeAgentUrl() {
+		return dbYoutubeAgentUrl;
 	}
 
 }
