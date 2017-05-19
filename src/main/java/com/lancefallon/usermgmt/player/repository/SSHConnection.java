@@ -1,29 +1,42 @@
 package com.lancefallon.usermgmt.player.repository;
 
+import java.util.Properties;
+
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 public class SSHConnection {
 
-//	private final static String S_PATH_FILE_PRIVATE_KEY = "C:\\Users\\Val\\.ssh\\privatekeyputy.ppk";
-//	private final static String S_PATH_FILE_KNOWN_HOSTS = "C:\\Users\\Val\\.ssh\\known_hosts";
-	private final static String S_PASS_PHRASE = "mypassphrase";
-	private final static int LOCAl_PORT = 3307;
-	private final static int REMOTE_PORT = 3306;
-	private final static int SSH_REMOTE_PORT = 2222;
-	private final static String SSH_USER = "vagrant";
-	private final static String SSH_REMOTE_SERVER = "root";
-	private final static String MYSQL_REMOTE_SERVER = "127.0.0.1";
+    private String strSshUser = "vagrant"; // SSH loging username
+    private String strSshPassword = "vagrant"; // SSH login password
+    private String strSshHost = "127.0.0.1"; // hostname or ip or SSH
+    private int nSshPort = 2222; // remote SSH host port number
+    private String strRemoteHost = "127.0.0.1"; // hostname or ip of your
+                                                                 // database server
+    private int nLocalPort = 3307; // local port number use to bind SSH tunnel
+    private int nRemotePort = 3306; // remote port number of your database
 
-	private Session sesion; // represents each ssh session
+	private Session session; // represents each ssh session
 
 	public void closeSSH() {
-		sesion.disconnect();
+		session.disconnect();
 	}
 
 	public SSHConnection() throws Throwable {
 
-		//TODO
+	       final JSch jsch = new JSch();
+	       Session session = jsch.getSession(strSshUser, strSshHost, nSshPort);
+	       session.setPassword(strSshPassword);
+
+	       final Properties config = new Properties();
+	       config.put("StrictHostKeyChecking", "no");
+	       session.setConfig(config);
+
+	       session.connect();
+	      
+	       try{
+	              session.setPortForwardingL(nLocalPort, strRemoteHost, nRemotePort);
+	       } catch (com.jcraft.jsch.JSchException e) { /* port already forwarded */ }
 
 	}
 }

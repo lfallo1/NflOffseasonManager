@@ -13,6 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppProperties {
 
+	/**
+	 * getMysqlDbDriver()).url(appConfig.getDbStudentsUrl())
+	 * .username(appConfig.getMysqlUsername()).password(appConfig.
+	 * getMysqlPassword()).build();
+	 */
+	@Value("${datasource.mysql.url}")
+	private String dbStudentsUrl;
+
+	@Value("${datasource.mysql.username}")
+	private String mysqlUsername;
+
+	@Value("${datasource.mysql.password}")
+	private String mysqlPassword;
+
+	@Value("${datasource.mysql.driver}")
+	private String mysqlDbDriver;
+
 	// @Value("${email.host}")
 	private String emailHost;
 	//
@@ -74,6 +91,22 @@ public class AppProperties {
 
 	public String getDbYoutubeAgentUrl() {
 		return dbYoutubeAgentUrl;
+	}
+
+	public String getDbStudentsUrl() {
+		return dbStudentsUrl;
+	}
+
+	public String getMysqlUsername() {
+		return mysqlUsername;
+	}
+
+	public String getMysqlPassword() {
+		return mysqlPassword;
+	}
+
+	public String getMysqlDbDriver() {
+		return mysqlDbDriver;
 	}
 
 }

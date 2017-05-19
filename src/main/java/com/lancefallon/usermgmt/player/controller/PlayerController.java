@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.player.model.Player;
+import com.lancefallon.usermgmt.player.repository.StudentsRepository;
 import com.lancefallon.usermgmt.player.repository.YoutubeAgentRepository;
 import com.lancefallon.usermgmt.player.service.OutputService;
 import com.lancefallon.usermgmt.player.service.PlayerService;
@@ -36,6 +37,9 @@ public class PlayerController {
 
 	@Autowired
 	private YoutubeAgentRepository youtubeAgentRepository;
+
+	@Autowired
+	private StudentsRepository studentsRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Player>> findAllPlayers(OAuth2Authentication auth) throws DatabaseException{
@@ -51,6 +55,13 @@ public class PlayerController {
 	public ResponseEntity<Map<String,List<String>>> findYoutubeAgentVideos(OAuth2Authentication auth) throws DatabaseException{
 		Map<String, List<String>> response = new HashMap<>();
 		response.put("response", youtubeAgentRepository.find());
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/students", method=RequestMethod.GET)
+	public ResponseEntity<Map<String,List<String>>> findStudentNames() throws DatabaseException{
+		Map<String, List<String>> response = new HashMap<>();
+		response.put("response", studentsRepository.find());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

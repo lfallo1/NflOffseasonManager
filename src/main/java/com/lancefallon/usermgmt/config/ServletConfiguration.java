@@ -43,7 +43,19 @@ public class ServletConfiguration implements EmbeddedServletContainerCustomizer 
 		return DataSourceBuilder.create().driverClassName(appConfig.getDbDriver()).url(appConfig.getDbYoutubeAgentUrl())
 				.username(appConfig.getDbUsername()).password(appConfig.getDbPassword()).build();
 	}
+	
+	@Bean
+	@Qualifier("Students")
+	public DataSource getStudentsDataSource() {
+		return DataSourceBuilder.create().driverClassName(appConfig.getMysqlDbDriver()).url(appConfig.getDbStudentsUrl())
+				.username(appConfig.getMysqlUsername()).password(appConfig.getMysqlPassword()).build();
+	}
 
+	@Bean
+	public MysqlContextListener mysqlContextListener() {
+	   return new MysqlContextListener();
+	}
+	
 	/**
 	 * configure velocity templating engine for emails
 	 * 
