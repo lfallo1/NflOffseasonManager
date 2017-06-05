@@ -1,4 +1,4 @@
-package com.lancefallon.usermgmt.config.actuator.listener;
+package com.lancefallon.usermgmt.config.jms.Listener;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
