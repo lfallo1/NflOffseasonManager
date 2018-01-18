@@ -13,6 +13,7 @@ public class Config {
 	private List<College> colleges;
 	private List<Conference> conferences;
 	private List<NflTeam> nflTeams;
+	private List<NoteTag> tags;
 
 	public Config() {
 	}
@@ -73,4 +74,11 @@ public class Config {
 		this.nflTeams = nflTeams;
 	}
 
+	public List<NoteTag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<NoteTag> tags) {
+		this.tags = tags;
+	}
 }

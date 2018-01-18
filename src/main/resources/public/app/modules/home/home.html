@@ -1,279 +1,329 @@
 <div class="container">
 
-	<div id="filters" class="well">
+    <div id="filters" class="well">
 
-		<div id="title-area" class="row">
-			<div id="filters-title">Filters</div>
-	    	<div id="combine-button">
-		    	<button class="btn btn-default expand-combine-row" ng-click="toggleExpandAll()">
-					<div class="inner-button-text">
-						Toggle Player Details
-						<img src="https://upload.wikimedia.org/wikipedia/en/f/fd/NFL_Draft.png" width="40px" />
-					</div>
-				</button>
-			</div>
-			<div id="nfl-team-options" ng-show="isCurrentYearSelected()">
-				<div>
-					<div
-						class="full-width"
-						ng-dropdown-multiselect=""
-						options="nflTeamOptions"
-						selected-model="filterParams.nflTeams"
-						extra-settings="smartButtonSettings"
-						translation-texts="{buttonDefaultText: 'Nfl Team'}"
-						events="onMultiSelectEvents">
-					</div>
-				</div>
-			</div>
-		</div>
+        <div id="title-area" class="row">
+            <div id="filters-title">Filters</div>
+            <div id="combine-button">
+                <button class="btn btn-default expand-combine-row" ng-click="toggleExpandAll()">
+                    <div class="inner-button-text">
+                        Toggle Player Details
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/2017_NFL_Draft_logo.svg/1200px-2017_NFL_Draft_logo.svg.png"
+                             width="40px"/>
+                    </div>
+                </button>
+            </div>
+            <div id="nfl-team-options" ng-show="isCurrentYearSelected()">
+                <div>
+                    <div
+                            class="full-width"
+                            ng-dropdown-multiselect=""
+                            options="nflTeamOptions"
+                            selected-model="filterParams.nflTeams"
+                            extra-settings="smartButtonSettings"
+                            translation-texts="{buttonDefaultText: 'Nfl Team'}"
+                            events="onMultiSelectEvents">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<form class="form-horizontal">
-		  <fieldset>
-		    <label id="show-favorite-checkbox" class="checkbox-label" ng-show="user" for="favoritesOnly"><input name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()" />Only show tagged players</label>
-			<label id="show-available-checkbox" class="checkbox-label" id="showAvailablePlayersCheckbox" for="availableOnly" ng-show="isCurrentYearSelected()"><input name="availableOnly" ng-model="availableOnly" type="checkbox" ng-change="didChangeAvailableOnly(); loadPlayers()" />Only show available players</label>
-		    <div id="primary-filters" class="form-group">
-		      	<div class="col-xs-4">
-		        	<div
-		        		class="full-width"
-		        		ng-dropdown-multiselect=""
-		        		options="positionOptions"
-		        		selected-model="filterParams.positions"
-		        		extra-settings="smartButtonSettings"
-		        		translation-texts="{buttonDefaultText: 'Positions'}"
-			        	events="onMultiSelectEvents">
-		        	</div>
-		      	</div>
-				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect=""
-		        		class="full-width"
-			        	options="positionCategoryOptions"
-			        	selected-model="filterParams.positionCategories"
-			        	extra-settings="smartButtonSettings"
-			        	translation-texts="{buttonDefaultText: 'Position Groups'}"
-			        	events="onMultiSelectEvents">
-			        </div>
-		      	</div>
-				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect=""
-		        		class="full-width"
-			        	options="positionSideOfBallOptions"
-			        	selected-model="filterParams.positionSidesOfBall"
-			        	extra-settings="smartButtonSettings"
-			        	translation-texts="{buttonDefaultText: 'Off / Def / Spt'}"
-			        	events="onMultiSelectEvents">
-			        </div>
-		      	</div>
+        <form class="form-horizontal">
+            <fieldset>
+                <label id="show-favorite-checkbox" class="checkbox-label" ng-show="user" for="favoritesOnly"><input
+                        name="favoritesOnly" ng-model="favorite" type="checkbox" ng-change="loadPlayers()"/>Only show
+                    tagged players</label>
+                <label id="show-available-checkbox" class="checkbox-label" id="showAvailablePlayersCheckbox"
+                       for="availableOnly" ng-show="isCurrentYearSelected()"><input name="availableOnly"
+                                                                                    ng-model="availableOnly"
+                                                                                    type="checkbox"
+                                                                                    ng-change="didChangeAvailableOnly(); loadPlayers()"/>Only
+                    show available players</label>
+                <div id="primary-filters" class="form-group">
+                    <div class="col-xs-4">
+                        <div
+                                class="full-width"
+                                ng-dropdown-multiselect=""
+                                options="positionOptions"
+                                selected-model="filterParams.positions"
+                                extra-settings="smartButtonSettings"
+                                translation-texts="{buttonDefaultText: 'Positions'}"
+                                events="onMultiSelectEvents">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div ng-dropdown-multiselect=""
+                             class="full-width"
+                             options="positionCategoryOptions"
+                             selected-model="filterParams.positionCategories"
+                             extra-settings="smartButtonSettings"
+                             translation-texts="{buttonDefaultText: 'Position Groups'}"
+                             events="onMultiSelectEvents">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div ng-dropdown-multiselect=""
+                             class="full-width"
+                             options="positionSideOfBallOptions"
+                             selected-model="filterParams.positionSidesOfBall"
+                             extra-settings="smartButtonSettings"
+                             translation-texts="{buttonDefaultText: 'Off / Def / Spt'}"
+                             events="onMultiSelectEvents">
+                        </div>
+                    </div>
 
-		      	<div class="col-xs-4">
-		        	<div
-		        		ng-dropdown-multiselect=""
-		        		class="full-width"
-		        		options="collegeOptions"
-		        		selected-model="filterParams.colleges"
-		        		extra-settings="smartButtonSettings"
-		        		translation-texts="{buttonDefaultText: 'Colleges'}"
-			        	events="onMultiSelectEvents">
-		        	</div>
-		      	</div>
-				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect=""
-		        		class="full-width"
-			        	options="conferenceOptions"
-			        	selected-model="filterParams.conferences"
-			        	extra-settings="smartButtonSettings"
-			        	translation-texts="{buttonDefaultText: 'Conferences'}"
-			        	events="onMultiSelectEvents">
-			        </div>
-		      	</div>
-				<div class="col-xs-4">
-		        	<div ng-dropdown-multiselect=""
-		        		class="full-width"
-			        	options="yearOptions"
-			        	selected-model="filterParams.years"
-			        	extra-settings="smartButtonSettings"
-			        	translation-texts="{buttonDefaultText: 'Years'}"
-			        	events="onMultiSelectEvents">
-			        </div>
-		      	</div>
-		    </div>
-		  </fieldset>
-		</form>
+                    <div class="col-xs-4">
+                        <div
+                                ng-dropdown-multiselect=""
+                                class="full-width"
+                                options="collegeOptions"
+                                selected-model="filterParams.colleges"
+                                extra-settings="smartButtonSettings"
+                                translation-texts="{buttonDefaultText: 'Colleges'}"
+                                events="onMultiSelectEvents">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div ng-dropdown-multiselect=""
+                             class="full-width"
+                             options="conferenceOptions"
+                             selected-model="filterParams.conferences"
+                             extra-settings="smartButtonSettings"
+                             translation-texts="{buttonDefaultText: 'Conferences'}"
+                             events="onMultiSelectEvents">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div ng-dropdown-multiselect=""
+                             class="full-width"
+                             options="yearOptions"
+                             selected-model="filterParams.years"
+                             extra-settings="smartButtonSettings"
+                             translation-texts="{buttonDefaultText: 'Years'}"
+                             events="onMultiSelectEvents">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
 
-	</div>
+    </div>
 
-	<div ng-if="loading" class="loading-text text-center">Loading...</div>
-	
-	<div id="shared-players" ng-show="user">
-		<div id="toggle-shared-players" class="btn btn-default btn-lg" ng-click="showSharedPlayers=!showSharedPlayers">Toggle Shared Players</div>
-		<div id="no-shared-players" ng-show="showSharedPlayers && sharedPlayers.length === 0">No shared players available</div>
-		<div id="shared-players-table-duration" ng-show="showSharedPlayers && sharedPlayers.length > 0">
-			<nav id="pagination" aria-label="Shared Player navigation">
-			  <div id="shared-players-duration-label">Days back</div>
-			  <ul class="pagination">
-			    <li>
-			    	<a ng-repeat="d in selectedDurationOptions"
-			    		ng-class="{'selected-page' : selectedDuration == d.val}" 
-			    		ng-click="reloadSharedPlayers(d)" 
-			    		href="">{{d.text}}</a>
-			    </li>
-			  </ul>
-			</nav>
-		</div>
-		<table class="table table-hover" ng-show="showSharedPlayers && sharedPlayers.length > 0">
-			<thead>
-				<tr>
-					<th>Shared By</th>
-					<th>Player</th>
-					<th>Notes</th>
-					<th>Date</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="shared in sharedPlayers">
-					<td>{{shared.usernameSender}}</td>
-					<td>{{shared.player.name}} {{shared.player.position.name}} {{shared.player.year}} - {{shared.player.collegeText}}</td>
-					<td><pre>{{shared.messageBody || 'No notes available'}}</pre></td>
-					<td>{{shared.date | date }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+    <div ng-if="loading" class="loading-text text-center">Loading...</div>
 
-	<nav id="pagination" aria-label="Page navigation">
-	  <ul class="pagination">
-	    <li>
-	      <a ng-click="prevPage()" href="" aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	      </a>
-	    </li>
-	    <li ng-repeat="p in getPageNumbers()"><a ng-class="{'selected-page' : getCurrentPageNumber() == p}" ng-click="gotoPage(p)" href="">{{p}}</a></li>
-	    <li>
-	      <a ng-click="nextPage()" href="" aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	      </a>
-	    </li>
-	  </ul>
-	</nav>
+    <div id="shared-players" ng-show="user">
+        <div id="toggle-shared-players" class="btn btn-default btn-lg" ng-click="showSharedPlayers=!showSharedPlayers">
+            Toggle Shared Players
+        </div>
+        <div id="no-shared-players" ng-show="showSharedPlayers && sharedPlayers.length === 0">No shared players
+            available
+        </div>
+        <div id="shared-players-table-duration" ng-show="showSharedPlayers && sharedPlayers.length > 0">
+            <nav id="pagination" aria-label="Shared Player navigation">
+                <div id="shared-players-duration-label">Days back</div>
+                <ul class="pagination">
+                    <li>
+                        <a ng-repeat="d in selectedDurationOptions"
+                           ng-class="{'selected-page' : selectedDuration == d.val}"
+                           ng-click="reloadSharedPlayers(d)"
+                           href="">{{d.text}}</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <table class="table table-hover" ng-show="showSharedPlayers && sharedPlayers.length > 0">
+            <thead>
+            <tr>
+                <th>Shared By</th>
+                <th>Player</th>
+                <th>Notes</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="shared in sharedPlayers">
+                <td>{{shared.usernameSender}}</td>
+                <td>{{shared.player.name}} {{shared.player.position.name}} {{shared.player.year}} -
+                    {{shared.player.collegeText}}
+                </td>
+                <td>
+                    <pre>{{shared.messageBody || 'No notes available'}}</pre>
+                </td>
+                <td>{{shared.date | date }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-	<table class="table">
-		<thead>
-			<tr class="sortable-header">
-				<th ng-click="sort('positionRank')">Pos Rnk</th>
-				<th ng-click="sort('projectedRound')">Proj Rd</th>
-				<th ng-click="sort('name')">Name</th>
-				<th ng-click="sort('position.name')">Pos</th>
-				<th ng-click="sort('college.name')">Col</th>
-				<th ng-click="sort('height')">Ht</th>
-				<th ng-click="sort('weight')">Wt</th>
-				<th ng-click="sort('year')">Yr</th>
-				<!-- <th ng-show="user">Notes</th> -->
-				<th ng-show="user" ng-click="sort('notes.overallGrade')">Grade</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="primary-data-row" ng-class="{'player-drafted-row' : player.round}" ng-repeat-start="player in players">
-				<td>{{player.positionRank}}</td>
-				<td>{{player.projectedRound}}</td>
-				<td class="player-name-row">
-					<button class="btn btn-default" ng-click="player.expanded = !player.expanded"><span ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span></button>
-					<a target="_blank" href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
-					<div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}" width="50px" /><i>{{player.round + ':' + player.pick}}</i></div>
-				</td>
-				<td>{{player.position.name}}</td>
-				<td>{{player.college.name}}</td>
-				<td>{{player.height}}</td>
-				<td>{{player.weight}}</td>
-				<td>{{player.year}} (<i>{{player.yearClass}}</i>)</td>
-<!-- 				<td class="max-width-notes" ng-show="user">
-					<div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
-				</td> -->
-				<td class="player-grade-button" ng-show="user">
-					<div class="player-grade-brief" ng-show="player.notes.id">
-						<span ng-class="'player-grade-likeness ' + getLikenessGlyphicon(player.notes)"></span>
-						<span class="player-grade-brief" ng-style="{background: calculateBgColor(player.notes.overallGrade)}">{{player.notes.overallGrade}}</span>
-						<div class="player-projected-round-brief">{{getProjectedRoundText(player.notes)}}&nbsp;</div>
-					</div>
-					<!-- <div ng-show="player.notes.id" ng-class="getClassByPlayerGrade('alert alert-', player.notes.grade)">
-						<div class="player-grade-button-number">{{player.notes.grade}}</div>
-					</div> -->
-				</td>
-				<!-- <td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td> -->
-				<td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
-					<div ng-show="player.notes.id">
-						<button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit Notes</button>
-					</div>
-					<div ng-show="!player.notes.id">
-						<button class="add-note btn btn-success" ng-click="openNotesModal(player)">Add Notes</button>
-					</div>
-				</td>
-				<td ng-show="!user">&nbsp;</td>
-			</tr>
-			<tr ng-show="user && player.expanded && player.notes.id">
-				<td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
-					<div class="player-strengths-table">
-						<div class="player-notes-table-row-title">Strengths</div>
-						<pre>{{player.notes.strengths || 'N/A'}}</pre>
-					</div>
-					<div class="player-weaknesses-table">
-						<div class="player-notes-table-row-title">Weaknesses</div>
-						<pre>{{player.notes.weaknesses || 'N/A'}}</pre>
-					</div>
-					<div class="player-summary-table">
-						<div class="player-notes-table-row-title">Summary</div>
-						<pre>{{player.notes.summary || 'N/A'}}</pre>
-					</div>
-				</td>
-			</tr>
-			<tr ng-show="user && player.expanded && !player.notes.id">
-				<td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
-					<div class="player-notes-table-no-data"><button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Click here</button> to add notes for this prospect</div>
-				</td>
-			</tr>
-			<tr ng-show="!user && player.expanded">
-				<td class="player-notes-table-row" colspan="9">
-					<div class="player-notes-table-no-data">Must be <a class="btn btn-info btn-sm" href="#/login">Logged In</a> to view / edit your player notes</div>
-				</td>
-			</tr>
-			<tr ng-show="player.year < 2018 && player.expanded" class="combine-row-header" ng-repeat-end>
-				<td>
-					<div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
-					<div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">{{player.fortyYardDash || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('twentyYardShuttle')" class="combine-logo">20-Yd</div>
-					<div ng-class="{'no-value-available' : !player.twentyYardShuttle}" class="combine-data">{{player.twentyYardShuttle || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('sixtyYardShuttle')" class="combine-logo">60-Yd</div>
-					<div ng-class="{'no-value-available' : !player.sixtyYardShuttle}" class="combine-data">{{player.sixtyYardShuttle || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('threeConeDrill')" class="combine-logo">3-Cone</div>
-					<div ng-class="{'no-value-available' : !player.threeConeDrill}" class="combine-data">{{player.threeConeDrill || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('benchPress')" class="combine-logo">Bench</div>
-					<div ng-class="{'no-value-available' : !player.benchPress}" class="combine-data">{{player.benchPress || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('verticalJump')" class="combine-logo">Vert</div>
-					<div ng-class="{'no-value-available' : !player.verticalJump}" class="combine-data">{{player.verticalJump || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('broadJump')" class="combine-logo">Broad</div>
-					<div ng-class="{'no-value-available' : !player.broadJump}" class="combine-data">{{player.broadJump || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('handSize')" class="combine-logo">Hands</div>
-					<div ng-class="{'no-value-available' : !player.handSize}" class="combine-data">{{player.handSize || 'N/A'}}</div>
-				</td>
-				<td>
-					<div ng-click="sort('armLength')" class="combine-logo">Arms</div>
-					<div ng-class="{'no-value-available' : !player.armLength}" class="combine-data">{{player.armLength || 'N/A'}}</div>
-				</td>
-				<td ng-show="user" colspan="2"></td>
-			</tr>
-		</tbody>
-	</table>
+    <nav id="pagination" aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a ng-click="prevPage()" href="" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="p in getPageNumbers()"><a ng-class="{'selected-page' : getCurrentPageNumber() == p}"
+                                                     ng-click="gotoPage(p)" href="">{{p}}</a></li>
+            <li>
+                <a ng-click="nextPage()" href="" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <table class="table">
+        <thead>
+        <tr class="sortable-header">
+            <th ng-click="sort('positionRank')">Pos Rnk</th>
+            <th ng-click="sort('projectedRound')">Proj Rd</th>
+            <th ng-click="sort('name')">Name</th>
+            <th ng-click="sort('position.name')">Pos</th>
+            <th ng-click="sort('college.name')">Col</th>
+            <th ng-click="sort('height')">Ht</th>
+            <th ng-click="sort('weight')">Wt</th>
+            <th ng-click="sort('year')">Yr</th>
+            <!-- <th ng-show="user">Notes</th> -->
+            <th ng-show="user" ng-click="sort('notes.overallGrade')">Grade</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="primary-data-row" ng-class="{'player-drafted-row' : player.round}"
+            ng-repeat-start="player in players">
+            <td>{{player.positionRank}}</td>
+            <td>{{player.projectedRound}}</td>
+            <td class="player-name-row">
+                <button class="btn btn-default" ng-click="player.expanded = !player.expanded"><span
+                        ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span>
+                </button>
+                <a target="_blank"
+                   href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
+                <div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}"
+                                                                          width="50px"/><i>{{player.round + ':' +
+                    player.pick}}</i></div>
+            </td>
+            <td>{{player.position.name}}</td>
+            <td>{{player.college.name}}</td>
+            <td>{{player.height}}</td>
+            <td>{{player.weight}}</td>
+            <td>{{player.year}} <span ng-show="player.yearClass">(<i>{{player.yearClass}}</i>)</span></td>
+            <!-- 				<td class="max-width-notes" ng-show="user">
+                                <div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
+                            </td> -->
+            <td class="player-grade-button" ng-show="user">
+                <div class="player-grade-brief" ng-show="player.notes.id">
+                    <span ng-class="'player-grade-likeness ' + getLikenessGlyphicon(player.notes)"></span>
+                    <span class="player-grade-brief"
+                          ng-style="{background: calculateBgColor(player.notes.overallGrade)}">{{player.notes.overallGrade}}</span>
+                    <div class="player-projected-round-brief">{{getProjectedRoundText(player.notes)}}&nbsp;</div>
+                </div>
+                <!-- <div ng-show="player.notes.id" ng-class="getClassByPlayerGrade('alert alert-', player.notes.grade)">
+                    <div class="player-grade-button-number">{{player.notes.grade}}</div>
+                </div> -->
+            </td>
+            <!-- <td ng-show="user" title="Copy player & notes to clipboard"><button  ng-click="copyToClipboard(player)" class="btn btn-default">Copy <span class="glyphicon glyphicon-copy"></span></button></td> -->
+            <td title="Tag the player and optionally add notes" class="tag-player-button" ng-show="user">
+                <div ng-show="player.notes.id">
+                    <button class="add-note btn btn-info" ng-click="openNotesModal(player)">Edit Notes</button>
+                </div>
+                <div ng-show="!player.notes.id">
+                    <button class="add-note btn btn-success" ng-click="openNotesModal(player)">Add Notes</button>
+                </div>
+            </td>
+            <td ng-show="!user">&nbsp;</td>
+        </tr>
+        <tr ng-show="user && player.expanded && player.notes.id">
+            <td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
+                <div class="player-strengths-table">
+                    <div class="player-notes-table-row-title">Strengths</div>
+                    <pre>{{player.notes.strengths || 'N/A'}}</pre>
+                </div>
+                <div class="player-weaknesses-table">
+                    <div class="player-notes-table-row-title">Weaknesses</div>
+                    <pre>{{player.notes.weaknesses || 'N/A'}}</pre>
+                </div>
+                <div class="player-summary-table">
+                    <div class="player-notes-table-row-title">Summary</div>
+                    <pre>{{player.notes.summary || 'N/A'}}</pre>
+                </div>
+                <div id="player-summary-tags" ng-show="player.notes.tags.length > 0">
+                    <span class="badge" ng-repeat="tag in player.notes.tags">{{tag.name}}</span>
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="user && player.expanded && !player.notes.id">
+            <td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
+                <div class="player-notes-table-no-data">
+                    <button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Click here</button>
+                    to add notes for this prospect
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="!user && player.expanded">
+            <td class="player-notes-table-row" colspan="9">
+                <div class="player-notes-table-no-data">Must be <a class="btn btn-info btn-sm" href="#/login">Logged
+                    In</a> to view / edit your player notes
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="player.year < 2018 && player.expanded" class="combine-row-header" ng-repeat-end>
+            <td>
+                <div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
+                <div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">
+                    {{player.fortyYardDash || 'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('twentyYardShuttle')" class="combine-logo">20-Yd</div>
+                <div ng-class="{'no-value-available' : !player.twentyYardShuttle}" class="combine-data">
+                    {{player.twentyYardShuttle || 'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('sixtyYardShuttle')" class="combine-logo">60-Yd</div>
+                <div ng-class="{'no-value-available' : !player.sixtyYardShuttle}" class="combine-data">
+                    {{player.sixtyYardShuttle || 'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('threeConeDrill')" class="combine-logo">3-Cone</div>
+                <div ng-class="{'no-value-available' : !player.threeConeDrill}" class="combine-data">
+                    {{player.threeConeDrill || 'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('benchPress')" class="combine-logo">Bench</div>
+                <div ng-class="{'no-value-available' : !player.benchPress}" class="combine-data">{{player.benchPress ||
+                    'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('verticalJump')" class="combine-logo">Vert</div>
+                <div ng-class="{'no-value-available' : !player.verticalJump}" class="combine-data">{{player.verticalJump
+                    || 'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('broadJump')" class="combine-logo">Broad</div>
+                <div ng-class="{'no-value-available' : !player.broadJump}" class="combine-data">{{player.broadJump ||
+                    'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('handSize')" class="combine-logo">Hands</div>
+                <div ng-class="{'no-value-available' : !player.handSize}" class="combine-data">{{player.handSize ||
+                    'N/A'}}
+                </div>
+            </td>
+            <td>
+                <div ng-click="sort('armLength')" class="combine-logo">Arms</div>
+                <div ng-class="{'no-value-available' : !player.armLength}" class="combine-data">{{player.armLength ||
+                    'N/A'}}
+                </div>
+            </td>
+            <td ng-show="user" colspan="2"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

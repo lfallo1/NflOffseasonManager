@@ -7,15 +7,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Spring boot - Entry point
- * @author lancefallon
  *
+ * @author lancefallon
  */
 @SpringBootApplication
 @EnableScheduling
-@ComponentScan(basePackages="com.lancefallon.usermgmt")
+@ComponentScan(basePackages = "com.lancefallon.usermgmt")
 public class NflDraftApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NflDraftApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NflDraftApplication.class, args);
+    }
 }
