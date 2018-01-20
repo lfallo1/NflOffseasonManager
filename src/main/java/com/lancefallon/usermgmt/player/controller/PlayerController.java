@@ -6,8 +6,10 @@ import com.lancefallon.usermgmt.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +32,25 @@ public class PlayerController {
     public ResponseEntity<List<Player>> findAllPlayers(Authentication authentication) throws DatabaseException {
         OAuth2Authentication auth = (OAuth2Authentication) authentication;
         return new ResponseEntity<>(playerService.findAll(auth), HttpStatus.OK);
+    }
+
+    //admin endpoints
+
+    @RequestMapping(value = "/{playerId}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Player> getPlayerById(@PathVariable Integer playerId) throws DatabaseException {
+        return new ResponseEntity<>(this.playerService.getPlayerById(playerId), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Player> addPlayer(Player player) throws DatabaseException {
+        return new ResponseEntity<>(this.playerService.addPlayer(player), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{playerId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Boolean> updatePlayer(@PathVariable Integer playerId, Player player) throws DatabaseException {
+        return new ResponseEntity<>(this.playerService.updatePlayer(player), HttpStatus.OK);
     }
 }

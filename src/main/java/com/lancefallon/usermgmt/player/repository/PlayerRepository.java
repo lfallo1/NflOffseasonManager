@@ -45,6 +45,22 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
     }
 
     /**
+     * find player by id
+     *
+     * @param id
+     * @return
+     * @throws DatabaseException
+     */
+    public Player findPlayerById(Integer id) throws DatabaseException {
+        try {
+            String sql = PLAYER_FIND_ALL + " AND p.id = ?";
+            return getJdbcTemplate().queryForObject(sql, new Object[]{id}, PLAYER_ROW_MAPPER);
+        } catch (DataAccessException e) {
+            throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
+        }
+    }
+
+    /**
      * get all positions
      *
      * @return
@@ -323,4 +339,50 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
         }
     }
 
+    /**
+     * add player
+     *
+     * @param player
+     * @return
+     * @throws DatabaseException
+     */
+    public Integer addPlayer(Player player) throws DatabaseException {
+
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(getJdbcTemplate());
+        // set the table name, primary key column name, and the array of column
+        // names
+        jdbcInsert.setTableName("public.player");
+        jdbcInsert.setGeneratedKeyName("id");
+        jdbcInsert.setColumnNames(Arrays.asList("name", "college", "college_text", "position", "height", "weight", "year"));
+
+        // set the values to be inserted
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        parameters.put("name", player.getName());
+        parameters.put("college", player.getCollege());
+        parameters.put("college_text", player.getCollegeText());
+        parameters.put("position", player.getPosition().getId());
+        parameters.put("height", player.getHeight());
+        parameters.put("weight", player.getWeight());
+        parameters.put("year", player.getYear());
+
+        // execute insert
+        Number key = null;
+        try {
+            // perform the insert and return the key
+            key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(
+                    parameters));
+        } catch (Exception e) {
+            throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
+        }
+
+        // return the key (primary key)
+        return key.intValue();
+    }
+
+    public Integer updatePlayer(Player player) throws DatabaseException {
+        return getJdbcTemplate().update("update public.player set college = ?, college_text = ?, position = ?, height = ?, weight = ?, year = ? where id = ?",
+                new Object[]{player.getName(), player.getCollege(), player.getCollegeText(), player.getPosition().getId(),
+                        player.getHeight(), player.getWeight(), player.getYear()});
+    }
 }

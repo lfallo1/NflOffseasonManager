@@ -2,13 +2,11 @@ package com.lancefallon.usermgmt.config.security.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.sql.DataSource;
 
+import com.lancefallon.usermgmt.config.security.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,27 +20,30 @@ import com.lancefallon.usermgmt.config.security.model.UserPrivileges;
 
 @Service
 public class UserRepository extends JdbcDaoSupport {
-	
+
+	public static final String FIND_USER_BY_USERNAME = "select * from public.user where lower(username) = ? limit 1";
+
+	private static final String GET_USER_ROLES_BY_USERNAME = "select * from public.user_role where lower(username) = ?";
+
+	private static final RowMapper<UserRole> USER_ROLE_ROW_MAPPER = (rs, rowNum) -> new UserRole(rs.getString("username"), rs.getString("role"));
+
+	private static final RowMapper<UserPrivileges> USER_ROW_MAPPER = (rs, rowNum) -> {
+		UserPrivileges user = new UserPrivileges();
+		user.setUsername(rs.getString("username"));
+		user.setPassword(rs.getString("password"));
+		user.setEnabled(rs.getBoolean("active"));
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(true);
+		return user;
+	};
+
 	public UserRepository(@Autowired DataSource dataSource) {
 		setDataSource(dataSource);
 	}
 
 	public UserPrivileges tryLogin(String username) {
-		return getJdbcTemplate().queryForObject("select * from public.user where lower(username) = ? limit 1", new Object[]{username.toLowerCase()}, new RowMapper<UserPrivileges>(){
-
-			@Override
-			public UserPrivileges mapRow(ResultSet rs, int rowNum) throws SQLException {
-				UserPrivileges user = new UserPrivileges();
-				user.setUsername(rs.getString("username"));
-				user.setPassword(rs.getString("password"));
-				user.setEnabled(rs.getBoolean("active"));
-				user.setAccountNonExpired(true);
-				user.setAccountNonLocked(true);
-				user.setCredentialsNonExpired(true);
-				return user;
-			}
-			
-		});
+		return getJdbcTemplate().queryForObject(FIND_USER_BY_USERNAME, new Object[]{username.toLowerCase()}, USER_ROW_MAPPER);
 	}
 	
 	/**
@@ -101,4 +102,8 @@ public class UserRepository extends JdbcDaoSupport {
 	        return ((Number) key).intValue();
 	}
 
+    public List<UserRole> getUserRoles(UserPrivileges user) {
+		return getJdbcTemplate()
+				.query(GET_USER_ROLES_BY_USERNAME, new Object[]{user.getUsername().toLowerCase()}, USER_ROLE_ROW_MAPPER);
+    }
 }
