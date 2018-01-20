@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,13 +41,13 @@ public class PlayerController {
 
     @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Player> addPlayer(Player player) throws DatabaseException {
+    public ResponseEntity<Player> addPlayer(@RequestBody Player player) throws DatabaseException {
         return new ResponseEntity<>(this.playerService.addPlayer(player), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{playerId}", method = RequestMethod.PUT)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Boolean> updatePlayer(@PathVariable Integer playerId, Player player) throws DatabaseException {
+    public ResponseEntity<Boolean> updatePlayer(@PathVariable Integer playerId, @RequestBody Player player) throws DatabaseException {
         return new ResponseEntity<>(this.playerService.updatePlayer(player), HttpStatus.OK);
     }
 }

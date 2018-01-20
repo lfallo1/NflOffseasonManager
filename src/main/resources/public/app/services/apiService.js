@@ -87,6 +87,32 @@
 			}
 			return deferred.promise;
 		};
+
+        service.apiSendPut = function(url, payload, deferred){
+            var deferred = deferred || $q.defer();
+            var token = JSON.parse(localStorage.getItem('authorization')).access_token
+            if(token){
+                var headers = {headers : {'Authorization' : 'Bearer ' + token}}
+                $http.put(url, payload, headers).then(function(res){
+                    deferred.resolve(res.data);
+                }, function(err){
+                    if(err.data && err.data.error_description && err.data.error_description.indexOf('expired')){
+                        tryRefreshToken().then(function(){
+                            return service.apiSendPost(url, payload, deferred);
+                        }, function(err){
+                            deferred.reject();
+                        })
+                    } else{
+                        console.log(err);
+//						LoginService.clearUser();
+                        deferred.reject(err);
+                    }
+                });
+            } else{
+                deferred.reject();
+            }
+            return deferred.promise;
+        };
 		
 		var tryRefreshToken = function(){
 			var deferred = $q.defer();

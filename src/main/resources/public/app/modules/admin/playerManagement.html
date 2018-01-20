@@ -1,8 +1,70 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <form>
-                <input type="text" class="form-control" ng-model="player.name"/>
+        <div class="col-md-8 col-md-offset-2">
+            <form id="add-update-player-form">
+                <div class="form-group">
+                    <label for="player-name">Name</label>
+                    <input type="text" class="form-control" id="player-name" placeholder="Player name"
+                           ng-model="player.name">
+                </div>
+                <div id="player-height-form-group" class="form-group">
+                    <label>Height</label>
+                    <rzslider
+                            rz-slider-model="player.height"
+                            rz-slider-options="heightSlider.options"></rzslider>
+                </div>
+                <div class="form-group">
+                    <label for="player-weight">Weight</label>
+                    <input type="number" class="form-control" id="player-weight" ng-model="player.weight">
+                </div>
+                <div class="form-group">
+                    <label>College</label>
+                    <angucomplete-alt id="player-college"
+                                      placeholder="Enter college"
+                                      pause="100"
+                                      selected-object="handleSelectCollege"
+                                      local-data="collegeOptions"
+                                      search-fields="name"
+                                      title-field="name"
+                                      minlength="1"
+                                      initial-value="initialCollege"
+                                      input-class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <angucomplete-alt id="player-position"
+                                      placeholder="Enter position"
+                                      pause="100"
+                                      selected-object="handleSelectPosition"
+                                      local-data="positionOptions"
+                                      search-fields="name"
+                                      title-field="name"
+                                      minlength="1"
+                                      initial-value="initialPosition"
+                                      input-class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <angucomplete-alt id="year-position"
+                                      placeholder="Enter year"
+                                      pause="100"
+                                      selected-object="handleSelectYear"
+                                      local-data="yearOptions"
+                                      search-fields="name"
+                                      title-field="name"
+                                      minlength="1"
+                                      initial-value="initialYear"
+                                      input-class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="player-position-rank">Position Rank</label>
+                    <input type="number" class="form-control" id="player-position-rank" ng-model="player.positionRank">
+                </div>
+
+                <button id="add-update-player-button" type="submit" class="btn btn-primary" ng-click="submit()">
+                    <span ng-if="player.id">Update</span>
+                    <span ng-if="!player.id">Save</span>
+                </button>
             </form>
         </div>
     </div>

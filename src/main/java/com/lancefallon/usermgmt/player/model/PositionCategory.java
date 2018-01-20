@@ -2,38 +2,41 @@ package com.lancefallon.usermgmt.player.model;
 
 public class PositionCategory {
 
-	private Integer id;
-	private String name;
-	private PositionSideOfBall positionSideOfBall;
+    private Integer id;
+    private String name;
+    private PositionSideOfBall positionSideOfBall;
 
-	public PositionCategory(Integer id, String name, PositionSideOfBall positionSideOfBall) {
-		this.id = id;
-		this.name = name;
-		this.positionSideOfBall = positionSideOfBall;
-	}
+    public PositionCategory() {
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public PositionCategory(Integer id, String name, PositionSideOfBall positionSideOfBall) {
+        this.id = id;
+        this.name = name;
+        this.positionSideOfBall = positionSideOfBall;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public PositionSideOfBall getPositionSideOfBall() {
-		return positionSideOfBall;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPositionSideOfBall(PositionSideOfBall positionSideOfBall) {
-		this.positionSideOfBall = positionSideOfBall;
-	}
+    public PositionSideOfBall getPositionSideOfBall() {
+        return positionSideOfBall;
+    }
+
+    public void setPositionSideOfBall(PositionSideOfBall positionSideOfBall) {
+        this.positionSideOfBall = positionSideOfBall;
+    }
 
 }

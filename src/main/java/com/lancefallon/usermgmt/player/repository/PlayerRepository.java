@@ -353,18 +353,20 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
         // names
         jdbcInsert.setTableName("public.player");
         jdbcInsert.setGeneratedKeyName("id");
-        jdbcInsert.setColumnNames(Arrays.asList("name", "college", "college_text", "position", "height", "weight", "year"));
+        jdbcInsert.setColumnNames(Arrays.asList("name", "college", "college_text", "position", "height", "weight", "year", "position_rank", "import_uuid"));
 
         // set the values to be inserted
         Map<String, Object> parameters = new HashMap<String, Object>();
 
         parameters.put("name", player.getName());
-        parameters.put("college", player.getCollege());
+        parameters.put("college", player.getCollege().getId());
         parameters.put("college_text", player.getCollegeText());
         parameters.put("position", player.getPosition().getId());
         parameters.put("height", player.getHeight());
         parameters.put("weight", player.getWeight());
         parameters.put("year", player.getYear());
+        parameters.put("position_rank", player.getPositionRank());
+        parameters.put("import_uuid", UUID.randomUUID());
 
         // execute insert
         Number key = null;
@@ -381,8 +383,12 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
     }
 
     public Integer updatePlayer(Player player) throws DatabaseException {
-        return getJdbcTemplate().update("update public.player set college = ?, college_text = ?, position = ?, height = ?, weight = ?, year = ? where id = ?",
-                new Object[]{player.getName(), player.getCollege(), player.getCollegeText(), player.getPosition().getId(),
-                        player.getHeight(), player.getWeight(), player.getYear()});
+        try {
+            return getJdbcTemplate().update("update public.player set name = ?, college = ?, college_text = ?, position = ?, height = ?, weight = ?, year = ?, position_rank = ? where id = ?",
+                    new Object[]{player.getName(), player.getCollege().getId(), player.getCollegeText(), player.getPosition().getId(),
+                            player.getHeight(), player.getWeight(), player.getYear(), player.getPositionRank(), player.getId()});
+        } catch (DataAccessException e) {
+            throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
+        }
     }
 }

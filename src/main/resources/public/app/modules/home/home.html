@@ -194,6 +194,9 @@
             <td>{{player.positionRank}}</td>
             <td>{{player.projectedRound}}</td>
             <td class="player-name-row">
+                <a ng-show="isAdmin()" class="btn btn-warning" href="#/admin/player/{{player.id}}"><span
+                        class="glyphicon glyphicon-edit"></span>
+                </a>
                 <button class="btn btn-default" ng-click="player.expanded = !player.expanded"><span
                         ng-class="player.expanded ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></span>
                 </button>

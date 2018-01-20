@@ -533,3 +533,57 @@ legend {
     padding: 7px;
     margin-left: 7px;
 }
+
+#add-update-player-button {
+    width: 100%;
+    background: #1CB94E;
+    font-size: 18px;
+}
+
+#add-update-player-button:hover {
+    opacity: 0.9;
+    font-weight: bolder;
+}
+
+#add-update-player-form input {
+    font-size: 20px;
+    height: 40px;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+}
+
+#add-update-player-form label {
+    color: #59B2E0;
+}
+
+#add-update-player-form .rz-bar {
+    height: 16px;
+    background: #2a69dc;
+}
+
+#add-update-player-form .rz-pointer, #add-update-player-form .rz-pointer.rz-active {
+    margin-top: 5px;
+    background: white !important;
+    border: 1px solid #451aff;
+}
+
+#refresh-data-title {
+    font-size: 22px;
+    text-align: center;
+}
+
+#refresh-data-buttons, #add-player-button-wrapper {
+    text-align: center;
+}
+
+#refresh-data-buttons button {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#add-player-button-wrapper button {
+    margin-top: 50px;
+    font-size: 22px;
+    font-weight: bold;
+}
