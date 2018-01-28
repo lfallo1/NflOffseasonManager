@@ -1,0 +1,1 @@
+insert into position (name, category) VALUES ('RS', 10);

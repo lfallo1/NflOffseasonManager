@@ -587,3 +587,44 @@ legend {
     font-size: 22px;
     font-weight: bold;
 }
+
+td.player-data-source {
+    font-weight: normal !important;
+    font-size: 10px !important;
+}
+
+#name-search-wrapper input {
+    margin: 0px auto;
+    width: 40%;
+    height: 40px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#refresh-all-button {
+    text-align: center;
+}
+
+#refresh-all-button .btn {
+    margin-top: 5px;
+    width: 64%;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#import-progress {
+    margin-top: 15px;
+}
+
+#import-progress .progress-bar {
+    display: block;
+    height: 35px;
+}
+
+#latest-import {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}

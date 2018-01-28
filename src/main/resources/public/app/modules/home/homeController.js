@@ -238,7 +238,8 @@ angular.module("nflDraftApp")
                 positionSidesOfBall: [{"id": 1, "name": "offense"}, {"id": 2, "name": "defense"}],
                 conferences: [],
                 colleges: [],
-                nflTeams: []
+                nflTeams: [],
+                name: ""
             };
 
             $scope.smartButtonSettings = {

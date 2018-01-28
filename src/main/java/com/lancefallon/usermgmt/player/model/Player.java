@@ -4,255 +4,264 @@ import com.lancefallon.usermgmt.team.model.NflTeam;
 
 public class Player {
 
-	private Integer id;
-	private Integer rank;
-	private String name;
-	private College college;
-	private String collegeText;
-	private Position position;
-	private Double height;
-	private Double weight;
-	private Integer positionRank;
-	private String projectedRound;
-	private String yearClass;
-	private Integer year;
+    private Integer id;
+    private Integer rank;
+    private String name;
+    private College college;
+    private String collegeText;
+    private Position position;
+    private Double height;
+    private Double weight;
+    private Integer positionRank;
+    private String projectedRound;
+    private String yearClass;
+    private Integer year;
 
-	// workout properties
-	private Double fortyYardDash;
-	private Double benchPress;
-	private Double verticalJump;
-	private Double broadJump;
-	private Double threeConeDrill;
-	private Double twentyYardShuttle;
-	private Double sixtyYardShuttle;
-	private Double handSize;
-	private Double armLength;
+    // workout properties
+    private Double fortyYardDash;
+    private Double benchPress;
+    private Double verticalJump;
+    private Double broadJump;
+    private Double threeConeDrill;
+    private Double twentyYardShuttle;
+    private Double sixtyYardShuttle;
+    private Double handSize;
+    private Double armLength;
 
-	// draft props
-	private Integer round;
-	private Integer pick;
-	private NflTeam team;
+    // draft props
+    private Integer round;
+    private Integer pick;
+    private NflTeam team;
 
-	private PlayerNote notes;
+    private PlayerNote notes;
 
-	public Player() {
-		this.rank = 0;
-	}
+    private String source;
 
-	public Player(Integer id, Integer rank, String name, College college, String collegeText, Position position,
-			Double height, Double weight, Integer positionRank, String projectedRound, String yearClass, Integer year) {
-		this.id = id;
-		this.rank = rank;
-		this.name = name;
-		this.college = college;
-		this.collegeText = collegeText;
-		this.position = position;
-		this.height = height;
-		this.weight = weight;
-		this.positionRank = positionRank;
-		this.projectedRound = projectedRound;
-		this.yearClass = yearClass;
-		this.year = year;
-	}
+    public Player() {
+        this.rank = 0;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Player(Integer id, Integer rank, String name, College college, String collegeText, Position position,
+                  Double height, Double weight, Integer positionRank, String projectedRound, String yearClass, Integer year) {
+        this.id = id;
+        this.rank = rank;
+        this.name = name;
+        this.college = college;
+        this.collegeText = collegeText;
+        this.position = position;
+        this.height = height;
+        this.weight = weight;
+        this.positionRank = positionRank;
+        this.projectedRound = projectedRound;
+        this.yearClass = yearClass;
+        this.year = year;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Integer getRank() {
-		return rank;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setRank(Integer rank) {
-		this.rank = rank;
-	}
+    public Integer getRank() {
+        return rank;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public College getCollege() {
-		return college;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCollege(College college) {
-		this.college = college;
-	}
+    public College getCollege() {
+        return college;
+    }
 
-	public String getCollegeText() {
-		return collegeText;
-	}
+    public void setCollege(College college) {
+        this.college = college;
+    }
 
-	public void setCollegeText(String collegeText) {
-		this.collegeText = collegeText;
-	}
+    public String getCollegeText() {
+        return collegeText;
+    }
 
-	public Position getPosition() {
-		return position;
-	}
+    public void setCollegeText(String collegeText) {
+        this.collegeText = collegeText;
+    }
 
-	public void setPosition(Position position) {
-		this.position = position;
-	}
+    public Position getPosition() {
+        return position;
+    }
 
-	public Double getHeight() {
-		return height;
-	}
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 
-	public void setHeight(Double height) {
-		this.height = height;
-	}
+    public Double getHeight() {
+        return height;
+    }
 
-	public Double getWeight() {
-		return weight;
-	}
+    public void setHeight(Double height) {
+        this.height = height;
+    }
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
+    public Double getWeight() {
+        return weight;
+    }
 
-	public Integer getPositionRank() {
-		return positionRank;
-	}
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
 
-	public void setPositionRank(Integer positionRank) {
-		this.positionRank = positionRank;
-	}
+    public Integer getPositionRank() {
+        return positionRank;
+    }
 
-	public String getProjectedRound() {
-		return projectedRound;
-	}
+    public void setPositionRank(Integer positionRank) {
+        this.positionRank = positionRank;
+    }
 
-	public void setProjectedRound(String projectedRound) {
-		this.projectedRound = projectedRound;
-	}
+    public String getProjectedRound() {
+        return projectedRound;
+    }
 
-	public String getYearClass() {
-		return yearClass;
-	}
+    public void setProjectedRound(String projectedRound) {
+        this.projectedRound = projectedRound;
+    }
 
-	public void setYearClass(String yearClass) {
-		this.yearClass = yearClass;
-	}
+    public String getYearClass() {
+        return yearClass;
+    }
 
-	public Integer getYear() {
-		return year;
-	}
+    public void setYearClass(String yearClass) {
+        this.yearClass = yearClass;
+    }
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    public Integer getYear() {
+        return year;
+    }
 
-	public PlayerNote getNotes() {
-		return notes;
-	}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
-	public void setNotes(PlayerNote notes) {
-		this.notes = notes;
-	}
+    public PlayerNote getNotes() {
+        return notes;
+    }
 
-	public Double getFortyYardDash() {
-		return fortyYardDash;
-	}
+    public void setNotes(PlayerNote notes) {
+        this.notes = notes;
+    }
 
-	public void setFortyYardDash(Double fortyYardDash) {
-		this.fortyYardDash = fortyYardDash;
-	}
+    public Double getFortyYardDash() {
+        return fortyYardDash;
+    }
 
-	public Double getBenchPress() {
-		return benchPress;
-	}
+    public void setFortyYardDash(Double fortyYardDash) {
+        this.fortyYardDash = fortyYardDash;
+    }
 
-	public void setBenchPress(Double benchPress) {
-		this.benchPress = benchPress;
-	}
+    public Double getBenchPress() {
+        return benchPress;
+    }
 
-	public Double getVerticalJump() {
-		return verticalJump;
-	}
+    public void setBenchPress(Double benchPress) {
+        this.benchPress = benchPress;
+    }
 
-	public void setVerticalJump(Double verticalJump) {
-		this.verticalJump = verticalJump;
-	}
+    public Double getVerticalJump() {
+        return verticalJump;
+    }
 
-	public Double getBroadJump() {
-		return broadJump;
-	}
+    public void setVerticalJump(Double verticalJump) {
+        this.verticalJump = verticalJump;
+    }
 
-	public void setBroadJump(Double broadJump) {
-		this.broadJump = broadJump;
-	}
+    public Double getBroadJump() {
+        return broadJump;
+    }
 
-	public Double getThreeConeDrill() {
-		return threeConeDrill;
-	}
+    public void setBroadJump(Double broadJump) {
+        this.broadJump = broadJump;
+    }
 
-	public void setThreeConeDrill(Double threeConeDrill) {
-		this.threeConeDrill = threeConeDrill;
-	}
+    public Double getThreeConeDrill() {
+        return threeConeDrill;
+    }
 
-	public Double getTwentyYardShuttle() {
-		return twentyYardShuttle;
-	}
+    public void setThreeConeDrill(Double threeConeDrill) {
+        this.threeConeDrill = threeConeDrill;
+    }
 
-	public void setTwentyYardShuttle(Double twentyYardShuttle) {
-		this.twentyYardShuttle = twentyYardShuttle;
-	}
+    public Double getTwentyYardShuttle() {
+        return twentyYardShuttle;
+    }
 
-	public Double getSixtyYardShuttle() {
-		return sixtyYardShuttle;
-	}
+    public void setTwentyYardShuttle(Double twentyYardShuttle) {
+        this.twentyYardShuttle = twentyYardShuttle;
+    }
 
-	public void setSixtyYardShuttle(Double sixtyYardShuttle) {
-		this.sixtyYardShuttle = sixtyYardShuttle;
-	}
+    public Double getSixtyYardShuttle() {
+        return sixtyYardShuttle;
+    }
 
-	public Double getHandSize() {
-		return handSize;
-	}
+    public void setSixtyYardShuttle(Double sixtyYardShuttle) {
+        this.sixtyYardShuttle = sixtyYardShuttle;
+    }
 
-	public void setHandSize(Double handSize) {
-		this.handSize = handSize;
-	}
+    public Double getHandSize() {
+        return handSize;
+    }
 
-	public Double getArmLength() {
-		return armLength;
-	}
+    public void setHandSize(Double handSize) {
+        this.handSize = handSize;
+    }
 
-	public void setArmLength(Double armLength) {
-		this.armLength = armLength;
-	}
+    public Double getArmLength() {
+        return armLength;
+    }
 
-	public Integer getRound() {
-		return round;
-	}
+    public void setArmLength(Double armLength) {
+        this.armLength = armLength;
+    }
 
-	public void setRound(Integer round) {
-		this.round = round;
-	}
+    public Integer getRound() {
+        return round;
+    }
 
-	public Integer getPick() {
-		return pick;
-	}
+    public void setRound(Integer round) {
+        this.round = round;
+    }
 
-	public void setPick(Integer pick) {
-		this.pick = pick;
-	}
+    public Integer getPick() {
+        return pick;
+    }
 
-	public NflTeam getTeam() {
-		return team;
-	}
+    public void setPick(Integer pick) {
+        this.pick = pick;
+    }
 
-	public void setTeam(NflTeam team) {
-		this.team = team;
-	}
+    public NflTeam getTeam() {
+        return team;
+    }
 
+    public void setTeam(NflTeam team) {
+        this.team = team;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 }

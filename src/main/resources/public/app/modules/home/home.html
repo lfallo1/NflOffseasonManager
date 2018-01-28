@@ -107,6 +107,11 @@
             </fieldset>
         </form>
 
+        <div id="name-search-wrapper">
+            <input class="form-control" type="text" ng-model="filterParams.name" placeholder="Filter by player name"
+                   ng-blur="loadPlayers()"/>
+        </div>
+
     </div>
 
     <div ng-if="loading" class="loading-text text-center">Loading...</div>
@@ -183,7 +188,7 @@
             <th ng-click="sort('height')">Ht</th>
             <th ng-click="sort('weight')">Wt</th>
             <th ng-click="sort('year')">Yr</th>
-            <!-- <th ng-show="user">Notes</th> -->
+            <th>Source</th>
             <th ng-show="user" ng-click="sort('notes.overallGrade')">Grade</th>
             <th></th>
         </tr>
@@ -211,9 +216,7 @@
             <td>{{player.height}}</td>
             <td>{{player.weight}}</td>
             <td>{{player.year}} <span ng-show="player.yearClass">(<i>{{player.yearClass}}</i>)</span></td>
-            <!-- 				<td class="max-width-notes" ng-show="user">
-                                <div ng-show="player.notes" ng-bind="displayNotes(player.notes.notes)"></div>
-                            </td> -->
+            <td class="player-data-source">{{player.source}}</td>
             <td class="player-grade-button" ng-show="user">
                 <div class="player-grade-brief" ng-show="player.notes.id">
                     <span ng-class="'player-grade-likeness ' + getLikenessGlyphicon(player.notes)"></span>
