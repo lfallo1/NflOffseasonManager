@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angularjs-dropdown-multiselect', 'ui.bootstrap', 'toaster', 'ngClipboard', 'rzModule', 'angucomplete-alt'])
+angular.module('nflDraftApp', ['ngRoute', 'ngAnimate', 'angular-storage', 'angularjs-dropdown-multiselect', 'ui.bootstrap', 'toaster', 'ngClipboard', 'rzModule', 'angucomplete-alt', 'ngStomp'])
     .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
 
         //add an http request interceptor (userful for handling errors from server), or managing / monitoring api requests

@@ -1,21 +1,20 @@
-package com.lancefallon.usermgmt.config.events;
+package com.lancefallon.usermgmt.player.messages;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
-import com.lancefallon.usermgmt.player.repository.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.io.IOException;
 
-public class EventConsumer {
+public class MessageConsumer {
 
-    private Logger logger = LoggerFactory.getLogger(EventConsumer.class);
+    private Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private SimpMessagingTemplate messageTemplate;
 
     /**
      * listen for messages related to import progress
@@ -25,9 +24,12 @@ public class EventConsumer {
     @RabbitListener(queues = "parserProgressQueue")
     public void receive(String payload) {
         try {
-            ParserProgressEvent message = new ObjectMapper().readValue(payload, ParserProgressEvent.class);
-            playerRepository.addParserProgress(message);
-        } catch (IOException | DatabaseException e) {
+            ParserProgressMessage message = new ObjectMapper().readValue(payload, ParserProgressMessage.class);
+
+            //broadcast to /topic/import channel
+            messageTemplate.convertAndSend("/topic/import", message);
+
+        } catch (IOException e) {
             logger.warn("Error adding parser progress: " + e.toString());
         }
 

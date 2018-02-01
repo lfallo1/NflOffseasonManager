@@ -24,6 +24,7 @@
     "angular-animate": "~1.4.7",
     "AngularJS-Toaster": "angularjs-toaster#~2.1.0",
     "angularjs-slider": "^6.4.3",
-    "angucomplete-alt": "^3.0.0"
+    "angucomplete-alt": "^3.0.0",
+    "ng-stomp": "^0.4.0"
   }
 }

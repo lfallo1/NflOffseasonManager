@@ -1,7 +1,7 @@
 package com.lancefallon.usermgmt.player.controller;
 
 import com.google.common.collect.ImmutableMap;
-import com.lancefallon.usermgmt.config.events.ParserProgressEvent;
+import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.player.model.Player;
 import com.lancefallon.usermgmt.player.service.PlayerService;
@@ -76,14 +76,14 @@ public class PlayerController {
 
     @RequestMapping(value = "/refresh-active", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ParserProgressEvent> findActiveImport() throws DatabaseException {
-        ParserProgressEvent event = this.playerService.findActiveImport();
+    public ResponseEntity<ParserProgressMessage> findActiveImport() throws DatabaseException {
+        ParserProgressMessage event = this.playerService.findActiveImport();
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/refresh-latest", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ParserProgressEvent> findLatestImport() throws DatabaseException {
+    public ResponseEntity<ParserProgressMessage> findLatestImport() throws DatabaseException {
         return new ResponseEntity<>(this.playerService.findLatestImport(), HttpStatus.OK);
     }
 }

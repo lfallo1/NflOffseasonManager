@@ -1,4 +1,4 @@
-package com.lancefallon.usermgmt.config.events;
+package com.lancefallon.usermgmt.player.messages;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class EventConsumerConfiguration {
+public class MessageConsumerConfiguration {
 
     @Bean
     @Qualifier("parserEventExchange")
-    public Exchange eventExchange() {
+    public Exchange messageExchange() {
         return new TopicExchange("parserEventExchange");
     }
 
@@ -29,8 +29,8 @@ public class EventConsumerConfiguration {
     }
 
     @Bean
-    public EventConsumer eventReceiver() {
-        return new EventConsumer();
+    public MessageConsumer messageConsumer() {
+        return new MessageConsumer();
     }
 
 }

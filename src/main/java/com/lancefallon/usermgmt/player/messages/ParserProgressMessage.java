@@ -1,18 +1,19 @@
-package com.lancefallon.usermgmt.config.events;
+package com.lancefallon.usermgmt.player.messages;
 
 import java.util.Date;
 
-public class ParserProgressEvent {
+public class ParserProgressMessage {
 
     private String id;
     private String username;
     private Date date;
-    private long progress;
+    private double progress;
     private String description;
     private Date started;
     private Date finished;
 
-    public ParserProgressEvent(){}
+    public ParserProgressMessage() {
+    }
 
     public String getId() {
         return id;
@@ -38,11 +39,11 @@ public class ParserProgressEvent {
         this.date = date;
     }
 
-    public long getProgress() {
+    public double getProgress() {
         return progress;
     }
 
-    public void setProgress(long progress) {
+    public void setProgress(double progress) {
         this.progress = progress;
     }
 

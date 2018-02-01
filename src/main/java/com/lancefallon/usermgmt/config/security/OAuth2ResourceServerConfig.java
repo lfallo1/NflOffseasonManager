@@ -14,25 +14,25 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
-	
-	@Autowired
-	private LogoutSuccessHandler logoutHandler;
 
-	/**
-	 * Use this to configure the access rules for secure resources. By default all resources <i>not</i> in "/oauth/**"
-	 * are protected (but no specific rules about scopes are given, for instance). You also get an
-	 * {@link OAuth2WebSecurityExpressionHandler} by default.
-	 * 
-	 * @param http the current http filter configuration
-	 * @throws Exception if there is a problem
-	 */
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/", "/app/**", "/bower/**", "/lib/**", "/fonts/**", "/images/**", "/api/players/**", "/api/config/**").permitAll()
-			.anyRequest().authenticated().and()
-			.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and()
-			.logout().logoutSuccessHandler(logoutHandler);
-	}
+    @Autowired
+    private LogoutSuccessHandler logoutHandler;
+
+    /**
+     * Use this to configure the access rules for secure resources. By default all resources <i>not</i> in "/oauth/**"
+     * are protected (but no specific rules about scopes are given, for instance). You also get an
+     * {@link OAuth2WebSecurityExpressionHandler} by default.
+     *
+     * @param http the current http filter configuration
+     * @throws Exception if there is a problem
+     */
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/", "/app/**", "/bower/**", "/lib/**", "/fonts/**", "/images/**", "/api/players/**", "/api/config/**", "/shared/**").permitAll()
+                .anyRequest().authenticated().and()
+                .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and()
+                .logout().logoutSuccessHandler(logoutHandler);
+    }
 
 }

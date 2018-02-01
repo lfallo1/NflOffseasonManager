@@ -1,13 +1,12 @@
 package com.lancefallon.usermgmt.player.repository;
 
-import com.lancefallon.usermgmt.config.events.ParserProgressEvent;
+import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.config.exception.model.CustomErrorMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.player.model.*;
 import com.lancefallon.usermgmt.player.sql.PlayerSql;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -398,48 +397,7 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
 
     // --- Import Events --
 
-    public void addParserProgress(ParserProgressEvent event) throws DatabaseException {
-
-        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(getJdbcTemplate());
-        // set the table name, primary key column name, and the array of column
-        // names
-        jdbcInsert.setTableName("public.parser_progress");
-        jdbcInsert.setColumnNames(Arrays.asList("id", "username", "date", "started", "finished", "description", "progress"));
-
-        // set the values to be inserted
-        Map<String, Object> parameters = new HashMap<String, Object>();
-
-        parameters.put("id", event.getId());
-        parameters.put("username", event.getUsername());
-        parameters.put("date", new Date());
-        parameters.put("started", event.getStarted());
-        parameters.put("finished", event.getFinished());
-        parameters.put("description", event.getDescription());
-        parameters.put("progress", event.getProgress());
-
-        // execute insert
-        Number key = null;
-        try {
-            // perform the insert and return the key
-            jdbcInsert.execute(new MapSqlParameterSource(
-                    parameters));
-        } catch (DuplicateKeyException e) {
-            this.updateParserProgress(event);
-        } catch (Exception e) {
-            throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
-        }
-    }
-
-    public Integer updateParserProgress(ParserProgressEvent event) throws DatabaseException {
-        try {
-            return getJdbcTemplate().update("update public.parser_progress set date = ?, description = ?, finished = ?, progress = ? where id = ?",
-                    new Object[]{event.getDate(), event.getDescription(), event.getFinished(), event.getProgress(), event.getId()});
-        } catch (DataAccessException e) {
-            throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
-        }
-    }
-
-    public ParserProgressEvent getActiveImport() throws DatabaseException {
+    public ParserProgressMessage getActiveImport() throws DatabaseException {
         try {
             return getJdbcTemplate().queryForObject("select * from parser_progress where finished is null", PARSER_PROGRESS_ROWMAPPER);
         } catch (EmptyResultDataAccessException e) {
@@ -449,9 +407,9 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
         }
     }
 
-    public ParserProgressEvent findLatestImport() throws DatabaseException {
+    public ParserProgressMessage findLatestImport() throws DatabaseException {
         try {
-            ParserProgressEvent event = getJdbcTemplate().queryForObject("select * from parser_progress where finished is not null order by date desc limit 1", PARSER_PROGRESS_ROWMAPPER);
+            ParserProgressMessage event = getJdbcTemplate().queryForObject("select * from parser_progress where finished is not null order by date desc limit 1", PARSER_PROGRESS_ROWMAPPER);
             return event;
         } catch (EmptyResultDataAccessException e) {
             return null;

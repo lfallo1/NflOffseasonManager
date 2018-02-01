@@ -20,11 +20,10 @@
             <div id="latest-import" ng-show="latestImport">
                 Last import: {{latestImport.date | date:'yyyy-MM-dd hh:mm:ss'}}
             </div>
-            <div class="row" id="import-progress" ng-if="importInProgress">
+            <div class="row" id="import-progress" ng-show="importInProgress">
                 <div class="col-md-6 well col-md-offset-3">
                     <div id="import-progress-title">Import in progress</div>
-                    <div id="import-progress-details" ng-if="importProgress">
-                        <div>Started: {{importProgress.started | date:'yyyy-MM-dd hh:mm:ss'}}</div>
+                    <div id="import-progress-details" ng-show="importProgress">
                         <div>Status: {{importProgress.description}} ({{importProgress.date | date:'yyyy-MM-dd hh:mm:ss'}})
                         </div>
                         <div class="progress-bar" role="progressbar" aria-valuenow="importProgress.progress"

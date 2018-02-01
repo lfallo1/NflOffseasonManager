@@ -1,6 +1,6 @@
 package com.lancefallon.usermgmt.player.sql;
 
-import com.lancefallon.usermgmt.config.events.ParserProgressEvent;
+import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.player.model.*;
 import com.lancefallon.usermgmt.team.model.NflTeam;
 import org.springframework.jdbc.core.RowMapper;
@@ -257,9 +257,9 @@ public interface PlayerSql {
 
     };
 
-    RowMapper<ParserProgressEvent> PARSER_PROGRESS_ROWMAPPER = (rs, rowNum) -> {
+    RowMapper<ParserProgressMessage> PARSER_PROGRESS_ROWMAPPER = (rs, rowNum) -> {
 
-        ParserProgressEvent event = new ParserProgressEvent();
+        ParserProgressMessage event = new ParserProgressMessage();
         event.setId(rs.getString("id"));
         event.setUsername(rs.getString("username"));
         event.setDate(rs.getTimestamp("date"));

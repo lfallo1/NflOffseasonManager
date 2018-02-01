@@ -1,6 +1,6 @@
 package com.lancefallon.usermgmt.player.service;
 
-import com.lancefallon.usermgmt.config.events.ParserProgressEvent;
+import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
 import com.lancefallon.usermgmt.player.model.Player;
 import com.lancefallon.usermgmt.player.repository.PlayerRepository;
@@ -35,11 +35,11 @@ public class PlayerService {
         return this.playerRepository.findPlayerById(playerId);
     }
 
-    public ParserProgressEvent findActiveImport() throws DatabaseException {
+    public ParserProgressMessage findActiveImport() throws DatabaseException {
         return this.playerRepository.getActiveImport();
     }
 
-    public ParserProgressEvent findLatestImport() throws DatabaseException {
+    public ParserProgressMessage findLatestImport() throws DatabaseException {
         return this.playerRepository.findLatestImport();
     }
 }
