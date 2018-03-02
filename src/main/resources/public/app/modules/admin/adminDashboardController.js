@@ -23,7 +23,7 @@ angular.module('nflDraftApp').controller('AdminDashboardCtrl', ['$q', '$http', '
 
             //connect to the websocket.
             //including access_token as query param so that user principal gets recognized (websocket does not support auth headers, so this needs to be a query param)
-            $stomp.connect('/shared?access_token=' + JSON.parse(localStorage.getItem('authorization')).access_token)
+            $stomp.connect(window.location.origin + window.location.pathname + 'shared?access_token=' + JSON.parse(localStorage.getItem('authorization')).access_token)
                 .then(function (frame) {
 
                     //subscribe to the channel to which import updates will be sent
@@ -38,6 +38,7 @@ angular.module('nflDraftApp').controller('AdminDashboardCtrl', ['$q', '$http', '
                             if ($scope.importProgress.progress == 100) {
                                 toaster.pop('success', '', 'Import complete!');
                                 $scope.latestImport = $scope.importProgress; //update the latest import if successful
+                                $scope.$apply();
                             } else {
                                 toaster.pop('error', '', 'Import failed');
                             }
@@ -46,6 +47,7 @@ angular.module('nflDraftApp').controller('AdminDashboardCtrl', ['$q', '$http', '
                             setTimeout(function () {
                                 $scope.importProgress = false;
                                 $scope.importInProgress = false;
+                                $scope.$apply();
                             }, 1000);
 
                             //close the socket

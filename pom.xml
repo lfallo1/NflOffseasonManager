@@ -6,7 +6,7 @@
     <groupId>com.lancefallon.usermgmt</groupId>
     <artifactId>nfl-draft-notes-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>nfl-draft-notes-app</name>
     <description>Nfl Draft Notes App</description>
@@ -84,14 +84,6 @@
         </dependency>
         <!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-jetty</artifactId>
             </dependency> -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-tools</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.sendgrid</groupId>
             <artifactId>sendgrid-java</artifactId>
