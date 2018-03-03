@@ -1,0 +1,22 @@
+branch-defaults:
+  master:
+    environment: nflDraftManager-env
+deploy:
+  artifact: /Users/lancefallon/Documents/workspace/NflOffseasonManager/target/nfldraftnotes.jar
+environment-defaults:
+  nflDraftManager-env:
+    branch: null
+    repository: null
+global:
+  application_name: nfl-draft-manager
+  default_ec2_keyname: aws
+  default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/Java 8 running on
+    64bit Amazon Linux/2.6.6
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: git
+  workspace_type: Application

@@ -1,5 +1,13 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{player.notes.id ? 'Update' : 'Add'}} Notes for {{playerDetails}}</h3>
+    <div id="player-notes-modal">
+        <h3 class="modal-title">{{player.notes.id ? 'Update' : 'Add'}} Notes for {{playerDetails}}</h3>
+        <div>
+            <small>Height</small>&nbsp;<strong>{{player.details.height}}</strong>
+            <small>Weight</small>&nbsp;<strong>{{player.details.weight}}</strong>
+            <small>40-time</small>&nbsp;<strong>{{player.details.fortyYardDash || 'N/A'}}</strong>
+        </div>
+    </div>
+
     <button ng-show="player.notes.id" id="delete-notes-button" class="btn btn-sm btn-danger" ng-click="delete()"><span
             class="glyphicon glyphicon-trash"></span> Delete
     </button>

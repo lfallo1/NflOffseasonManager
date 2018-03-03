@@ -29,7 +29,7 @@
 
         service.load = function (filterParams, sortParam) {
             var deferred = $q.defer();
-            deferred.resolve(sortAndFilter(players, filterParams, sortParam));
+            deferred.resolve(service.sortAndFilter(players, filterParams, sortParam));
             return deferred.promise;
         };
 

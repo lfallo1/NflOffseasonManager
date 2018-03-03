@@ -239,7 +239,7 @@
             </td>
             <td ng-show="!user">&nbsp;</td>
         </tr>
-        <tr ng-show="user && (player.expanded || expandAll) && player.notes.id">
+        <tr ng-show="user && player.expanded && player.notes.id">
             <td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
                 <div class="player-strengths-table">
                     <div class="player-notes-table-row-title">Strengths</div>
@@ -258,7 +258,7 @@
                 </div>
             </td>
         </tr>
-        <tr ng-show="user && (player.expanded || expandAll) && !player.notes.id">
+        <tr ng-show="user && player.expanded && !player.notes.id">
             <td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
                 <div class="player-notes-table-no-data">
                     <button class="btn btn-success btn-sm" ng-click="openNotesModal(player)">Click here</button>
@@ -266,14 +266,14 @@
                 </div>
             </td>
         </tr>
-        <tr ng-show="!user && (player.expanded || expandAll) && player.notes.id">
+        <tr ng-show="!user && player.expanded && player.notes.id">
             <td class="player-notes-table-row" colspan="9">
                 <div class="player-notes-table-no-data">Must be <a class="btn btn-info btn-sm" href="#/login">Logged
                     In</a> to view / edit your player notes
                 </div>
             </td>
         </tr>
-        <tr ng-show="player.year <= 2018 && (player.expanded || expandAll)" class="combine-row-header" ng-repeat-end>
+        <tr ng-show="player.year <= 2018 && player.expanded" class="combine-row-header" ng-repeat-end>
             <td>
                 <div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
                 <div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">

@@ -14,6 +14,7 @@ angular.module("nflDraftApp")
                         $scope.loading = false;
                         PlayerService.setPlayers(data);
                         $scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
+                        $scope.players.forEach(setExpanded)
                     }, function (err) {
                         $scope.loading = false;
                         console.log(err);
@@ -23,6 +24,7 @@ angular.module("nflDraftApp")
                         $scope.loading = false;
                         PlayerService.setPlayers(data);
                         $scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
+                        $scope.players.forEach(setExpanded)
                     }, function (err) {
                         $scope.loading = false;
                         console.log(err);
@@ -31,6 +33,7 @@ angular.module("nflDraftApp")
             } else {
                 $scope.loading = false;
                 $scope.players = PlayerService.sortAndFilter($scope.filterParams, $scope.sortParam, $scope.favorite && $rootScope.user, $scope.availableOnly);
+                $scope.players.forEach(setExpanded)
             }
         };
 
@@ -42,14 +45,21 @@ angular.module("nflDraftApp")
 
         $scope.prevPage = function () {
             $scope.players = PlayerService.gotoPage(PlayerService.pagination.currentPage - 1);
+            $scope.players.forEach(setExpanded)
         };
 
         $scope.nextPage = function () {
             $scope.players = PlayerService.gotoPage(PlayerService.pagination.currentPage + 1);
+            $scope.players.forEach(setExpanded)
         };
 
         $scope.gotoPage = function (pg) {
             $scope.players = PlayerService.gotoPage(pg);
+            $scope.players.forEach(setExpanded)
+        };
+
+        var setExpanded = function (player) {
+            player.expanded = $scope.expandAll;
         };
 
         $scope.getCurrentPageNumber = function () {
@@ -67,9 +77,9 @@ angular.module("nflDraftApp")
 
         $scope.toggleExpandAll = function () {
             $scope.expandAll = !$scope.expandAll;
-            // for (var i = 0; i < $scope.players.length; i++) {
-            //     $scope.players[i].expanded = !$scope.players[i].expanded;
-            // }
+            for (var i = 0; i < $scope.players.length; i++) {
+                $scope.players[i].expanded = $scope.expandAll;
+            }
         };
 
         $scope.deleteNote = function (player) {
@@ -100,7 +110,14 @@ angular.module("nflDraftApp")
 
             var input = {
                 id: player.id,
-                details: {position: player.position, name: player.name, collegeText: player.collegeText},
+                details: {
+                    height: player.height,
+                    weight: player.weight,
+                    fortyYardDash: player.fortyYardDash,
+                    position: player.position,
+                    name: player.name,
+                    collegeText: player.collegeText
+                },
                 notes: {
                     id: player.notes.id,
                     summary: player.notes.summary,
@@ -278,9 +295,7 @@ angular.module("nflDraftApp")
             $scope.nflTeamOptions = ConfigurationService.getNflTeams();
 
             //flag determining whether to show the combine results row
-            $scope.combine = {
-                expanded: false
-            };
+            $scope.expandAll = false;
         };
 
         init();
