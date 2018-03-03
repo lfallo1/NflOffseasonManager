@@ -32,6 +32,9 @@ public class AppProperties {
     @Value("${datasource.driver}")
     private String dbDriver;
 
+    @Value("${import.host}")
+    private String importHost;
+
     //	@Value("${flyway.locations}")
     private String flywayLocations;
 
@@ -63,4 +66,7 @@ public class AppProperties {
         return flywayLocations;
     }
 
+    public String getImportHost() {
+        return importHost;
+    }
 }

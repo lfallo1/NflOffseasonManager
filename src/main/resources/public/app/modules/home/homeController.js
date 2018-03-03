@@ -66,9 +66,10 @@ angular.module("nflDraftApp")
         };
 
         $scope.toggleExpandAll = function () {
-            for (var i = 0; i < $scope.players.length; i++) {
-                $scope.players[i].expanded = !$scope.players[i].expanded;
-            }
+            $scope.expandAll = !$scope.expandAll;
+            // for (var i = 0; i < $scope.players.length; i++) {
+            //     $scope.players[i].expanded = !$scope.players[i].expanded;
+            // }
         };
 
         $scope.deleteNote = function (player) {

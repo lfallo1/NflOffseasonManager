@@ -81,7 +81,14 @@ angular.module('nflDraftApp').controller('AdminDashboardCtrl', ['$q', '$http', '
                 closeImportSocket();
                 $scope.importProgress = false;
                 $scope.importInProgress = false;
-                toaster.pop('error', '', 'There is an import already in progress');
+
+                if (err.status && err.status === 400) {
+                    toaster.pop('error', '', 'There is an import already in progress');
+                } else if (err.status && err.status === 503) {
+                    toaster.pop('error', '', 'Import service is not accessible');
+                } else {
+                    toaster.pop('error', '', 'There was an error starting the refresh');
+                }
 
             })
         };

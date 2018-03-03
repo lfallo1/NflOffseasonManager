@@ -17,6 +17,12 @@
                 <button ng-disabled="importInProgress" class="btn btn-default" ng-click="refresh(0)">Refresh ALL
                 </button>
             </div>
+            <div id="combine-data-refresh">
+                <button ng-disabled="importInProgress" class="btn btn-default" ng-click="refresh(6)">NFL Combine Data
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/2017_NFL_Draft_logo.svg/1200px-2017_NFL_Draft_logo.svg.png"
+                         width="40px"/>
+                </button>
+            </div>
             <div id="latest-import" ng-show="latestImport">
                 Last import: {{latestImport.date | date:'yyyy-MM-dd hh:mm:ss'}}
             </div>
@@ -24,7 +30,8 @@
                 <div class="col-md-6 well col-md-offset-3">
                     <div id="import-progress-title">Import in progress</div>
                     <div id="import-progress-details" ng-show="importProgress">
-                        <div>Status: {{importProgress.description}} ({{importProgress.date | date:'yyyy-MM-dd hh:mm:ss'}})
+                        <div>Status: {{importProgress.description}} ({{importProgress.date | date:'yyyy-MM-dd
+                            hh:mm:ss'}})
                         </div>
                         <div class="progress-bar" role="progressbar" aria-valuenow="importProgress.progress"
                              aria-valuemin="0" aria-valuemax="100"

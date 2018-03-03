@@ -628,3 +628,14 @@ td.player-data-source {
     margin-top: 6px;
     margin-bottom: 10px;
 }
+
+#combine-data-refresh{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#combine-data-refresh button{
+    font-size: 22px;
+    font-weight: bolder;
+}

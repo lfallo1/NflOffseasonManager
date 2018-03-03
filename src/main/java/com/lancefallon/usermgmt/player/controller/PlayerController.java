@@ -1,8 +1,9 @@
 package com.lancefallon.usermgmt.player.controller;
 
 import com.google.common.collect.ImmutableMap;
-import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
+import com.lancefallon.usermgmt.config.model.AppProperties;
+import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.player.model.Player;
 import com.lancefallon.usermgmt.player.service.PlayerService;
 import org.springframework.amqp.core.Exchange;
@@ -15,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/players")
 public class PlayerController {
+
+    @Autowired
+    private AppProperties appProperties;
 
     @Autowired
     private PlayerService playerService;
@@ -67,11 +73,22 @@ public class PlayerController {
     @RequestMapping(value = "/refresh/{datasourceTypeId}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> refreshDataSource(@PathVariable Integer datasourceTypeId) throws DatabaseException {
-        if (this.playerService.findActiveImport() == null) {
-            rabbitTemplate.convertAndSend(exchange.getName(), "nflcombine.refresh.start", datasourceTypeId);
-            return new ResponseEntity<>(ImmutableMap.of("status", "Import started"), HttpStatus.OK);
+
+        try {
+
+            if (this.playerService.findActiveImport() == null) {
+
+                //check status of import service
+                new RestTemplate().getForEntity(this.appProperties.getImportHost() + "health", String.class);
+
+                rabbitTemplate.convertAndSend(exchange.getName(), "nflcombine.refresh.start", datasourceTypeId);
+                return new ResponseEntity<>(ImmutableMap.of("status", "Import started"), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(ImmutableMap.of("status", "Import already in progress"), HttpStatus.BAD_REQUEST);
+
+        } catch (RestClientException e) {
+            return new ResponseEntity<>(ImmutableMap.of("status", "Importer is not accessible"), HttpStatus.SERVICE_UNAVAILABLE);
         }
-        return new ResponseEntity<>(ImmutableMap.of("status", "Import already in progress"), HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/refresh-active", method = RequestMethod.GET)
