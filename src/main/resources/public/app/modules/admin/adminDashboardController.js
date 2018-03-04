@@ -48,10 +48,10 @@ angular.module('nflDraftApp').controller('AdminDashboardCtrl', ['$q', '$http', '
                                 $scope.importProgress = false;
                                 $scope.importInProgress = false;
                                 $scope.$apply();
-                            }, 1000);
 
-                            //close the socket
-                            closeImportSocket();
+                                //close the socket
+                                closeImportSocket();
+                            }, 1000);
                         }
                     });
 
