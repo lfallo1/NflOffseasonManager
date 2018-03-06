@@ -266,7 +266,9 @@ angular.module("nflDraftApp")
                 smartButtonMaxItems: 3,
                 smartButtonTextConverter: function (itemText, originalItem) {
                     return itemText;
-                }
+                },
+                enableSearch: true,
+                searchField: 'name'
             };
 
             $scope.onMultiSelectEvents = {
