@@ -76,6 +76,17 @@
             return nflTeams;
         };
 
+        service.smartButtonSettings = {
+            displayProp: 'name',
+            externalIdProp: '',
+            smartButtonMaxItems: 3,
+            smartButtonTextConverter: function (itemText, originalItem) {
+                return itemText;
+            },
+            enableSearch: true,
+            searchField: 'name'
+        };
+
         return service;
 
     }]);

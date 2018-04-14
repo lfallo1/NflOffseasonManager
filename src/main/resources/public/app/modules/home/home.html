@@ -181,7 +181,7 @@
         <thead>
         <tr class="sortable-header">
             <th ng-click="sort('positionRank')">Pos Rnk</th>
-            <th ng-click="sort('projectedRound')">Proj Rd</th>
+            <th ng-show="isCurrentYearSelected()" ng-click="sort('pickOverall')">Drafted</th>
             <th ng-click="sort('name')">Name</th>
             <th ng-click="sort('position.name')">Pos</th>
             <th ng-click="sort('college.name')">Col</th>
@@ -197,7 +197,12 @@
         <tr class="primary-data-row" ng-class="{'player-drafted-row' : player.round}"
             ng-repeat-start="player in players">
             <td>{{player.positionRank}}</td>
-            <td>{{player.projectedRound}}</td>
+            <td ng-show="isCurrentYearSelected()">
+                <div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}"
+                                                                                          width="50px"/><i>{{player.round + ':' +
+                player.pick}}</i></div>
+                <span ng-if="isAdmin()" class="clickable glyphicon glyphicon-edit" ng-click="editDraftInformation(player)"></span>
+            </td>
             <td class="player-name-row">
                 <a ng-show="isAdmin()" class="btn btn-warning" href="#/admin/player/{{player.id}}"><span
                         class="glyphicon glyphicon-edit"></span>
@@ -207,9 +212,6 @@
                 </button>
                 <a target="_blank"
                    href="https://www.youtube.com/results?search_query={{player.name + ' ' + player.college.name}}">{{player.name}}</a>
-                <div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}"
-                                                                          width="50px"/><i>{{player.round + ':' +
-                    player.pick}}</i></div>
             </td>
             <td>{{player.position.name}}</td>
             <td>{{player.college.name}}</td>
@@ -240,7 +242,7 @@
             <td ng-show="!user">&nbsp;</td>
         </tr>
         <tr ng-show="user && player.expanded && player.notes.id">
-            <td class="player-notes-table-row" colspan="{{user ? 12 : 9}}">
+            <td class="player-notes-table-row" colspan="{{colspanSize()}}">
                 <div class="player-strengths-table">
                     <div class="player-notes-table-row-title">Strengths</div>
                     <pre>{{player.notes.strengths || 'N/A'}}</pre>
@@ -273,7 +275,7 @@
                 </div>
             </td>
         </tr>
-        <tr ng-show="player.year <= 2018 && player.expanded" class="combine-row-header" ng-repeat-end>
+        <tr ng-show="isCurrentYearSelected() && player.expanded" class="combine-row-header" ng-repeat-end>
             <td>
                 <div ng-click="sort('fortyYardDash')" class="combine-logo">40-Yd</div>
                 <div ng-class="{'no-value-available' : !player.fortyYardDash}" class="combine-data">

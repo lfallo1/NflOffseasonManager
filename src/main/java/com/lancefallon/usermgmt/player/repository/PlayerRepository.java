@@ -1,8 +1,8 @@
 package com.lancefallon.usermgmt.player.repository;
 
-import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.config.exception.model.CustomErrorMessage;
 import com.lancefallon.usermgmt.config.exception.model.DatabaseException;
+import com.lancefallon.usermgmt.player.messages.ParserProgressMessage;
 import com.lancefallon.usermgmt.player.model.*;
 import com.lancefallon.usermgmt.player.sql.PlayerSql;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -390,6 +390,19 @@ public class PlayerRepository extends JdbcDaoSupport implements PlayerSql {
             return getJdbcTemplate().update("update public.player set name = ?, college = ?, college_text = ?, position = ?, height = ?, weight = ?, year = ?, position_rank = ? where id = ?",
                     new Object[]{player.getName(), player.getCollege().getId(), player.getCollegeText(), player.getPosition().getId(),
                             player.getHeight(), player.getWeight(), player.getYear(), player.getPositionRank(), player.getId()});
+        } catch (DataAccessException e) {
+            throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
+        }
+    }
+
+    public Integer updateDraftInformation(Player player) throws DatabaseException {
+        try {
+            int result = getJdbcTemplate().update("update public.player set team = ?, pick = ?, round = ? where id = ? and year = ?",
+                    new Object[]{player.getTeam().getTeam(), player.getPick(), player.getRound(), player.getId(), player.getYear()});
+
+            //update other players in round
+            getJdbcTemplate().update("update public.player set pick = pick + 1 where round = ? and year = ? and pick >= ? and pick is not null and id <> ?", new Object[]{player.getRound(), player.getYear(), player.getPick(), player.getId()});
+            return result;
         } catch (DataAccessException e) {
             throw new DatabaseException(new CustomErrorMessage("nflDraftAppError", e.getMessage()));
         }

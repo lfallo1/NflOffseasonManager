@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{player.name + ' ' + player.college.name}}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-4">
+            <label for="teams">Team</label>
+            <select id="teams" class="form-control" name="teams" class="form-control"
+                    ng-model="player.team.team"
+                    ng-options="team.name as team.name for team in teams" />
+        </div>
+        <div class="col-xs-4">
+            <label for="rounds">Round</label>
+            <select id="rounds" class="form-control" name="rounds" class="form-control"
+                    ng-model="player.round"
+                    ng-options="round.id as round.id for round in rounds" />
+        </div>
+        <div class="col-xs-4">
+            <label for="playerPick">Pick</label>
+            <input id="playerPick" name="playerPick" class="form-control" type="number" ng-model="player.pick" />
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success full-width" ng-click="savePlayer()" >Confirm</button>
+    <button class="btn-link" ng-click="cancel()">Cancel</button>
+</div>

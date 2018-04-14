@@ -5,7 +5,7 @@
         var players = [];
         var filtered = [];
 
-        var ignoreNullOrZeroWhenSortingList = ['broadJump', 'verticalJump', 'benchPress', 'threeConeDrill', 'sixtyYardShuttle', 'twentyYardShuttle', 'fortyYardDash', 'notes.overallGrade'];
+        var ignoreNullOrZeroWhenSortingList = ['broadJump', 'verticalJump', 'benchPress', 'threeConeDrill', 'sixtyYardShuttle', 'twentyYardShuttle', 'fortyYardDash', 'notes.overallGrade', 'pickOverall'];
 
         var projectedRoundOptions = [{round: 1, text: '1st'}, {round: 2, text: '2nd'}, {round: 3, text: '3rd'},
             {round: 4, text: '4th'}, {round: 5, text: '5th'}, {round: 6, text: '6th'},

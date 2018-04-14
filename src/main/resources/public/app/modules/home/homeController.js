@@ -190,9 +190,14 @@ angular.module("nflDraftApp")
         $scope.isCurrentYearSelected = function () {
 //      		var currentYear = new Date().getFullYear();
             return $scope.filterParams.years.filter(function (y) {
-                return y.name <= 2017;
+                return y.name <= new Date().getFullYear();
             }).length > 0;
         };
+
+        $scope.colspanSize = function () {
+            var draftedByColSpan = $scope.isCurrentYearSelected() ? 1 : 0;
+            return draftedByColSpan + $scope.user ? 11 : 8;
+        }
 
         var logoPlaceholder = 'http://i.nflcdn.com/static/site/7.5/img/teams/{TEAM}/{TEAM}_logo-80x90.gif';
         $scope.getNflTeamLogo = function (player) {
@@ -234,6 +239,49 @@ angular.module("nflDraftApp")
             SharedPlayerPollingService.reloadSharedPlayers(date);
         };
 
+        $scope.editDraftInformation = function (player) {
+            //open notes modal
+            $uibModal.open({
+                templateUrl: 'app/modules/home/modals/editDraftInfoModal.html',
+                controller: 'EditDraftInfoModalCtrl',
+                size: 'sm',
+                resolve: {
+                    data: function () {
+                        return {
+                            id: player.id,
+                            name: player.name,
+                            team: {team: player.team.team || $scope.nflTeamOptions[0].name},
+                            pick: player.pick || 4,
+                            round: player.round || 1,
+                            year: player.year
+                        };
+                    }
+                }
+            }).result.then(function (result) {
+
+                ApiService.apiSendPost(`api/players/draft/${result.id}`, {
+                    id: player.id,
+                    team: result.team,
+                    pick: result.pick,
+                    round: result.round,
+                    year: player.year
+                }).then(function (data) {
+
+                    $scope.showMessage('success', '', 'Draft info saved for ' + player.name);
+
+                    //do a clean refresh to reload players with adjusted draft info
+                    PlayerService.setPlayers([]);
+                    $scope.players = [];
+                    $scope.loadPlayers();
+
+                }, function (err) {
+                    $scope.showMessage('error', '', 'Something tragic happened & we couldn\'t save :-(');
+                    console.log(err);
+                });
+
+            });
+        }
+
         var init = function () {
             $scope.selectedDurationOptions = [{val: 30, text: '30'}, {val: 90, text: '90'}, {val: 1000, text: 'All'}];
             $scope.selectedDuration = $scope.selectedDurationOptions[1].val;
@@ -260,16 +308,7 @@ angular.module("nflDraftApp")
                 name: ""
             };
 
-            $scope.smartButtonSettings = {
-                displayProp: 'name',
-                externalIdProp: '',
-                smartButtonMaxItems: 3,
-                smartButtonTextConverter: function (itemText, originalItem) {
-                    return itemText;
-                },
-                enableSearch: true,
-                searchField: 'name'
-            };
+            $scope.smartButtonSettings = ConfigurationService.smartButtonSettings;
 
             $scope.onMultiSelectEvents = {
                 onItemSelect: function () {

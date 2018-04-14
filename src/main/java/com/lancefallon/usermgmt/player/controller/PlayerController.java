@@ -70,6 +70,12 @@ public class PlayerController {
         return new ResponseEntity<>(this.playerService.updatePlayer(player), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/draft/{playerId}", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_ADMIN') && @authService.checkPlayerId(#playerId, #player)")
+    public ResponseEntity<Boolean> updateDraftInformation(@PathVariable Integer playerId, @RequestBody Player player) throws DatabaseException {
+        return new ResponseEntity<>(this.playerService.updateDraftInformation(player), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/refresh/{datasourceTypeId}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Map<String, String>> refreshDataSource(@PathVariable Integer datasourceTypeId) throws DatabaseException {

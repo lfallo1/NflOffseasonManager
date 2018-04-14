@@ -18,6 +18,12 @@ public class PlayerService {
 
     public List<Player> findAll(OAuth2Authentication auth) throws DatabaseException {
         List<Player> players = playerRepository.findAll(auth);
+        players.stream().forEach(p->{
+            if(p.getPick() != null){
+                long overallPick = players.stream().filter(q->q.getRound() < p.getRound()).count() + players.stream().filter(q-> q.getPick() < p.getPick() && q.getRound() == p.getRound()).count();
+                p.setPickOverall((int) overallPick);
+            }
+        });
         return players;
     }
 
@@ -29,6 +35,10 @@ public class PlayerService {
 
     public Boolean updatePlayer(Player player) throws DatabaseException {
         return this.playerRepository.updatePlayer(player) > 0;
+    }
+
+    public Boolean updateDraftInformation(Player player) throws DatabaseException {
+        return this.playerRepository.updateDraftInformation(player) > 0;
     }
 
     public Player getPlayerById(Integer playerId) throws DatabaseException {

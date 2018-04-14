@@ -32,6 +32,7 @@ public class Player {
     private Integer round;
     private Integer pick;
     private NflTeam team;
+    private Integer pickOverall;
 
     private PlayerNote notes;
 
@@ -255,6 +256,14 @@ public class Player {
 
     public void setTeam(NflTeam team) {
         this.team = team;
+    }
+
+    public Integer getPickOverall() {
+        return pickOverall;
+    }
+
+    public void setPickOverall(Integer pickOverall) {
+        this.pickOverall = pickOverall;
     }
 
     public String getSource() {
