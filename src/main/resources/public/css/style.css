@@ -639,3 +639,8 @@ td.player-data-source {
     font-size: 22px;
     font-weight: bolder;
 }
+
+.admin-edit-draft-info:hover{
+    cursor: pointer;
+    color: #f89406;
+}

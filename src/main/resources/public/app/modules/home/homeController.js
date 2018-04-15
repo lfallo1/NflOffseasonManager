@@ -241,6 +241,7 @@ angular.module("nflDraftApp")
 
         $scope.editDraftInformation = function (player) {
             //open notes modal
+            var nextPick = PlayerService.nextPick(player.year);
             $uibModal.open({
                 templateUrl: 'app/modules/home/modals/editDraftInfoModal.html',
                 controller: 'EditDraftInfoModalCtrl',
@@ -251,8 +252,8 @@ angular.module("nflDraftApp")
                             id: player.id,
                             name: player.name,
                             team: {team: player.team.team || $scope.nflTeamOptions[0].name},
-                            pick: player.pick || 4,
-                            round: player.round || 1,
+                            pick: nextPick.pick,
+                            round: nextPick.round,
                             year: player.year
                         };
                     }
@@ -287,7 +288,7 @@ angular.module("nflDraftApp")
             $scope.selectedDuration = $scope.selectedDurationOptions[1].val;
             $scope.sharedPlayers = [];
             $scope.favorite = false;
-            $scope.availableOnly = true;
+            $scope.availableOnly = false;
 
             $scope.yearOptions = [];
             $scope.collegeOptions = [];

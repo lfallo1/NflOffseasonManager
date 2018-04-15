@@ -201,7 +201,7 @@
                 <div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}"
                                                                                           width="50px"/><i>{{player.round + ':' +
                 player.pick}}</i></div>
-                <span ng-if="isAdmin()" class="clickable glyphicon glyphicon-edit" ng-click="editDraftInformation(player)"></span>
+                <span ng-if="isAdmin()" class="admin-edit-draft-info clickable glyphicon glyphicon-edit" ng-click="editDraftInformation(player)"></span>
             </td>
             <td class="player-name-row">
                 <a ng-show="isAdmin()" class="btn btn-warning" href="#/admin/player/{{player.id}}"><span

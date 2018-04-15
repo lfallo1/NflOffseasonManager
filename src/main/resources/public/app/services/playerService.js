@@ -201,6 +201,23 @@
             return 'hsl(' + hue + ', 100%, 50%)';
         }
 
+        service.nextPick = function(year){
+            var round = 1;
+            var pick = 0;
+            for(var i = 0; i < players.length; i++){
+                if(players[i].year == year && players[i].round > round) {
+                    round = players[i].round;
+                    pick = players[i].pick;
+                } else if(players[i].year == year && players[i].round == round && players[i].pick > pick){
+                    pick = players[i].pick;
+                }
+            }
+            return {
+                round: round,
+                pick: pick + 1
+            }
+        }
+
         return service;
 
     }]);
