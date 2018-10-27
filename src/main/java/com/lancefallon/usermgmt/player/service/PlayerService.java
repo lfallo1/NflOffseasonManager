@@ -19,8 +19,8 @@ public class PlayerService {
     public List<Player> findAll(OAuth2Authentication auth) throws DatabaseException {
         List<Player> players = playerRepository.findAll(auth);
         players.stream().forEach(p->{
-            if(p.getPick() != null){
-                long overallPick = players.stream().filter(q->q.getRound() < p.getRound()).count() + players.stream().filter(q-> q.getPick() < p.getPick() && q.getRound() == p.getRound()).count();
+            if(p.getPick() != null && p.getPick() > 0){
+                long overallPick = players.stream().filter(q->q.getRound() > 0 && q.getRound() < p.getRound() && q.getYear().equals(p.getYear())).count() + players.stream().filter(q-> q.getYear().equals(p.getYear()) && q.getPick() > 0 && q.getPick() < p.getPick() && q.getRound() > 0 && q.getRound().equals(p.getRound())).count() + 1;
                 p.setPickOverall((int) overallPick);
             }
         });

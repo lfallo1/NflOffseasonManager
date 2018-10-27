@@ -190,7 +190,7 @@ angular.module("nflDraftApp")
         $scope.isCurrentYearSelected = function () {
 //      		var currentYear = new Date().getFullYear();
             return $scope.filterParams.years.filter(function (y) {
-                return y.name <= new Date().getFullYear();
+                return y.name <= $scope._currentYear;
             }).length > 0;
         };
 
@@ -249,12 +249,15 @@ angular.module("nflDraftApp")
                 resolve: {
                     data: function () {
                         return {
-                            id: player.id,
-                            name: player.name,
-                            team: {team: player.team.team || $scope.nflTeamOptions[0].name},
-                            pick: nextPick.pick,
-                            round: nextPick.round,
-                            year: player.year
+                            player: {
+                                id: player.id,
+                                name: player.name,
+                                team: {team: player.team.team || $scope.nflTeamOptions[0].name},
+                                pick: nextPick.pick,
+                                round: nextPick.round,
+                                year: player.year
+                            },
+                            overall: nextPick.overall
                         };
                     }
                 }
@@ -281,7 +284,20 @@ angular.module("nflDraftApp")
                 });
 
             });
-        }
+        };
+
+        // var startDraftListener = function(){
+        //     if($rootScope.user) {
+        //         $stomp.connect(window.location.origin + window.location.pathname + 'shared?access_token=' + JSON.parse(localStorage.getItem('authorization')).access_token)
+        //             .then(function (frame) {
+        //
+        //                 //subscribe to the channel to which import updates will be sent
+        //                 $scope.draftSubscription = $stomp.subscribe('/topic/draft', function (payload) {
+        //                     PlayerService.refreshDraft(payload);
+        //                 });
+        //             })
+        //     }
+        // }
 
         var init = function () {
             $scope.selectedDurationOptions = [{val: 30, text: '30'}, {val: 90, text: '90'}, {val: 1000, text: 'All'}];
@@ -298,8 +314,11 @@ angular.module("nflDraftApp")
             $scope.positionSideOfBallOptions = [];
             $scope.nflTeamOptions = [];
 
+            var appDate = new Date();
+            $scope._currentYear = appDate.getMonth() > 5 ? appDate.getFullYear() + 1 : appDate.getFullYear();
+
             $scope.filterParams = {
-                years: [{id: 1, name: 2018}],
+                years: [{id: $scope._currentYear - 2017, name: $scope._currentYear}],
                 positions: [],
                 positionCategories: [],
                 positionSidesOfBall: [{"id": 1, "name": "offense"}, {"id": 2, "name": "defense"}],

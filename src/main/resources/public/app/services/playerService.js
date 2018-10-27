@@ -212,9 +212,27 @@
                     pick = players[i].pick;
                 }
             }
+            var overall = players.filter(function(p){ return p.year == year && p.round}).length + 1;
             return {
                 round: round,
-                pick: pick + 1
+                pick: pick + 1,
+                overall: overall
+            }
+        };
+
+        var getOverall = function(year, pick, round){
+            return players.filter(function(p){ return p.pick && p.year == year && (p.round < round || (p.round == round && p.pick < pick))}).length + 1;
+        }
+
+        service.refreshDraft = function(draftUpdates){
+            for(var i = 0; i < draftUpdates.length; i++){
+                var player = players.filter(function(d) { return d.id == draftUpdates[i].id});
+                if(player.length > 0){
+                    player[0].pick = draftUpdates[i].pick;
+                    player[0].team = draftUpdates[i].team;
+                    player[0].round = draftUpdates[i].round;
+                    players[0].pickOverall = getOverall(draftUpdates[i].year, draftUpdates[i].pick, draftUpdates[i].round);
+                }
             }
         }
 

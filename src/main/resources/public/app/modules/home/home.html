@@ -188,7 +188,7 @@
             <th ng-click="sort('height')">Ht</th>
             <th ng-click="sort('weight')">Wt</th>
             <th ng-click="sort('year')">Yr</th>
-            <th>Source</th>
+            <th ng-click="sort('source')">Source</th>
             <th ng-show="user" ng-click="sort('notes.overallGrade')">Grade</th>
             <th></th>
         </tr>
@@ -200,7 +200,7 @@
             <td ng-show="isCurrentYearSelected()">
                 <div id="draft-team-info" ng-show="player.team.team"><img src="{{getNflTeamLogo(player)}}"
                                                                                           width="50px"/><i>{{player.round + ':' +
-                player.pick}}</i></div>
+                player.pick}} ({{player.pickOverall}})</i></div>
                 <span ng-if="isAdmin()" class="admin-edit-draft-info clickable glyphicon glyphicon-edit" ng-click="editDraftInformation(player)"></span>
             </td>
             <td class="player-name-row">

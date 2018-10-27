@@ -14,13 +14,14 @@ angular.module('nflDraftApp')
         ];
 
         $scope.init = function(){
-            $scope.player = data;
+            $scope.player = data.player;
+            $scope.overall = data.overall;
             $scope.teams = ConfigurationService.getNflTeams();
             console.log('pause');
         };
 
         $scope.savePlayer = function(){
-            if($scope.player.round <= 7 && $scope.player.round >= 1 && $scope.player.pick >= 1 && $scope.player.pick <= 40 && $scope.player.team.team){
+            if($scope.player.round <= 7 && $scope.player.round >= 1 && $scope.player.pick >= 1 && $scope.player.pick <= 50 && $scope.player.team.team){
                 confirm();
                 return;
             }
