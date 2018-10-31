@@ -29,7 +29,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", "/app/**", "/bower/**", "/fonts/**", "/images/**", "/api/players/**", "/api/config/**").permitAll()
+			.antMatchers("/", "/app/**", "/bower/**", "/fonts/**", "/images/**", "/api/players/**", "/api/config/**", "/v2/api-docs", "/swagger-ui.html", "/configuration/ui", "/swagger-resources").permitAll()
 			.anyRequest().authenticated().and()
 			.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and()
 			.logout().logoutSuccessHandler(logoutHandler);
