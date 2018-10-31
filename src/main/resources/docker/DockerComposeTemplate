@@ -1,0 +1,10 @@
+version: '3'
+services:
+  palas-api:
+    image: lfallo1/nfldraftmanager:{build.version}
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "8080:8080"

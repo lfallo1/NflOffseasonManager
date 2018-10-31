@@ -5,7 +5,7 @@
 
     <groupId>com.lancefallon.usermgmt</groupId>
     <artifactId>nfl-draft-notes-app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>nfl-draft-notes-app</name>
@@ -25,6 +25,7 @@
         <start-class>com.lancefallon.usermgmt.NflDraftApplication</start-class>
         <!-- <tomcat.version>8.0.28</tomcat.version> -->
         <tomcat.version>7.0.68</tomcat.version>
+        <docker.image.name>lfallo1/nfldraftmanager:${project.version}-${git.commit.id.abbrev}</docker.image.name>
     </properties>
 
     <dependencies>
@@ -130,6 +131,12 @@
             <version>7.6.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.5.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -142,6 +149,63 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.11.v20150529</version>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <imageName>${docker.image.name}</imageName>
+                    <dockerDirectory>${basedir}/src/main/resources/docker</dockerDirectory>
+                    <!-- copies war file from target into root dir of docker image -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath> <!-- one folder up from target directory -->
+                            <directory>${project.build.directory}</directory> <!-- target folder -->
+                            <include>${project.build.finalName}.war</include> <!-- name of artifact (PALAS2.0.war) -->
+                        </resource>
+                    </resources>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <injectAllReactorProjects>true</injectAllReactorProjects>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Dynamically generates docker-compose.yml -->
+                    <mainClass>com.scripts.DockerScripts</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
