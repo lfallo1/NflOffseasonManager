@@ -25,7 +25,8 @@
         <start-class>com.lancefallon.usermgmt.NflDraftApplication</start-class>
         <!-- <tomcat.version>8.0.28</tomcat.version> -->
         <tomcat.version>7.0.68</tomcat.version>
-        <docker.image.name>lfallo1/nfldraftmanager:${project.version}-${git.commit.id.abbrev}</docker.image.name>
+        <!--<docker.image.name>lfallo1/nfldraftmanager:${project.version}-${git.commit.id.abbrev}</docker.image.name>-->
+        <docker.image.name>lfallo1/nfldraftmanager</docker.image.name>
     </properties>
 
     <dependencies>
@@ -162,7 +163,7 @@
                         <resource>
                             <targetPath>/</targetPath> <!-- one folder up from target directory -->
                             <directory>${project.build.directory}</directory> <!-- target folder -->
-                            <include>${project.build.finalName}.war</include> <!-- name of artifact (PALAS2.0.war) -->
+                            <include>${project.build.finalName}.jar</include> <!-- name of artifact (PALAS2.0.war) -->
                         </resource>
                     </resources>
                 </configuration>
@@ -190,23 +191,23 @@
                     <injectAllReactorProjects>true</injectAllReactorProjects>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- Dynamically generates docker-compose.yml -->
-                    <mainClass>com.scripts.DockerScripts</mainClass>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>exec-maven-plugin</artifactId>-->
+                <!--<version>1.6.0</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>process-classes</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>java</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash; Dynamically generates docker-compose.yml &ndash;&gt;-->
+                    <!--<mainClass>com.scripts.DockerScripts</mainClass>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

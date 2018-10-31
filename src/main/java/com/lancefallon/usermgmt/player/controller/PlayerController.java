@@ -84,8 +84,12 @@ public class PlayerController {
 
             if (this.playerService.findActiveImport() == null) {
 
+                System.out.println("Checking health of importer at " + this.appProperties.getImportHost() + "health");
+
                 //check status of import service
                 new RestTemplate().getForEntity(this.appProperties.getImportHost() + "health", String.class);
+
+                System.out.println("Health check passed");
 
                 rabbitTemplate.convertAndSend(exchange.getName(), "nflcombine.refresh.start", datasourceTypeId);
                 return new ResponseEntity<>(ImmutableMap.of("status", "Import started"), HttpStatus.OK);

@@ -44,7 +44,7 @@ public class DbFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("In App Filter");
+
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		httpResponse.setHeader(RESPONSE_HEADER_CACHE_CONTROL, NO_CACHE_NO_STORE_MUST_REVALIDATE);
 		// HTTP 1.0. Proxies.
