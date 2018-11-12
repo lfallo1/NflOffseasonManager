@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime
-FROM openjdk:8-jdk-alpine
+FROM java:8
 
 # Add Maintainer Info
 LABEL maintainer="fallon.lance@gmail.com"
