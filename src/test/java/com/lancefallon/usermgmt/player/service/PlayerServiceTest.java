@@ -11,10 +11,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
+import testhelpers.DomainFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,15 +31,15 @@ class PlayerServiceTest {
     @Test
     void findAll() throws DatabaseException {
 
-        Mockito.when(playerRepository.findAll(null)).thenReturn(createPlayers(4));
+        Mockito.when(playerRepository.findAll(null)).thenReturn(DomainFactory.createPlayers(4));
 
         List<Player> players = this.playerService.findAll(null);
-        assertEquals(createPlayers(4).size(), players.size());
+        assertEquals(DomainFactory.createPlayers(4).size(), players.size());
     }
 
     @Test
     void addPlayer() throws DatabaseException {
-        Player player = createPlayers(1).get(0);
+        Player player = DomainFactory.createPlayers(1).get(0);
         int id = 99;
         Mockito.when(playerRepository.addPlayer(player)).thenReturn(id);
 
@@ -51,21 +50,21 @@ class PlayerServiceTest {
     @Test
     void updatePlayer() throws DatabaseException {
         Mockito.when(playerRepository.updatePlayer(Mockito.any(Player.class))).thenReturn(1);
-        Boolean result = this.playerService.updatePlayer(createPlayers(1).get(0));
+        Boolean result = this.playerService.updatePlayer(DomainFactory.createPlayers(1).get(0));
         assertTrue(result);
     }
 
     @Test
     void updateDraftInformation() throws DatabaseException {
         Mockito.when(playerRepository.updateDraftInformation(Mockito.any(Player.class))).thenReturn(1);
-        Boolean result = this.playerService.updateDraftInformation(createPlayers(1).get(0));
+        Boolean result = this.playerService.updateDraftInformation(DomainFactory.createPlayers(1).get(0));
         assertTrue(result);
     }
 
     @Test
     void getPlayerById() throws DatabaseException {
         int id = 99;
-        Player player = createPlayers(1).get(0);
+        Player player = DomainFactory.createPlayers(1).get(0);
         player.setId(id);
         Mockito.when(playerRepository.findPlayerById(Mockito.anyInt())).thenReturn(player);
 
@@ -82,17 +81,5 @@ class PlayerServiceTest {
     void findLatestImport() {
     }
 
-    private List<Player> createPlayers(int count) {
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            Player player = new Player();
-            player.setId(i);
-            player.setName("John Doe" + i);
-            player.setPick(new Random().nextInt(32) + 1);
-            player.setRound(new Random().nextInt(7) + 1);
-            player.setYear(2018);
-            players.add(player);
-        }
-        return players;
-    }
+
 }
