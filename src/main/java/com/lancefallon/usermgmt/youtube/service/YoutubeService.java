@@ -1,10 +1,8 @@
 package com.lancefallon.usermgmt.youtube.service;
 
-import com.lancefallon.usermgmt.config.model.AppProperties;
 import com.lancefallon.usermgmt.youtube.model.YoutubeSnippet;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
