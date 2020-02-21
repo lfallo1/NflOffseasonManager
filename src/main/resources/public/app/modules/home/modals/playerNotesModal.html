@@ -13,17 +13,36 @@
     </button>
 </div>
 <div class="modal-body">
-    <div>
-        <h3>Summary</h3>
-        <textarea rows="8" class="form-control" ng-model="player.notes.summary"></textarea>
+
+    <div id="youtube-wrapper">
+        <div id="youtube-list-wrapper" ng-show="!activeVideo">
+            <div class="youtube-video-item col-xs-2" ng-repeat="video in videos">
+                <img src="{{video.thumbnail}}" ng-click="selectVideo(video)" />
+                <div class="youtube-video-title">{{video.title.substring(0,25)}}</div>
+            </div>
+        </div>
+        <div id="video-wrapper" ng-show="activeVideo">
+            <youtube-video video-url="videoUrl()"
+                           player-vars="youtubePlayerOptions"></youtube-video>
+            <div class="stop-video" ng-click="activeVideo = null"><span class="glyphicon glyphicon-stop"></span>
+                Stop Video
+            </div>
+        </div>
     </div>
-    <div>
-        <h3>Strengths</h3>
-        <textarea rows="8" class="form-control" ng-model="player.notes.strengths"></textarea>
-    </div>
-    <div class="text-area-input">
-        <h3>Weaknesses</h3>
-        <textarea rows="8" class="form-control" ng-model="player.notes.weaknesses"></textarea>
+
+    <div id="text-notes-wrapper">
+        <div>
+            <h4>Summary</h4>
+            <textarea rows="3" class="form-control" ng-model="player.notes.summary"></textarea>
+        </div>
+        <div>
+            <h4>Strengths</h4>
+            <textarea rows="3" class="form-control" ng-model="player.notes.strengths"></textarea>
+        </div>
+        <div class="text-area-input">
+            <h4>Weaknesses</h4>
+            <textarea rows="3" class="form-control" ng-model="player.notes.weaknesses"></textarea>
+        </div>
     </div>
     <div id="player-tags" class="row">
         <div ng-repeat="tag in tags" class="col-sm-2">

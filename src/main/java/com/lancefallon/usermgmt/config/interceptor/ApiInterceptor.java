@@ -29,10 +29,6 @@ public class ApiInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-
-		System.out.println("hello from the Api interceptor");
-		
-
 		return true;
 	}
 

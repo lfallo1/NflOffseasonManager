@@ -1,11 +1,16 @@
 angular.module('nflDraftApp')
-    .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModal", "$uibModalInstance", "$timeout", "player", 'PlayerService', 'ConfigurationService', function ($rootScope, $scope, $uibModal, $uibModalInstance, $timeout, player, PlayerService, ConfigurationService) {
+    .controller('PlayerNotesModalCtrl', ["$rootScope", "$scope", "$uibModal", "$uibModalInstance", "$timeout", '$http', "player", 'PlayerService', 'ConfigurationService', function ($rootScope, $scope, $uibModal, $uibModalInstance, $timeout, $http, player, PlayerService, ConfigurationService) {
 
         $scope.init = function () {
 
             $scope.projectedRoundOptions = PlayerService.getProjectedRoundOptions();
             $scope.likenessOptions = PlayerService.getLikenessOptions();
             $scope.tags = ConfigurationService.getTags();
+            $scope.videos = [];
+            $scope.youtubePlayerOptions = {
+                autoplay : 1
+            };
+            $scope.activeVideo = null;
 
             $scope.player = player;
             $scope.playerDetails = player.details.name;
@@ -28,6 +33,7 @@ angular.module('nflDraftApp')
             }
             $scope.sliderVisible = true;
             refreshSlider();
+            searchHighlights();
         };
 
         var refreshSlider = function () {
@@ -101,6 +107,25 @@ angular.module('nflDraftApp')
             return $scope.player.notes.tags.map(function (t) {
                 return t.id
             }).indexOf(tag.id) > -1;
+        };
+
+        var searchHighlights = function(){
+            $http.get('api/youtube/search?q=' + encodeURI($scope.player.details.name + ' vs')).then(function(res){
+               $scope.videos = res.data;
+            }, function(err){
+                console.log(err);
+            });
+        };
+
+        $scope.selectVideo = function(video){
+          $scope.activeVideo = video;
+        };
+
+        $scope.videoUrl = function(){
+            if($scope.activeVideo){
+                return 'https://www.youtube.com/embed/' + $scope.activeVideo.id;
+            }
+            return '';
         }
 
         $scope.init();

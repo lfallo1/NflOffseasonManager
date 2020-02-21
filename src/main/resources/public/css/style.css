@@ -644,3 +644,51 @@ td.player-data-source {
     cursor: pointer;
     color: #f89406;
 }
+
+#youtube-list-wrapper{
+    background: rgb(25,25,25);
+    padding: 3px;
+    border-radius: 3px;
+    color: white;
+}
+
+.youtube-video-item img{
+    width: 100%;
+}
+
+.youtube-video-item img:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#youtube-list-wrapper{
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 84%;
+    float: right;
+    margin-top: 20px;
+}
+
+#video-wrapper{
+    float: right;
+    text-align: center;
+    width: 85%;
+}
+
+#text-notes-wrapper{
+    width: 15%;
+    margin-top: -18px;
+}
+
+.youtube-video-title{
+    font-size: 6px
+}
+
+.stop-video{
+    color: #ee5f5b;
+}
+
+.stop-video:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
