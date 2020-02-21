@@ -6,8 +6,8 @@
             <small>Weight</small>&nbsp;<strong>{{player.details.weight}}</strong>
             <small>40-time</small>&nbsp;<strong>{{player.details.fortyYardDash || 'N/A'}}</strong>
         </div>
+        <button class="btn-link text-danger"><span ng-click="cancel()">Close</span></button>
     </div>
-
     <button ng-show="player.notes.id" id="delete-notes-button" class="btn btn-sm btn-danger" ng-click="delete()"><span
             class="glyphicon glyphicon-trash"></span> Delete
     </button>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div id="video-wrapper" ng-show="activeVideo">
-            <youtube-video video-url="videoUrl()"
+            <youtube-video player-width="860" player-height="497" video-url="videoUrl()"
                            player-vars="youtubePlayerOptions"></youtube-video>
             <div class="stop-video" ng-click="activeVideo = null"><span class="glyphicon glyphicon-stop"></span>
                 Stop Video

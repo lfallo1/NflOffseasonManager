@@ -136,7 +136,9 @@ angular.module("nflDraftApp")
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/modules/home/modals/playerNotesModal.html',
                 controller: 'PlayerNotesModalCtrl',
-                size: 'lg',
+                windowClass: 'player-notes-modal-window',
+                backdrop: 'static',
+                // size: 'lg',
                 resolve: {
                     player: function () {
                         return input;
